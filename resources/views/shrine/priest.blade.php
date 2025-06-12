@@ -46,7 +46,7 @@
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
             <div class="member">
               <div class="member-img">
-                <img src="assets/img/team/team-1.jpg" class="img-fluid" alt="pariest" style="height: 357px;width: 357px;">
+                <img src="{{asset('images/remigious.png')}}" class="img-fluid" alt="pariest" style="height: 357px;width: 357px;">
                 <div class="social">
                   <a href=""><i class="fab fa-twitter"></i></a>
                   <a href=""><i class="fab fa-facebook"></i></a>
@@ -56,7 +56,6 @@
               </div>
               <div class="member-info">
                 <h4>Rev.Fr.Remigious</h4>
-
                 <p class="text-danger">2015 - 2020</p>
               </div>
             </div>
@@ -75,27 +74,7 @@
               </div>
               <div class="member-info">
                 <h4>Rev.Fr.SamiNathan</h4>
-
                 <p class="text-danger">2010 - 2015</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
-            <div class="member">
-              <div class="member-img">
-                <img src="assets/img/team/team-1.jpg" class="img-fluid" alt="pariest" style="height: 357px;width: 357px;">
-                <div class="social">
-                  <a href=""><i class="fab fa-twitter"></i></a>
-                  <a href=""><i class="fab fa-facebook"></i></a>
-                  <a href=""><i class="fab fa-instagram"></i></a>
-                  <a href=""><i class="fab fa-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Rev.Fr.RajaSekaran</h4>
-
-                <p class="text-danger">2010 - 2014</p>
               </div>
             </div>
           </div>
@@ -113,11 +92,28 @@
               <div class="member-info">
                 <h4>Rev.Fr.Joseph Lourdhu Raja</h4>
 
-                <p class="text-danger">2014 - 2015</p>
+                <p class="text-danger">2010 - 2010</p>
               </div>
             </div>
           </div>
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+            <div class="member">
+              <div class="member-img">
+                <img src="assets/img/team/team-1.jpg" class="img-fluid" alt="pariest" style="height: 357px;width: 357px;">
+                <div class="social">
+                  <a href=""><i class="fab fa-twitter"></i></a>
+                  <a href=""><i class="fab fa-facebook"></i></a>
+                  <a href=""><i class="fab fa-instagram"></i></a>
+                  <a href=""><i class="fab fa-linkedin"></i></a>
+                </div>
+              </div>
+              <div class="member-info">
+                <h4>Rev.Fr.RajaSekaran</h4>
 
+                <p class="text-danger">2008 - 2009</p>
+              </div>
+            </div>
+          </div>
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
             <div class="member">
               <div class="member-img">
@@ -132,7 +128,7 @@
               <div class="member-info">
                 <h4>Rev.Fr.Arul Anand</h4>
 
-                <p class="text-danger">2005 - 2010</p>
+                <p class="text-danger">2003 - 2008</p>
               </div>
             </div>
           </div>
@@ -151,7 +147,7 @@
               <div class="member-info">
                 <h4>Rev.Fr.Sebastian</h4>
 
-                <p class="text-danger">2000 - 2005</p>
+                <p class="text-danger">1998 - 2003</p>
               </div>
             </div>
           </div>

@@ -5,7 +5,7 @@ July 4th, being the first Friday of the month, Holy Mass will be celebrated at 7
   <div class="container">
     <a class="navbar-brand" href="#">
       <img src="{{ asset('images/idai1.png') }}" alt="" height="40" class="d-inline-block align-top">
-      <span class="ml-2 font-weight-bold text-primary">SACRED HEART SHRINE</span>
+      <span class="ml-2 font-weight-bold text-primary"><a href="{{ url('/') }}">SACRED HEART SHRINE</a></span>
     </a>
     <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
@@ -18,12 +18,12 @@ July 4th, being the first Friday of the month, Holy Mass will be celebrated at 7
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link px-3 text-dark" href="#">
+          <a class="nav-link px-3 text-dark" href="{{ url('/about') }}">
             <i class="fas fa-info-circle mr-1"></i>About
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link px-3 text-dark" href="#">
+          <a class="nav-link px-3 text-dark" href="{{ url('/gallery') }}">
             <i class="fas fa-images mr-1"></i>Gallery
           </a>
         </li>
@@ -42,7 +42,7 @@ July 4th, being the first Friday of the month, Holy Mass will be celebrated at 7
             <i class="fas fa-church mr-1"></i>Mass
           </a>
           <div class="dropdown-menu border-0 shadow-sm" aria-labelledby="massDropdown">
-            <a class="dropdown-item py-2" href="">
+            <a class="dropdown-item py-2" href="{{ url('/videos') }}">
               <i class="fas fa-video mr-2"></i>Mass Videos
             </a>
             <a class="dropdown-item py-2" href="{{ url('/schedule') }}">

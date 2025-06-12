@@ -12,3 +12,6 @@ Route::get('/schedule', function () {
 
 Route::view('/priest', 'shrine.priest');
 Route::view('/contact', 'shrine.contact');
+Route::view('/videos', 'shrine.mass_videos');
+Route::view('/about', 'shrine.about');
+Route::view('/gallery', 'shrine.gallery');
