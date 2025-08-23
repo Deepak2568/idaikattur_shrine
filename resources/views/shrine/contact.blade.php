@@ -14,17 +14,19 @@
                     <div class="card shadow-sm h-100">
                         <div class="card-body">
                             <div class="d-flex align-items-start mb-4">
-                                <div class="flex-shrink-0 me-3">
-                                    <i class="fas fa-map-marker-alt fa-2x text-danger"></i>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h5 class="mb-1">Sacred Heart Shrine</h5>
-                                    <p class="mb-0 text-muted">Idaikaattur, Sivagangai-630602, Tamilnadu, India</p>
+                                <div class="d-flex align-items-center">
+                                    <span class="flex-shrink-0" style="margin-right: 16px;">
+                                        <i class="fas fa-map-marker-alt fa-2x text-danger"></i>
+                                    </span>
+                                    <div class="flex-grow-1">
+                                        <h5 class="mb-1">Sacred Heart Shrine</h5>
+                                        <p class="mb-0 text-muted">Idaikattur, Sivagangai-630602, Tamilnadu, India</p>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="d-flex align-items-start mb-4">
-                                <div class="flex-shrink-0 me-3">
+                                <div class="flex-shrink-0" style="margin-right: 16px;">
                                     <i class="fas fa-envelope fa-2x text-danger"></i>
                                 </div>
                                 <div class="flex-grow-1">
@@ -38,7 +40,7 @@
                             </div>
 
                             <div class="d-flex align-items-start">
-                                <div class="flex-shrink-0 me-3">
+                                <div class="flex-shrink-0" style="margin-right: 16px;">
                                     <i class="fas fa-phone-alt fa-2x text-danger"></i>
                                 </div>
                                 <div class="flex-grow-1">
@@ -58,26 +60,26 @@
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <div class="form-floating">
+                                            <label for="name">Full name</label>
                                             <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
-                                            <label for="name">Your Name</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating">
+                                            <label for="email">Email address</label>
                                             <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
-                                            <label for="email">Your Email</label>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-12 mt-2">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>
                                             <label for="subject">Subject</label>
+                                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>                                            
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-12 mt-2">
                                         <div class="form-floating">
-                                            <textarea class="form-control" id="message" name="message" style="height: 150px" placeholder="Message" required></textarea>
                                             <label for="message">Message</label>
+                                            <textarea class="form-control" id="message" name="message" style="height: 150px" placeholder="Message" required></textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -86,9 +88,9 @@
                                         </div>
                                         <div class="alert alert-danger d-none" id="error-message"></div>
                                     </div>
-                                    <div class="col-12 text-center">
+                                    <div class="col-12 text-center mt-2">
                                         <button type="submit" class="btn btn-danger btn-lg px-5">
-                                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                                            <i class="fas fa-paper-plane me-2"></i> Send Message
                                         </button>
                                     </div>
                                 </div>

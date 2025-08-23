@@ -1,6 +1,5 @@
-<marquee behavior="scroll" direction="left" style="background-color: #000; color: #fff; padding: 10px;">
-ஜூலை மாதம் 4 ஆம் தேதி மாதத்தின் முதல் வெள்ளிகிழமை. அன்று காலை 7 மணிக்கும், 11 மணிக்கும், மாலை 6 மணிக்கும் திருப்பலி நடைபெரும்.
-July 4th, being the first Friday of the month, Holy Mass will be celebrated at 7:00 AM, 11:00 AM, and 6:00 PM.</marquee>
+<marquee behavior="scroll" direction="left" style="background-color: #000; color: #fff; padding: 10px;font-size: 20px;">
+ஆலயத்தில் தினசரி திருப்பலி காலை 11 மணிக்கு நடைபெறும்.செப்டம்பர் மாதம் 3 ஆம் தேதி மாதத்தின் முதல் வெள்ளிகிழமை. அன்று காலை 7 மணிக்கும், 11 மணிக்கும், மாலை 6 மணிக்கும் திருப்பலி நடைபெறும்.Daily mass will be conducted at 11 am in our shrine.Septemeber 3rd, being the first Friday of the month, Holy Mass will be celebrated at 7:00 AM, 11:00 AM, and 6:00 PM.</marquee>
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
   <div class="container">
     <a class="navbar-brand" href="#">

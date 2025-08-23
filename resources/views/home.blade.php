@@ -11,7 +11,7 @@
       </div>
       <div class="col-md-6">
         <h3 class="display-6 text-uppercase font-weight-bold mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Sacred Heart Shrine Festival</h3>
-        <p class="lead mb-4" style="font-size:2.5rem; font-weight: 300; letter-spacing: 2px;">04-07-2025</p>
+        <p class="lead mb-4" style="font-size:2.5rem; font-weight: 300; letter-spacing: 2px;">03-07-2026</p>
         <div class="d-flex justify-content-center mb-4">
             <div class="mx-3 text-center">
                 <div class="h2 bg-white text-primary rounded-circle p-3 shadow-sm" style="width: 80px; height: 80px; line-height: 50px;" id="days">0</div>
@@ -30,10 +30,10 @@
                 <small class="text-white font-weight-bold mt-2 d-block" style="font-size: 0.9rem; letter-spacing: 1px;">Seconds</small>
             </div>
         </div>
-        <p class="text-white font-weight-bold">"எமது இதய அன்பில் நிலைத்திருந்தால் எல்லா நன்மைகளும் பெறுவீர்கள்"</p>
-        <p class="text-white font-weight-bold">இயேசுவின் திரு இருதய ஆண்டவர் திருத்தலம் - IDAIKATTUR</p>
-        <p class="text-white font-weight-bold">இடைக்காட்டூர், சிவகங்கை.</p>
-        <p class="text-white font-weight-bold">SACRED HEART OF JESUS SHRINE - IDAIKATTUR</p>
+        <p class="text-white font-weight-bold" style="font-size: 20px;">எமது இதய அன்பில் நிலைத்திருந்தால் எல்லா நன்மைகளும் பெறுவீர்கள்"</p>
+        <p class="text-white font-weight-bold" style="font-size: 20px;">இயேசுவின் திரு இருதய ஆண்டவர் திருத்தலம் - IDAIKATTUR</p>
+        <p class="text-white font-weight-bold" style="font-size: 20px;">இடைக்காட்டூர், சிவகங்கை.</p>
+        <p class="text-white font-weight-bold" style="font-size: 20px;">SACRED HEART OF JESUS SHRINE - IDAIKATTUR</p>
       </div>
       <div class="col-md-3">
         <!-- <img src="{{ asset('images/jvk.jpg') }}" alt="Right Image" class="img-fluid"> -->
@@ -76,7 +76,7 @@
 <script>
 $(function() {
     // Set the date we're counting down to (YYYY-MM-DD format)
-    var countDownDate = new Date("2025-07-04T00:00:00").getTime();
+    var countDownDate = new Date("2026-07-03T00:00:00").getTime();
 
     function updateCountdown() {
         var now = new Date().getTime();
