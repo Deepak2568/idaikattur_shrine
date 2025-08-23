@@ -39,7 +39,7 @@
           <a href="#" class="text-light mr-3"><i class="fab fa-facebook-f fa-lg"></i></a>
           <a href="#" class="text-light mr-3"><i class="fab fa-twitter fa-lg"></i></a>
           <a href="#" class="text-light mr-3"><i class="fab fa-instagram fa-lg"></i></a>
-          <a href="#" class="text-light"><i class="fab fa-youtube fa-lg"></i></a>
+          <a href="https://www.youtube.com/channel/UCkj4XX11IQ-3uuqeOcFPZGA" class="text-light" target="_blank"><i class="fab fa-youtube fa-lg"></i></a>
         </div>
         <div class="mt-4">
           <h5 class="mb-3">Newsletter</h5>
