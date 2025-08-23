@@ -56,30 +56,31 @@
                 <div class="col-lg-6">
                     <div class="card shadow-sm h-100">
                         <div class="card-body">
-                            <form action="forms/contact.php" method="post" role="form">
+                            <form action="{{ route('contact') }}" method="post" role="form">
+                                @csrf
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <div class="form-floating">
                                             <label for="name">Full name</label>
-                                            <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+                                            <input type="text" class="form-control" id="name" name="user_namez" placeholder="Your Name">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating">
                                             <label for="email">Email address</label>
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Your Email">
                                         </div>
                                     </div>
                                     <div class="col-12 mt-2">
                                         <div class="form-floating">
                                             <label for="subject">Subject</label>
-                                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>                                            
+                                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject">                                            
                                         </div>
                                     </div>
                                     <div class="col-12 mt-2">
                                         <div class="form-floating">
                                             <label for="message">Message</label>
-                                            <textarea class="form-control" id="message" name="message" style="height: 150px" placeholder="Message" required></textarea>
+                                            <textarea class="form-control" id="message" name="message" style="height: 150px" placeholder="Message"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
