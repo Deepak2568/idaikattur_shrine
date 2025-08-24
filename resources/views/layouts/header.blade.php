@@ -4,57 +4,57 @@
   <div class="container">
     <a class="navbar-brand" href="#">
       <img src="{{ asset('images/idai1.png') }}" alt="" height="40" class="d-inline-block align-top">
-      <span class="ml-2 font-weight-bold text-primary"><a href="{{ url('/') }}">SACRED HEART SHRINE</a></span>
+              <span class="ms-2 fw-bold text-primary"><a href="{{ url('/') }}">SACRED HEART SHRINE</a></span>
     </a>
-    <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbarNav">
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ms-auto">
         <li class="nav-item">
           <a class="nav-link px-3 text-dark" href="{{ url('/') }}">
-            <i class="fas fa-home mr-1"></i>Home
+            <i class="fas fa-home me-1"></i>Home
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link px-3 text-dark" href="{{ url('/about') }}">
-            <i class="fas fa-info-circle mr-1"></i>About
+            <i class="fas fa-info-circle me-1"></i>About
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link px-3 text-dark" href="{{ url('/gallery') }}">
-            <i class="fas fa-images mr-1"></i>Gallery
+            <i class="fas fa-images me-1"></i>Gallery
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link px-3 text-dark" href="{{ url('/priest') }}">
-            <i class="fas fa-user-tie mr-1"></i>Priests
+            <i class="fas fa-user-tie me-1"></i>Priests
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link px-3 text-dark" href="https://www.youtube.com/channel/UCkj4XX11IQ-3uuqeOcFPZGA" target="_blank">
-            <i class="fab fa-youtube mr-1 text-danger"></i>YouTube
+            <i class="fab fa-youtube me-1 text-danger"></i>YouTube
           </a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle px-3 text-dark" href="#" id="massDropdown" role="button" data-toggle="dropdown">
-            <i class="fas fa-church mr-1"></i>Mass
+          <a class="nav-link dropdown-toggle px-3 text-dark" href="#" id="massDropdown" role="button" data-bs-toggle="dropdown">
+            <i class="fas fa-church me-1"></i>Mass
           </a>
           <div class="dropdown-menu border-0 shadow-sm" aria-labelledby="massDropdown">
             <a class="dropdown-item py-2" href="{{ url('/videos') }}">
-              <i class="fas fa-video mr-2"></i>Mass Videos
+              <i class="fas fa-video me-2"></i>Mass Videos
             </a>
             <a class="dropdown-item py-2" href="{{ url('/schedule') }}">
-              <i class="fas fa-calendar-alt mr-2"></i>Mass Schedule
+              <i class="fas fa-calendar-alt me-2"></i>Mass Schedule
             </a>
             <a class="dropdown-item py-2" href="">
-              <i class="fas fa-comments mr-2"></i>Mass Comments
+              <i class="fas fa-comments me-2"></i>Mass Comments
             </a>
           </div>
         </li>
         <li class="nav-item">
           <a class="nav-link px-3 text-dark" href="{{ url('/contact') }}">
-            <i class="fas fa-envelope mr-1"></i>Contact Us
+            <i class="fas fa-envelope me-1"></i>Contact Us
           </a>
         </li>
       </ul>
