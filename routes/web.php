@@ -16,6 +16,6 @@ Route::view('/contact', 'shrine.contact');
 Route::view('/videos', 'shrine.mass_videos');
 Route::view('/about', 'shrine.about');
 Route::view('/gallery', 'shrine.gallery');
-
+Route::view('/matrimony', 'shrine.matrimony');
 // crud
 Route::post('/contact',[ContactController::class,'store'])->name('contact');

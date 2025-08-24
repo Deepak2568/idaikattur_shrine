@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- Hero Section -->
-<div class="jumbotron jumbotron-fluid text-center" style="background: url('{{ asset('images/shs.png') }}') no-repeat center center; background-size: cover; color: white; position: relative;">
+<div class="bg-primary text-center py-5" style="background: url('{{ asset('images/shs.png') }}') no-repeat center center; background-size: cover; color: white; position: relative;">
   <div class="overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(29, 233, 182, 0.8) 0%, rgba(183, 33, 255, 0.8) 100%);"></div>
   <div class="container" style="position: relative; z-index: 1;">
     <div class="row align-items-center">
@@ -10,30 +10,30 @@
         <!-- <img src="{{ asset('images/shs.png') }}" alt="Left Image" class="img-fluid"> -->
       </div>
       <div class="col-md-6">
-        <h3 class="display-6 text-uppercase font-weight-bold mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Sacred Heart Shrine Festival</h3>
-        <p class="lead mb-4 font-weight-bold" style="font-size:2.5rem; letter-spacing: 2px;">03-07-2026</p>
+        <h3 class="display-6 text-uppercase fw-bold mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Sacred Heart Shrine Festival</h3>
+        <p class="lead mb-4 fw-bold" style="font-size:2.5rem; letter-spacing: 2px;">03-07-2026</p>
         <div class="d-flex justify-content-center mb-4">
             <div class="mx-3 text-center">
                 <div class="h2 bg-white text-primary rounded-circle p-3 shadow-sm" style="width: 80px; height: 80px; line-height: 50px;" id="days">0</div>
-                <small class="text-white font-weight-bold mt-2 d-block" style="font-size: 0.9rem; letter-spacing: 1px;">Days</small>
+                <small class="text-white fw-bold mt-2 d-block" style="font-size: 0.9rem; letter-spacing: 1px;">Days</small>
             </div>
             <div class="mx-3 text-center">
                 <div class="h2 bg-white text-primary rounded-circle p-3 shadow-sm" style="width: 80px; height: 80px; line-height: 50px;" id="hours">0</div>
-                <small class="text-white font-weight-bold mt-2 d-block" style="font-size: 0.9rem; letter-spacing: 1px;">Hours</small>
+                <small class="text-white fw-bold mt-2 d-block" style="font-size: 0.9rem; letter-spacing: 1px;">Hours</small>
             </div>
             <div class="mx-3 text-center">
                 <div class="h2 bg-white text-primary rounded-circle p-3 shadow-sm" style="width: 80px; height: 80px; line-height: 50px;" id="minutes">0</div>
-                <small class="text-white font-weight-bold mt-2 d-block" style="font-size: 0.9rem; letter-spacing: 1px;">Minutes</small>
+                <small class="text-white fw-bold mt-2 d-block" style="font-size: 0.9rem; letter-spacing: 1px;">Minutes</small>
             </div>
             <div class="mx-3 text-center">
                 <div class="h2 bg-white text-primary rounded-circle p-3 shadow-sm" style="width: 80px; height: 80px; line-height: 50px;" id="seconds">0</div>
-                <small class="text-white font-weight-bold mt-2 d-block" style="font-size: 0.9rem; letter-spacing: 1px;">Seconds</small>
+                <small class="text-white fw-bold mt-2 d-block" style="font-size: 0.9rem; letter-spacing: 1px;">Seconds</small>
             </div>
         </div>
-        <p class="text-white font-weight-bold" style="font-size: 16px;">எமது இதய அன்பில் நிலைத்திருந்தால் எல்லா நன்மைகளும் பெறுவீர்கள்"</p>
-        <p class="text-white font-weight-bold" style="font-size: 16px;">இயேசுவின் திரு இருதய ஆண்டவர் திருத்தலம் - IDAIKATTUR</p>
-        <p class="text-white font-weight-bold" style="font-size: 16px;">இடைக்காட்டூர், சிவகங்கை.</p>
-        <p class="text-white font-weight-bold" style="font-size: 16px;">SACRED HEART OF JESUS SHRINE - IDAIKATTUR</p>
+        <p class="text-white fw-bold" style="font-size: 16px;">எமது இதய அன்பில் நிலைத்திருந்தால் எல்லா நன்மைகளும் பெறுவீர்கள்"</p>
+        <p class="text-white fw-bold" style="font-size: 16px;">இயேசுவின் திரு இருதய ஆண்டவர் திருத்தலம் - IDAIKATTUR</p>
+        <p class="text-white fw-bold" style="font-size: 16px;">இடைக்காட்டூர், சிவகங்கை.</p>
+        <p class="text-white fw-bold" style="font-size: 16px;">SACRED HEART OF JESUS SHRINE - IDAIKATTUR</p>
       </div>
       <div class="col-md-3">
         <!-- <img src="{{ asset('images/jvk.jpg') }}" alt="Right Image" class="img-fluid"> -->
@@ -72,9 +72,8 @@
 </div>
 @endsection
 @section('scripts')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(function() {
+document.addEventListener('DOMContentLoaded', function() {
     // Set the date we're counting down to (YYYY-MM-DD format)
     var countDownDate = new Date("2026-07-03T00:00:00").getTime();
 
@@ -83,10 +82,10 @@ $(function() {
         var distance = countDownDate - now;
 
         if (distance < 0) {
-            $('#days').text('0');
-            $('#hours').text('0');
-            $('#minutes').text('0');
-            $('#seconds').text('0');
+            document.getElementById('days').textContent = '0';
+            document.getElementById('hours').textContent = '0';
+            document.getElementById('minutes').textContent = '0';
+            document.getElementById('seconds').textContent = '0';
             return;
         }
 
@@ -95,10 +94,10 @@ $(function() {
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        $('#days').text(days);
-        $('#hours').text(hours);
-        $('#minutes').text(minutes);
-        $('#seconds').text(seconds);
+        document.getElementById('days').textContent = days;
+        document.getElementById('hours').textContent = hours;
+        document.getElementById('minutes').textContent = minutes;
+        document.getElementById('seconds').textContent = seconds;
     }
 
     updateCountdown(); // Initial call

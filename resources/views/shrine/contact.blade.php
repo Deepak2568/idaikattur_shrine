@@ -68,8 +68,8 @@
                                         <div class="alert alert-danger d-none" id="error-message"></div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <label for="name">Full name</label>
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Full name</label>
                                             <input type="text" class="form-control" id="name" name="user_name" placeholder="Your Name" value='{{old("user_name")}}'>
                                             @error('user_name')
                                                 <span class='text-danger'>{{$message}}</span>
@@ -77,33 +77,33 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <label for="email">Email address</label>
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email address</label>
                                             <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" value='{{old("email")}}'>
                                             @error('email')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-12 mt-2">
-                                        <div class="form-floating">
-                                            <label for="subject">Subject</label>
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label for="subject" class="form-label">Subject</label>
                                             <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" value='{{old("subject")}}'>   
                                             @error('subject')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror                                         
                                         </div>
                                     </div>
-                                    <div class="col-12 mt-2">
-                                        <div class="form-floating">
-                                            <label for="message">Message</label>
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label for="message" class="form-label">Message</label>
                                             <textarea class="form-control" id="message" name="message" style="height: 150px" placeholder="Message">{{old("message")}}</textarea>
                                             @error('message')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-12 text-center mt-2">
+                                    <div class="col-12 text-center">
                                         <button type="submit" class="btn btn-danger btn-lg px-5">
                                             <i class="fas fa-paper-plane me-2"></i> Send Message
                                         </button>

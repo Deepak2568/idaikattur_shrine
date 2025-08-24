@@ -11,11 +11,11 @@
           </li>
           <li class="mb-2">
             <i class="fas fa-phone me-2"></i>
-            <a href="tel:+919159698893" class="text-light">+91 91596 98893</a>
+            <a href="tel:+919159698893" class="text-light text-decoration-none">+91 91596 98893</a>
           </li>
           <li class="mb-2">
             <i class="fas fa-envelope me-2"></i>
-            <a href="mailto:sacredheartblessing@gmail.com" class="text-light">sacredheartblessing@gmail.com</a>
+            <a href="mailto:sacredheartblessing@gmail.com" class="text-light text-decoration-none">sacredheartblessing@gmail.com</a>
           </li>
         </ul>
       </div>
@@ -24,11 +24,11 @@
       <div class="col-md-4 mb-4">
         <h5 class="mb-3">Quick Links</h5>
         <ul class="list-unstyled">
-          <li class="mb-2"><a href="#" class="text-light">Home</a></li>
-          <li class="mb-2"><a href="#" class="text-light">About Us</a></li>
-          <li class="mb-2"><a href="#" class="text-light">Mass Schedule</a></li>
-          <li class="mb-2"><a href="#" class="text-light">Gallery</a></li>
-          <li class="mb-2"><a href="#" class="text-light">Contact</a></li>
+          <li class="mb-2"><a href="#" class="text-light text-decoration-none">Home</a></li>
+          <li class="mb-2"><a href="#" class="text-light text-decoration-none">About Us</a></li>
+          <li class="mb-2"><a href="#" class="text-light text-decoration-none">Mass Schedule</a></li>
+          <li class="mb-2"><a href="#" class="text-light text-decoration-none">Gallery</a></li>
+          <li class="mb-2"><a href="#" class="text-light text-decoration-none">Contact</a></li>
         </ul>
       </div>
 
@@ -36,10 +36,10 @@
       <div class="col-md-4 mb-4">
         <h5 class="mb-3">Follow Us</h5>
         <div class="social-links">
-          <a href="#" class="text-light me-3"><i class="fab fa-facebook-f fa-lg"></i></a>
-          <a href="#" class="text-light me-3"><i class="fab fa-twitter fa-lg"></i></a>
-          <a href="#" class="text-light me-3"><i class="fab fa-instagram fa-lg"></i></a>
-          <a href="https://www.youtube.com/channel/UCkj4XX11IQ-3uuqeOcFPZGA" class="text-light" target="_blank"><i class="fab fa-youtube fa-lg"></i></a>
+          <a href="#" class="text-light me-3 text-decoration-none"><i class="fab fa-facebook-f fa-lg"></i></a>
+          <a href="#" class="text-light me-3 text-decoration-none"><i class="fab fa-twitter fa-lg"></i></a>
+          <a href="#" class="text-light me-3 text-decoration-none"><i class="fab fa-instagram fa-lg"></i></a>
+          <a href="https://www.youtube.com/channel/UCkj4XX11IQ-3uuqeOcFPZGA" class="text-light text-decoration-none" target="_blank"><i class="fab fa-youtube fa-lg"></i></a>
         </div>
         <div class="mt-4">
           <h5 class="mb-3">Newsletter</h5>

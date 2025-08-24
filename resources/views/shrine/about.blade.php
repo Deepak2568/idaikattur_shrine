@@ -105,6 +105,8 @@
       // Counter animation function
       function animateCounter(elementId, target, duration = 2000) {
         const element = document.getElementById(elementId);
+        if (!element) return;
+        
         const start = 0;
         const increment = target / (duration / 16);
         let current = start;
@@ -121,18 +123,23 @@
       }
 
       // Start counters when section is in view
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            animateCounter('yearsCounter', 135);
-            animateCounter('visitorsCounter', 200000);
-            animateCounter('massCounter', 50);
-            animateCounter('workersCounter', 10);
-            observer.disconnect();
-          }
+      document.addEventListener('DOMContentLoaded', function() {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              animateCounter('yearsCounter', 135);
+              animateCounter('visitorsCounter', 200000);
+              animateCounter('massCounter', 50);
+              animateCounter('workersCounter', 10);
+              observer.disconnect();
+            }
+          });
         });
-      });
 
-      observer.observe(document.querySelector('.py-5'));
+        const targetSection = document.querySelector('.py-5');
+        if (targetSection) {
+          observer.observe(targetSection);
+        }
+      });
     </script>
 @endsection
