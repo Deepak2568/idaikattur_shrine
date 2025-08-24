@@ -59,35 +59,49 @@
                             <form action="{{ route('contact') }}" method="post" role="form">
                                 @csrf
                                 <div class="row g-3">
+                                <div class="col-12">
+                                        @if(session('success'))
+                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                {{ session('success') }}
+                                            </div>
+                                        @endif
+                                        <div class="alert alert-danger d-none" id="error-message"></div>
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-floating">
                                             <label for="name">Full name</label>
-                                            <input type="text" class="form-control" id="name" name="user_namez" placeholder="Your Name">
+                                            <input type="text" class="form-control" id="name" name="user_name" placeholder="Your Name" value='{{old("user_name")}}'>
+                                            @error('user_name')
+                                                <span class='text-danger'>{{$message}}</span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating">
                                             <label for="email">Email address</label>
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="Your Email">
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" value='{{old("email")}}'>
+                                            @error('email')
+                                                <span class='text-danger'>{{$message}}</span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-12 mt-2">
                                         <div class="form-floating">
                                             <label for="subject">Subject</label>
-                                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject">                                            
+                                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" value='{{old("subject")}}'>   
+                                            @error('subject')
+                                                <span class='text-danger'>{{$message}}</span>
+                                            @enderror                                         
                                         </div>
                                     </div>
                                     <div class="col-12 mt-2">
                                         <div class="form-floating">
                                             <label for="message">Message</label>
-                                            <textarea class="form-control" id="message" name="message" style="height: 150px" placeholder="Message"></textarea>
+                                            <textarea class="form-control" id="message" name="message" style="height: 150px" placeholder="Message">{{old("message")}}</textarea>
+                                            @error('message')
+                                                <span class='text-danger'>{{$message}}</span>
+                                            @enderror
                                         </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="alert alert-success d-none" id="success-message">
-                                            Your message has been sent. Thank you!
-                                        </div>
-                                        <div class="alert alert-danger d-none" id="error-message"></div>
                                     </div>
                                     <div class="col-12 text-center mt-2">
                                         <button type="submit" class="btn btn-danger btn-lg px-5">
