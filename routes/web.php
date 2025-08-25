@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\RegisterController;
 
 Route::get('/', function () {
     return view('home');
@@ -19,3 +20,4 @@ Route::view('/gallery', 'shrine.gallery');
 Route::view('/matrimony', 'shrine.matrimony');
 // crud
 Route::post('/contact',[ContactController::class,'store'])->name('contact');
+Route::post('/register',[RegisterController::class,'register'])->name('register');

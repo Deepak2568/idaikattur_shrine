@@ -278,30 +278,34 @@
         </div>
         <div class="modal-body">
           <form id="registerForm">
+            @csrf
             <div class="row g-3">
               <div class="col-md-6">
                 <label for="firstName" class="form-label fw-bold">First Name *</label>
-                <input type="text" class="form-control" id="firstName" placeholder="Enter first name" required>
+                <input type="text" name="fname" class="form-control" id="firstName" placeholder="Enter first name">
+                <span class="text-danger error-text fname_error"></span>
               </div>
               <div class="col-md-6">
                 <label for="lastName" class="form-label fw-bold">Last Name *</label>
-                <input type="text" class="form-control" id="lastName" placeholder="Enter last name" required>
+                <input type="text" name="lname" class="form-control" id="lastName" placeholder="Enter last name">
+                <span class="text-danger error-text lname_error"></span>
               </div>
               <div class="col-md-6">
                 <label for="email" class="form-label fw-bold">Email Address *</label>
-                <input type="email" class="form-control" id="email" placeholder="Enter email address" required>
+                <input type="email" name="email" class="form-control" id="email" placeholder="Enter email address">
+                <span class="text-danger error-text email_error"></span>
               </div>
               <div class="col-md-6">
                 <label for="phone" class="form-label fw-bold">Phone Number *</label>
-                <input type="tel" class="form-control" id="phone" placeholder="Enter phone number" required>
+                <input type="tel" name="phone" class="form-control" id="phone" placeholder="Enter phone number">
               </div>
               <div class="col-md-6">
                 <label for="dateOfBirth" class="form-label fw-bold">Date of Birth *</label>
-                <input type="date" class="form-control" id="dateOfBirth" required>
+                <input type="date" name="dob" class="form-control" id="dateOfBirth">
               </div>
               <div class="col-md-6">
                 <label for="gender" class="form-label fw-bold">Gender *</label>
-                <select class="form-select" id="gender" required>
+                <select class="form-select" name="gender" id="gender">
                   <option value="">Select gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
@@ -309,29 +313,55 @@
               </div>
               <div class="col-md-6">
                 <label for="religion" class="form-label fw-bold">Religion *</label>
-                <select class="form-select" id="religion" required>
+                <select class="form-select" name="religion" id="religion">
                   <option value="">Select religion</option>
-                  <option value="catholic">Catholic</option>
+                  <option value="catholic">Roman Catholic</option>
                   <option value="protestant">Protestant</option>
                   <option value="orthodox">Orthodox</option>
                   <option value="other-christian">Other Christian</option>
                 </select>
               </div>
               <div class="col-md-6">
-                <label for="location" class="form-label fw-bold">Location *</label>
-                <input type="text" class="form-control" id="location" placeholder="City, State" required>
+                <label for="subcaste" class="form-label fw-bold">Subcaste *</label>
+                <select class="form-select" name="subcaste" id="subcaste">
+                  <option value="">Select subcaste</option>
+                  <option value="vellalar">Vellalar</option>
+                  <option value="udayar">Udayar</option>
+                  <option value="nadar">Nadar</option>
+                  <option value="pillai">Pillai</option>
+                  <option value="mukkulathor">Mukkulathor (Thevar, Maravar, Agamudayar)</option>
+                  <option value="paravar">Paravar</option>
+                  <option value="chettiar">Chettiar</option>
+                  <option value="vanniyar">Vanniyar</option>
+                  <option value="adhidravidar">Adhidravidar</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="state" class="form-label fw-bold">State *</label>
+                <select class="form-select" name="state" id="state">
+                  <option value="">Select State</option>
+                  <option value="tamil-nadu" selected>Tamil Nadu</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label for="city" class="form-label fw-bold">City/District *</label>
+                <select class="form-select" name="city" id="city">
+                  <option value="">Select City/District</option>
+                </select>
               </div>
               <div class="col-12">
                 <label for="password" class="form-label fw-bold">Password *</label>
-                <input type="password" class="form-control" id="password" placeholder="Create a strong password" required>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Create a strong password">
               </div>
               <div class="col-12">
                 <label for="confirmPassword" class="form-label fw-bold">Confirm Password *</label>
-                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password" required>
+                <input type="password" name="password_confirmation" class="form-control" id="confirmPassword" placeholder="Confirm your password">
               </div>
               <div class="col-12">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="termsAccepted" required>
+                  <input class="form-check-input" type="checkbox" name="termsAccepted" id="termsAccepted">
                   <label class="form-check-label" for="termsAccepted">
                     I agree to the <a href="#" class="text-danger">Terms & Conditions</a> and <a href="#" class="text-danger">Privacy Policy</a>
                   </label>
@@ -345,7 +375,9 @@
                 </div>
               </div>
             </div>
+            <div id="responseMsg"></div>
           </form>
+
           <hr class="my-4">
           <div class="text-center">
             <p class="mb-2">Already have an account?</p>
@@ -359,64 +391,9 @@
   </div>
 
   @section('scripts')
+  <script src="{{ asset('shrine.js') }}"></script>
   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Login form submission
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
-      
-      // Add your login logic here
-      console.log('Login attempt:', { email, password });
-      
-      // Show success message (replace with actual login logic)
-      alert('Login functionality will be implemented here!');
-    });
-
-    // Register form submission
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const formData = {
-        firstName: document.getElementById('firstName').value,
-        lastName: document.getElementById('lastName').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        dateOfBirth: document.getElementById('dateOfBirth').value,
-        gender: document.getElementById('gender').value,
-        religion: document.getElementById('religion').value,
-        location: document.getElementById('location').value,
-        password: document.getElementById('password').value,
-        confirmPassword: document.getElementById('confirmPassword').value
-      };
-      
-      // Validate passwords match
-      if (formData.password !== formData.confirmPassword) {
-        alert('Passwords do not match!');
-        return;
-      }
-      
-      // Add your registration logic here
-      console.log('Registration attempt:', formData);
-      
-      // Show success message (replace with actual registration logic)
-      alert('Registration functionality will be implemented here!');
-    });
-
-    // Password confirmation validation
-    document.getElementById('confirmPassword').addEventListener('input', function() {
-      const password = document.getElementById('password').value;
-      const confirmPassword = this.value;
-      
-      if (password !== confirmPassword) {
-        this.setCustomValidity('Passwords do not match');
-      } else {
-        this.setCustomValidity('');
-      }
-    });
-  });
+    var registerUrl = "{{ route('register') }}";
   </script>
   @endsection
   
