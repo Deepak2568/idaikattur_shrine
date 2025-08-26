@@ -298,10 +298,12 @@
               <div class="col-md-6">
                 <label for="phone" class="form-label fw-bold">Phone Number *</label>
                 <input type="tel" name="phone" class="form-control" id="phone" placeholder="Enter phone number">
+                <span class="text-danger error-text phone_error"></span>
               </div>
               <div class="col-md-6">
                 <label for="dateOfBirth" class="form-label fw-bold">Date of Birth *</label>
                 <input type="date" name="dob" class="form-control" id="dateOfBirth">
+                <span class="text-danger error-text dob_error"></span>
               </div>
               <div class="col-md-6">
                 <label for="gender" class="form-label fw-bold">Gender *</label>
@@ -310,6 +312,7 @@
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                 </select>
+                <span class="text-danger error-text gender_error"></span>
               </div>
               <div class="col-md-6">
                 <label for="religion" class="form-label fw-bold">Religion *</label>
@@ -320,6 +323,7 @@
                   <option value="orthodox">Orthodox</option>
                   <option value="other-christian">Other Christian</option>
                 </select>
+                <span class="text-danger error-text religion_error"></span>
               </div>
               <div class="col-md-6">
                 <label for="subcaste" class="form-label fw-bold">Subcaste *</label>
@@ -336,6 +340,7 @@
                   <option value="adhidravidar">Adhidravidar</option>
                   <option value="other">Other</option>
                 </select>
+                <span class="text-danger error-text subcaste_error"></span>
               </div>
               <div class="col-md-6">
                 <label for="state" class="form-label fw-bold">State *</label>
@@ -343,6 +348,7 @@
                   <option value="">Select State</option>
                   <option value="tamil-nadu" selected>Tamil Nadu</option>
                 </select>
+                <span class="text-danger error-text state_error"></span>
               </div>
 
               <div class="col-md-6">
@@ -350,26 +356,30 @@
                 <select class="form-select" name="city" id="city">
                   <option value="">Select City/District</option>
                 </select>
+                <span class="text-danger error-text city_error"></span>
               </div>
               <div class="col-12">
                 <label for="password" class="form-label fw-bold">Password *</label>
                 <input type="password" name="password" class="form-control" id="password" placeholder="Create a strong password">
+                <span class="text-danger error-text password_error"></span>
               </div>
               <div class="col-12">
                 <label for="confirmPassword" class="form-label fw-bold">Confirm Password *</label>
                 <input type="password" name="password_confirmation" class="form-control" id="confirmPassword" placeholder="Confirm your password">
+                <span class="text-danger error-text password_error"></span>
               </div>
               <div class="col-12">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" name="termsAccepted" id="termsAccepted">
                   <label class="form-check-label" for="termsAccepted">
-                    I agree to the <a href="#" class="text-danger">Terms & Conditions</a> and <a href="#" class="text-danger">Privacy Policy</a>
-                  </label>
+                    I agree to the <a href="#" class="text-success">Terms & Conditions</a> and <a href="#" class="text-success">Privacy Policy</a>
+                  </label><br/>
+                  <span class="text-danger error-text termsAccepted_error"></span>
                 </div>
               </div>
               <div class="col-12">
                 <div class="d-grid">
-                  <button type="submit" class="btn btn-danger btn-lg fw-bold">
+                  <button type="submit" id="registerBtn" class="btn btn-danger btn-lg fw-bold">
                     <i class="fas fa-user-plus me-2"></i>Create Account
                   </button>
                 </div>
