@@ -320,13 +320,7 @@
                 <label for="religion" class="form-label fw-bold">Religion *</label>
                 <select class="form-select" name="religion" id="religion">
                   <option value="">Select religion</option>
-                  <option value="Hindu">Hindu</option>
-                  <option value="Muslim">Muslim</option>
                   <option value="Christian">Christian</option>
-                  <option value="Sikh">Sikh</option>
-                  <option value="Buddhist">Buddhist</option>
-                  <option value="Jain">Jain</option>
-                  <option value="Other">Other</option>
                 </select>
                 <span class="text-danger error-text religion_error"></span>
               </div>
@@ -352,13 +346,6 @@
                 <select class="form-select" name="state" id="state">
                   <option value="">Select State</option>
                   <option value="Tamil Nadu" selected>Tamil Nadu</option>
-                  <option value="Kerala">Kerala</option>
-                  <option value="Karnataka">Karnataka</option>
-                  <option value="Andhra Pradesh">Andhra Pradesh</option>
-                  <option value="Telangana">Telangana</option>
-                  <option value="Maharashtra">Maharashtra</option>
-                  <option value="Delhi">Delhi</option>
-                  <option value="Other">Other</option>
                 </select>
                 <span class="text-danger error-text state_error"></span>
               </div>

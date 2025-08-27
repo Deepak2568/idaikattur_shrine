@@ -1,7 +1,7 @@
 <marquee behavior="scroll" direction="left" style="background: linear-gradient(90deg, #dc3545 0%, #ffc107 100%); color: #fff; padding: 12px 0; font-size: 1.15rem; font-weight: 600; letter-spacing: 1px; border-radius: 0 0 16px 16px; box-shadow: 0 4px 16px rgba(220,53,69,0.15); text-shadow: 1px 1px 4px rgba(0,0,0,0.25);">
   <span style="margin-right: 32px;">
     <i class="fas fa-church" style="color: #fff; margin-right: 8px;"></i>
-    ஆலயத்தில் தினசரி திருப்பலி காலை 11 மணிக்கு நடைபெறும்.
+    அன்பிற்குரியவர்களே நமது திருத்தலத்தில் ஒவ்வொரு நாளும் காலை 11மணிக்கு திருப்பலி நடைபெறுகின்றது.
   </span>
   <span style="margin-right: 32px;">
     <i class="fas fa-calendar-day" style="color: #fff; margin-right: 8px;"></i>
