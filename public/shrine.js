@@ -10,7 +10,7 @@ $(document).ready(function () {
         let fieldName = $(this).attr("name");
         $("." + fieldName + "_error").text("");
     });
-    
+
     $("#registerForm").on("submit", function (e) {
         e.preventDefault(); // stop form from reloading page
         $(".error-text").text(""); // clear old errors
@@ -85,6 +85,25 @@ $(document).ready(function () {
         $("#city").html('<option value="">Select City/District</option>');
         $.each(tnCities, function (key, value) {
             $("#city").append('<option value="' + value.toLowerCase().replace(/\s+/g, '-') + '">' + value + '</option>');
+        });
+    });
+
+    $("#loginForm").submit(function(e){
+        e.preventDefault();
+        $("#loginBtn").prop("disabled", true).html('<span class="spinner-border spinner-border-sm"></span> Processing...');
+    
+        $.ajax({
+            url: loginUrl,
+            type: "POST",
+            data: $(this).serialize(),
+            success: function(res){
+                if(res.status){
+                    window.location.href = res.redirect;
+                } else {
+                    $("#loginError").text(res.message).show();
+                    $("#loginBtn").prop("disabled", false).text("Login");
+                }
+            }
         });
     });
 });

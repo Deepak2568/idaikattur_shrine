@@ -236,23 +236,25 @@
         </div>
         <div class="modal-body">
           <form id="loginForm">
+            @csrf
             <div class="mb-3">
               <label for="loginEmail" class="form-label fw-bold">Email Address</label>
-              <input type="email" class="form-control" id="loginEmail" placeholder="Enter your email" required>
+              <input type="email" class="form-control" name="username" id="loginEmail" placeholder="Enter your email" required>
             </div>
             <div class="mb-3">
               <label for="loginPassword" class="form-label fw-bold">Password</label>
-              <input type="password" class="form-control" id="loginPassword" placeholder="Enter your password" required>
+              <input type="password" class="form-control" name="password" id="loginPassword" placeholder="Enter your password" required>
             </div>
             <div class="mb-3 form-check">
               <input type="checkbox" class="form-check-input" id="rememberMe">
               <label class="form-check-label" for="rememberMe">Remember me</label>
             </div>
             <div class="d-grid">
-              <button type="submit" class="btn btn-danger btn-lg fw-bold">
+              <button type="submit" id="loginBtn" class="btn btn-danger btn-lg fw-bold">
                 <i class="fas fa-sign-in-alt me-2"></i>Login
               </button>
             </div>
+            <p id="loginError" style="color:red;display:none;"></p>
           </form>
           <hr class="my-4">
           <div class="text-center">
@@ -318,10 +320,13 @@
                 <label for="religion" class="form-label fw-bold">Religion *</label>
                 <select class="form-select" name="religion" id="religion">
                   <option value="">Select religion</option>
-                  <option value="catholic">Roman Catholic</option>
-                  <option value="protestant">Protestant</option>
-                  <option value="orthodox">Orthodox</option>
-                  <option value="other-christian">Other Christian</option>
+                  <option value="Hindu">Hindu</option>
+                  <option value="Muslim">Muslim</option>
+                  <option value="Christian">Christian</option>
+                  <option value="Sikh">Sikh</option>
+                  <option value="Buddhist">Buddhist</option>
+                  <option value="Jain">Jain</option>
+                  <option value="Other">Other</option>
                 </select>
                 <span class="text-danger error-text religion_error"></span>
               </div>
@@ -346,7 +351,14 @@
                 <label for="state" class="form-label fw-bold">State *</label>
                 <select class="form-select" name="state" id="state">
                   <option value="">Select State</option>
-                  <option value="tamil-nadu" selected>Tamil Nadu</option>
+                  <option value="Tamil Nadu" selected>Tamil Nadu</option>
+                  <option value="Kerala">Kerala</option>
+                  <option value="Karnataka">Karnataka</option>
+                  <option value="Andhra Pradesh">Andhra Pradesh</option>
+                  <option value="Telangana">Telangana</option>
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Delhi">Delhi</option>
+                  <option value="Other">Other</option>
                 </select>
                 <span class="text-danger error-text state_error"></span>
               </div>
@@ -404,6 +416,36 @@
   <script src="{{ asset('shrine.js') }}"></script>
   <script>
     var registerUrl = "{{ route('register') }}";
+    var loginUrl = "{{ route('login.check') }}";
+    
+    // Update login form to use the correct route
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        
+        fetch(loginUrl, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status) {
+                window.location.href = data.redirect;
+            } else {
+                document.getElementById('loginError').textContent = data.message || 'Login failed';
+                document.getElementById('loginError').style.display = 'block';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('loginError').textContent = 'An error occurred during login';
+            document.getElementById('loginError').style.display = 'block';
+        });
+    });
   </script>
   @endsection
   

@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\RegisterController;
-
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProfileController;
 Route::get('/', function () {
     return view('home');
 });
@@ -17,7 +18,24 @@ Route::view('/contact', 'shrine.contact');
 Route::view('/videos', 'shrine.mass_videos');
 Route::view('/about', 'shrine.about');
 Route::view('/gallery', 'shrine.gallery');
-Route::view('/matrimony', 'shrine.matrimony');
+Route::view('/matrimony', 'shrine.matrimony')->name('matrimony');
 // crud
 Route::post('/contact',[ContactController::class,'store'])->name('contact');
+// Register
 Route::post('/register',[RegisterController::class,'register'])->name('register');
+
+// Login
+Route::get('/matrimony', function () {
+    return view('shrine.matrimony');
+})->name('login');
+Route::post('/login-check', [LoginController::class, 'login'])->name('login.check');
+Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard')->middleware('auth:customer');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Profile routes
+Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth:customer');
+Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth:customer');
+
+// AJAX routes
+Route::get('/profile/{id}', [LoginController::class, 'viewProfile'])->name('profile.view')->middleware('auth:customer');
+Route::post('/send-interest/{id}', [LoginController::class, 'sendInterest'])->name('send.interest')->middleware('auth:customer');

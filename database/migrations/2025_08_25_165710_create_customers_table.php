@@ -27,6 +27,7 @@ return new class extends Migration
             $table->boolean('termsAccepted')->default(false);
             $table->bigInteger('active_status')->default(0);
             $table->enum('is_admin', ['yes', 'no'])->default('no');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

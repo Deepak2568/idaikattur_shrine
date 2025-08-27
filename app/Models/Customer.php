@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 
-class Customer extends Model
+class Customer extends Authenticatable
 {
-    //
     protected $fillable = [
         'fname',
         'lname',
@@ -24,10 +23,10 @@ class Customer extends Model
         'active_status',
         'is_admin',
     ];
-    
-     // Automatically hash when setting password
-     public function setPasswordAttribute($value)
-     {
-         $this->attributes['password'] = Hash::make($value);
-     }
+
+    // Automatically hash when setting password
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
+    }
 }
