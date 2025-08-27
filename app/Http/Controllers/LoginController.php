@@ -35,10 +35,21 @@ class LoginController extends Controller
         ]);
     }
 
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         $customer = Auth::guard('customer')->user();
-        return view('shrine.dashboard', compact('customer'));
+
+        // Determine opposite gender
+        $oppositeGender = $customer->gender === 'male' ? 'female' : 'male';
+
+        // Query opposite-gender customers, exclude current user; 5 per page
+        $profiles = Customer::where('gender', $oppositeGender)
+            ->where('id', '!=', $customer->id)
+            ->orderByDesc('id')
+            ->paginate(5)
+            ->withQueryString();
+
+        return view('shrine.dashboard', compact('customer', 'profiles', 'oppositeGender'));
     }
 
     public function logout(Request $request)
