@@ -357,6 +357,11 @@
                 </select>
                 <span class="text-danger error-text city_error"></span>
               </div>
+              <div class="col-md-6">
+                <label for="profile_image" class="form-label fw-bold">Profile Image</label>
+                <input type="file" class="form-control" name="profile_image" id="profile_image" accept="image/*">
+                <span class="text-danger error-text profile_image_error"></span>
+              </div>
               <div class="col-12">
                 <label for="password" class="form-label fw-bold">Password *</label>
                 <input type="password" name="password" class="form-control" id="password" placeholder="Create a strong password">

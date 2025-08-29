@@ -14,38 +14,34 @@ $(document).ready(function () {
     $("#registerForm").on("submit", function (e) {
         e.preventDefault(); // stop form from reloading page
         $(".error-text").text(""); // clear old errors
-
-        let $btn = $("#registerBtn"); // ✅ target submit button
+    
+        let $btn = $("#registerBtn");
         let originalBtnHtml = $btn.html();
-
-        // Show loader inside button
+    
+        // Show loader
         $btn.html('<span class="spinner-border spinner-border-sm me-2"></span> Processing...')
             .prop("disabled", true);
-
+    
+        let formData = new FormData(this); // ✅ Use FormData
+    
         $.ajax({
-            url: registerUrl, // from Blade
+            url: registerUrl,
             type: "POST",
-            data: $(this).serialize(),
+            data: formData,
+            processData: false,   // ✅ Required for FormData
+            contentType: false,   // ✅ Required for FormData
             success: function(response){
                 if(response.status === 200){
-                    // ✅ Show success popup
                     $("body").append(`
                         <div id="successPopup" style="
-                            position: fixed;
-                            top: 0; left: 0; right: 0; bottom: 0;
-                            background: rgba(0,0,0,0.3);
-                            z-index: 9999;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
+                            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+                            background: rgba(0,0,0,0.3); z-index: 9999;
+                            display: flex; align-items: center; justify-content: center;
                         ">
                             <div style="
-                                background: #fff;
-                                padding: 30px 40px;
-                                border-radius: 10px;
-                                box-shadow: 0 2px 16px rgba(0,0,0,0.2);
-                                text-align: center;
-                                min-width: 300px;
+                                background: #fff; padding: 30px 40px;
+                                border-radius: 10px; box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+                                text-align: center; min-width: 300px;
                             ">
                                 <span class="text-success" style="font-size:1.2rem;">${response.message}</span>
                             </div>
@@ -54,30 +50,27 @@ $(document).ready(function () {
                     setTimeout(function(){
                         $("#successPopup").fadeOut(800, function() { $(this).remove(); });
                     }, 2200);
-                    
+    
                     $("#registerForm")[0].reset();
-                    
                     setTimeout(function(){
                         $('#registerModal').modal('hide'); 
                     }, 3000); 
                 }
-
-                // ✅ Reset button back
+    
                 $btn.html(originalBtnHtml).prop("disabled", false);
             },
             error: function(xhr){
-                if(xhr.status === 422){ // validation error
+                if(xhr.status === 422){
                     let errors = xhr.responseJSON.errors;
                     $.each(errors, function(key, value){
-                        $("."+key+"_error").text(value[0]); // place error under input
+                        $("."+key+"_error").text(value[0]);
                     });
                 }
-
-                // ❌ On error also reset button
                 $btn.html(originalBtnHtml).prop("disabled", false);
             }
         });
     });
+    
 
     // Load cities JSON
     $.getJSON("/tamilnadu.json", function (data) {

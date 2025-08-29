@@ -6,7 +6,7 @@
         <div class="d-flex flex-wrap justify-content-between align-items-center">
             <div class="mb-3 mb-md-0">
                 <h4 class="mb-1 fw-semibold" style="letter-spacing:.2px;">Welcome, {{ $customer->fname }} {{ $customer->lname }}</h4>
-                <div class="text-muted small">Discover thoughtful {{ $oppositeGender === 'female' ? 'Bride' : 'Groom' }} matches curated for you</div>
+                <div class="text-muted small">Discover thoughtful {{ $oppositeGender === 'female' ? 'bride' : 'groom' }} matches curated for you</div>
             </div>
             <div class="d-flex gap-2">
                 <a href="#" class="btn btn-light border ripple">
@@ -42,13 +42,18 @@
                         $p->state === 'tamil-nadu' ? 'Tamilnadu' : $p->state,
                     ])));
                     $bio = $p->subcaste ? (ucfirst($p->subcaste).' • '.ucfirst($p->religion)) : ucfirst($p->religion);
+                    $profile_image = $p->profile_image ?? '';
                 @endphp
                 <div class="card mb-3 profile-card border-0 shadow-sm lift-glow">
                     <div class="row g-0 align-items-stretch">
                         <!-- Avatar / Photo with initials and colored ring -->
                         <div class="col-12 col-md-4 d-flex align-items-center justify-content-center p-4">
                             <div class="avatar-ring" aria-label="profile avatar">
-                                <div class="avatar-initials">{{ $initials }}</div>
+                                @if($profile_image)
+                                    <img src="{{ asset('storage/' . $profile_image) }}" alt="Profile photo" class="rounded-circle shadow-sm" style="width: 100px; height: 100px; border: 3px solid #e3e6f0;">
+                                @else
+                                    <div class="avatar-initials">{{ $initials }}</div>
+                                @endif
                             </div>
                             <div class="ms-3 d-none d-md-flex flex-column align-items-start gap-1">
                                 @if($verified)
@@ -127,9 +132,9 @@
 
                 <!-- Pagination: aligned number and controls -->
                 <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-2 mt-4">
-                    <div class="text-muted small">
+                    <!-- <div class="text-muted small">
                         Showing {{ $profiles->firstItem() }} to {{ $profiles->lastItem() }} of {{ $profiles->total() }} results
-                    </div>
+                    </div> -->
                     <div>
                         {{ $profiles->onEachSide(1)->links() }}
                     </div>

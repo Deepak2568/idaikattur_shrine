@@ -19,6 +19,7 @@ class Customer extends Authenticatable
         'state',
         'city',
         'password',
+        'profile_image',
         'termsAccepted',
         'active_status',
         'is_admin',

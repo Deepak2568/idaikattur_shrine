@@ -24,7 +24,8 @@ class RegisterController extends Controller
             'state'                => 'required|string|max:100',
             'city'                 => 'required|string|max:100',
             'password'             => 'required|string|min:8|confirmed',
-            'termsAccepted'        => 'accepted'
+            'termsAccepted'        => 'accepted',
+            'profile_image' => 'required|image|mimes:jpg,jpeg,png|max:4096',
         ]);
 
         // if ($validated->fails()) {
@@ -35,6 +36,13 @@ class RegisterController extends Controller
         // }
       
         $validated['password'] = Hash::make($validated['password']);
+
+        if ($request->hasFile('profile_image')) {
+            $file = $request->file('profile_image');
+            $filename = uniqid('profile_') . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('profile_images', $filename, 'public');
+            $validated['profile_image'] = $path;
+        }
         Customer::create($validated);
         return response()->json([
             "status" => 200,
