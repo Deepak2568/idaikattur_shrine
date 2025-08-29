@@ -9,7 +9,7 @@
                 <div class="text-muted small">Discover thoughtful {{ $oppositeGender === 'female' ? 'bride' : 'groom' }} matches curated for you</div>
             </div>
             <div class="d-flex gap-2">
-                <a href="#" class="btn btn-light border ripple">
+                <a href="{{ route('profile.show') }}" class="btn btn-light border ripple">
                     <i class="fas fa-user-edit me-1"></i> Update Profile
                 </a>
                 <form action="{{ route('logout') }}" method="POST" class="d-inline">

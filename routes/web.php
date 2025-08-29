@@ -42,8 +42,10 @@ Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Profile routes
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show')->middleware('auth:customer');
 Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth:customer');
 Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth:customer');
+Route::delete('/profile/delete', [ProfileController::class, 'destroy'])->name('profile.delete')->middleware('auth:customer');
 
 // AJAX routes
 Route::get('/profile/{id}', [LoginController::class, 'viewProfile'])->name('profile.view')->middleware('auth:customer');
