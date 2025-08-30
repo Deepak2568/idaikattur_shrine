@@ -22,6 +22,8 @@ Route::view('/contact', 'shrine.contact');
 Route::view('/videos', 'shrine.mass_videos');
 Route::view('/about', 'shrine.about');
 Route::view('/gallery', 'shrine.gallery');
+Route::view('/terms', 'shrine.terms')->name('terms');
+Route::view('/privacy', 'shrine.privacy')->name('privacy');
 
 
 Route::get('/matrimony', function (Request $request) {

@@ -379,7 +379,7 @@
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" name="termsAccepted" id="termsAccepted">
                   <label class="form-check-label" for="termsAccepted">
-                    I agree to the <a href="#" class="text-success">Terms & Conditions</a> and <a href="#" class="text-success">Privacy Policy</a>
+                    I agree to the <a href="{{ route('terms') }}" target="_blank" class="text-success">Terms & Conditions</a> and <a href="{{ route('privacy') }}" target="_blank" class="text-success">Privacy Policy</a>
                   </label><br/>
                   <span class="text-danger error-text termsAccepted_error"></span>
                 </div>

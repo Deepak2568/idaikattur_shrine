@@ -35,7 +35,7 @@ class RegisterController extends Controller
         //     ],200);
         // }
       
-        $validated['password'] = Hash::make($validated['password']);
+        // Password will be automatically hashed by the Customer model mutator
 
         if ($request->hasFile('profile_image')) {
             $file = $request->file('profile_image');

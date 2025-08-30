@@ -117,7 +117,7 @@
                         <div class="col-sm-6">
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-calendar text-muted me-2" style="width: 20px;"></i>
-                                <span>{{ \Carbon\Carbon::parse($customer->dob)->age }} years old</span>
+                                <span>{{ \Carbon\Carbon::parse($customer->dob)->age }}</span>
                             </div>
                         </div>
                         <div class="col-sm-6">

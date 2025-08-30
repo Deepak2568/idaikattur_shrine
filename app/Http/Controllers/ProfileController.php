@@ -79,7 +79,7 @@ class ProfileController extends Controller
             'sister_name', 'sister_occupation', 'sister_status', 'partner_preference'
         ]);
 
-        // Handle password update
+        // Handle password update - will be automatically hashed by the model mutator
         if ($request->filled('password')) {
             $data['password'] = $request->password;
         }
