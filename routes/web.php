@@ -22,6 +22,7 @@ Route::view('/contact', 'shrine.contact');
 Route::view('/videos', 'shrine.mass_videos');
 Route::view('/about', 'shrine.about');
 Route::view('/gallery', 'shrine.gallery');
+Route::view('/comments', 'shrine.comments');
 Route::view('/terms', 'shrine.terms')->name('terms');
 Route::view('/privacy', 'shrine.privacy')->name('privacy');
 

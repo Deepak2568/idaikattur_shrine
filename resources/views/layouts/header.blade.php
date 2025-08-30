@@ -79,7 +79,7 @@
               <a class="dropdown-item py-3 px-3 fw-semibold d-flex align-items-center" href="{{ url('/schedule') }}" style="border-radius: 8px; transition: all 0.3s ease; margin: 2px 0;">
                 <i class="fas fa-calendar-alt me-2" style="color: #dc3545;"></i>Mass Schedule
               </a>
-              <a class="dropdown-item py-3 px-3 fw-semibold d-flex align-items-center" href="" style="border-radius: 8px; transition: all 0.3s ease; margin: 2px 0;">
+              <a class="dropdown-item py-3 px-3 fw-semibold d-flex align-items-center" href="{{ url('/comments') }}" style="border-radius: 8px; transition: all 0.3s ease; margin: 2px 0;">
                 <i class="fas fa-comments me-2" style="color: #dc3545;"></i>Mass Comments
               </a>
             </div>

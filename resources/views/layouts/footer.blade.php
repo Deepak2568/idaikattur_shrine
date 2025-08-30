@@ -24,11 +24,11 @@
       <div class="col-md-4 mb-4">
         <h5 class="mb-3">Quick Links</h5>
         <ul class="list-unstyled">
-          <li class="mb-2"><a href="#" class="text-light text-decoration-none">Home</a></li>
-          <li class="mb-2"><a href="#" class="text-light text-decoration-none">About Us</a></li>
-          <li class="mb-2"><a href="#" class="text-light text-decoration-none">Mass Schedule</a></li>
-          <li class="mb-2"><a href="#" class="text-light text-decoration-none">Gallery</a></li>
-          <li class="mb-2"><a href="#" class="text-light text-decoration-none">Contact</a></li>
+          <li class="mb-2"><a href="{{ url('/') }}" class="text-light text-decoration-none">Home</a></li>
+          <li class="mb-2"><a href="{{ url('/about') }}" class="text-light text-decoration-none">About Us</a></li>
+          <li class="mb-2"><a href="{{ url('/schedule') }}" class="text-light text-decoration-none">Mass Schedule</a></li>
+          <li class="mb-2"><a href="{{ url('/gallery') }}" class="text-light text-decoration-none">Gallery</a></li>
+          <li class="mb-2"><a href="{{ url('/contact') }}" class="text-light text-decoration-none">Contact</a></li>
         </ul>
       </div>
 
