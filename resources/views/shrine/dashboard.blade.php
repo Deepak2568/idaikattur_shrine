@@ -39,7 +39,7 @@
                     $summary = trim(implode(' • ', array_filter([
                         (\Carbon\Carbon::parse($p->dob)->age).' yrs',
                         ucfirst($p->city),
-                        $p->state === 'tamil-nadu' ? 'Tamilnadu' : $p->state,
+                        $p->state != '' ? 'Tamilnadu' : '',
                     ])));
                     $bio = $p->subcaste ? (ucfirst($p->subcaste).' • '.ucfirst($p->religion)) : ucfirst($p->religion);
                     $profile_image = $p->profile_image ?? '';
@@ -81,7 +81,7 @@
                                 <div class="d-flex flex-wrap gap-2 mb-2">
                                     <span class="pill"><i class="far fa-calendar me-1"></i>{{ \Carbon\Carbon::parse($p->dob)->age }} yrs</span>
                                     <span class="pill"><i class="fas fa-map-marker-alt me-1"></i>{{ ucfirst($p->city) }}</span>
-                                    <span class="pill"><i class="fas fa-globe-asia me-1"></i>{{ $p->state === 'tamil-nadu' ? 'Tamilnadu' : $p->state }}</span>
+                                    <span class="pill"><i class="fas fa-globe-asia me-1"></i>{{ $p->state != '' ? 'Tamilnadu' : '' }}</span>
                                 </div>
 
                                 <!-- Two-line bio / intro -->
@@ -383,7 +383,7 @@ function displayProfileModal(profile) {
                     </div>
                     <div class="col-sm-6">
                         <label class="form-label fw-bold text-muted">Religion</label>
-                        <p class="mb-0">${profile.religion}</p>
+                        <p class="mb-0">${profile.religion.charAt(0).toUpperCase() + profile.religion.slice(1)}</p>
                     </div>
                     <div class="col-sm-6">
                         <label class="form-label fw-bold text-muted">Subcaste</label>
@@ -416,6 +416,143 @@ function displayProfileModal(profile) {
                 </div>
             </div>
         </div>
+
+        <!-- Physical Details -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <h6 class="fw-bold text-primary mb-3">Physical Details</h6>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Height</label>
+                        <p class="mb-0">${profile.height || 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Weight</label>
+                        <p class="mb-0">${profile.weight || 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Body Type</label>
+                        <p class="mb-0">${profile.body_type ? profile.body_type.replace('_', ' ').charAt(0).toUpperCase() + profile.body_type.replace('_', ' ').slice(1) : 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Complexion</label>
+                        <p class="mb-0">${profile.complexion ? profile.complexion.replace('_', ' ').charAt(0).toUpperCase() + profile.complexion.replace('_', ' ').slice(1) : 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Blood Group</label>
+                        <p class="mb-0">${profile.blood_group || 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Physical Status</label>
+                        <p class="mb-0">${profile.physical_status ? profile.physical_status.replace('_', ' ').charAt(0).toUpperCase() + profile.physical_status.replace('_', ' ').slice(1) : 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Marital Status</label>
+                        <p class="mb-0">${profile.marital_status ? profile.marital_status.charAt(0).toUpperCase() + profile.marital_status.slice(1) : 'Not specified'}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Education & Occupation -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <h6 class="fw-bold text-primary mb-3">Education & Occupation</h6>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Education</label>
+                        <p class="mb-0">${profile.education ? profile.education.replace('_', ' ').charAt(0).toUpperCase() + profile.education.replace('_', ' ').slice(1) : 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Education Details</label>
+                        <p class="mb-0">${profile.education_details || 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Employed In</label>
+                        <p class="mb-0">${profile.employed_in ? profile.employed_in.charAt(0).toUpperCase() + profile.employed_in.slice(1) : 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Occupation</label>
+                        <p class="mb-0">${profile.occupation_details || 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Occupation Category</label>
+                        <p class="mb-0">${profile.occupation_category || 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Working Place</label>
+                        <p class="mb-0">${profile.working_place || 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Working State</label>
+                        <p class="mb-0">${profile.working_state || 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Salary</label>
+                        <p class="mb-0">${profile.salary || 'Not specified'}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Family Details -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <h6 class="fw-bold text-primary mb-3">Family Details</h6>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Father Name</label>
+                        <p class="mb-0">${profile.father_name || 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Father Occupation</label>
+                        <p class="mb-0">${profile.father_occupation || 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Mother Name</label>
+                        <p class="mb-0">${profile.mother_name || 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Mother Occupation</label>
+                        <p class="mb-0">${profile.mother_occupation || 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Brother Name</label>
+                        <p class="mb-0">${profile.brother_name || 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Brother Occupation</label>
+                        <p class="mb-0">${profile.brother_occupation || 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Brother Status</label>
+                        <p class="mb-0">${profile.brother_status ? profile.brother_status.charAt(0).toUpperCase() + profile.brother_status.slice(1) : 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Sister Name</label>
+                        <p class="mb-0">${profile.sister_name || 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Sister Occupation</label>
+                        <p class="mb-0">${profile.sister_occupation || 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Sister Status</label>
+                        <p class="mb-0">${profile.sister_status ? profile.sister_status.charAt(0).toUpperCase() + profile.sister_status.slice(1) : 'Not specified'}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Partner Preference -->
+        ${profile.partner_preference ? `
+        <div class="row mt-4">
+            <div class="col-12">
+                <h6 class="fw-bold text-primary mb-3">Partner Preference</h6>
+                <p class="mb-0">${profile.partner_preference}</p>
+            </div>
+        </div>
+        ` : ''}
     `;
     
     console.log('Modal content set, trying to show modal...');
