@@ -88,7 +88,7 @@
                                 <label for="email" class="form-label fw-semibold">
                                     <i class="fas fa-envelope text-muted me-1"></i>Email Address
                                 </label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $customer->email) }}" required>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $customer->email) }}" readonly required>
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -136,7 +136,7 @@
                                 <label for="religion" class="form-label fw-semibold">
                                     <i class="fas fa-praying-hands text-muted me-1"></i>Religion
                                 </label>
-                                <input type="text" class="form-control @error('religion') is-invalid @enderror" id="religion" name="religion" value="{{ old('religion', $customer->religion) }}" required>
+                                <input type="text" class="form-control @error('religion') is-invalid @enderror" id="religion" name="religion" value="{{ old('religion', ucfirst($customer->religion)) }}" readonly>
                                 @error('religion')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -147,7 +147,7 @@
                                 <label for="subcaste" class="form-label fw-semibold">
                                     <i class="fas fa-users text-muted me-1"></i>Subcaste (Optional)
                                 </label>
-                                <input type="text" class="form-control @error('subcaste') is-invalid @enderror" id="subcaste" name="subcaste" value="{{ old('subcaste', $customer->subcaste) }}">
+                                <input type="text" class="form-control @error('subcaste') is-invalid @enderror" id="subcaste" name="subcaste" value="{{ old('subcaste', ucfirst($customer->subcaste)) }}">
                                 @error('subcaste')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -158,7 +158,7 @@
                                 <label for="state" class="form-label fw-semibold">
                                     <i class="fas fa-map text-muted me-1"></i>State
                                 </label>
-                                <input type="text" class="form-control @error('state') is-invalid @enderror" id="state" name="state" value="{{ old('state', $customer->state) }}" required>
+                                <input type="text" class="form-control @error('state') is-invalid @enderror" id="state" name="state" value="{{ old('state', $customer->state == 'tamil-nadu' ? 'Tamilnadu' : '') }}" readonly>
                                 @error('state')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -169,7 +169,7 @@
                                 <label for="city" class="form-label fw-semibold">
                                     <i class="fas fa-city text-muted me-1"></i>City
                                 </label>
-                                <input type="text" class="form-control @error('city') is-invalid @enderror" id="city" name="city" value="{{ old('city', $customer->city) }}" required>
+                                <input type="text" class="form-control @error('city') is-invalid @enderror" id="city" name="city" value="{{ old('city', ucfirst($customer->city)) }}" required>
                                 @error('city')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
