@@ -50,7 +50,7 @@
                         <div class="col-12 col-md-4 d-flex align-items-center justify-content-center p-4">
                             <div class="avatar-ring" aria-label="profile avatar">
                                 @if($profile_image)
-                                    <img src="{{ asset('storage/' . $profile_image) }}" alt="Profile photo" class="rounded-circle shadow-sm" style="width: 100px; height: 100px; border: 3px solid #e3e6f0;">
+                                    <img src="{{ asset('storage/' . $profile_image) }}" alt="Profile photo" class="shadow-sm" style="width: 100%; height: 100%; border-radius: 5px;">
                                 @else
                                     <div class="avatar-initials">{{ $initials }}</div>
                                 @endif
@@ -155,22 +155,24 @@
 .lift-glow { transition: box-shadow .2s ease, transform .2s ease; }
 .lift-glow:hover { box-shadow: 0 14px 28px rgba(16,24,40,.12), 0 2px 6px rgba(16,24,40,.06); transform: translateY(-2px); }
 
-/* Initials avatar with colored ring */
+/* Square avatar with red border - Large size */
 .avatar-ring {
-    width: 104px; height: 104px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #ffffff 0%, #f8fafc 70%);
-    display: grid; place-items: center;
+    width: 200px; height: 200px;
+    border-radius: 8px;
+    border: 3px solid #dc3545;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
+    overflow: hidden;
 }
-.avatar-ring:before {
-    content: ""; position: absolute; inset: -4px;
-    border-radius: 50%; padding: 4px;
-    background: linear-gradient(135deg,#6366f1,#22c55e,#06b6d4);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor; mask-composite: exclude;
+.avatar-initials { 
+    font-size: 3rem; 
+    font-weight: 700; 
+    color: #6c757d; 
+    letter-spacing: .5px; 
 }
-.avatar-initials { font-size: 1.75rem; font-weight: 700; color: #1f2937; letter-spacing: .5px; }
 
 /* Pills */
 .pill { background:#f8fafc; border:1px solid #e5e7eb; color:#334155; border-radius:999px; padding:.25rem .6rem; font-size:.85rem; }
