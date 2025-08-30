@@ -89,7 +89,7 @@
             <div class="row align-items-center">
                 <div class="col-md-3 text-center mb-3 mb-md-0">
                     @if($customer->profile_image)
-                        <img src="{{ asset('storage/' . $customer->profile_image) }}" alt="Profile photo" class="rounded-circle shadow-sm" style="width: 120px; height: 120px; object-fit: cover;">
+                        <img src="{{ asset('storage/' . $customer->profile_image) }}" alt="Profile photo" class="img-fluid" style="width: 250px; height: 250px; object-fit: fill; border-radius: 8px; border: 3px solid #dc3545; background-color: #f8f9fa;">
                     @else
                         <div class="avatar-initials-large">{{ strtoupper(mb_substr($customer->fname,0,1) . mb_substr($customer->lname,0,1)) }}</div>
                     @endif
@@ -153,7 +153,7 @@
                 <div class="row">
                     <div class="col-md-4 text-center mb-3">
                         @if($customer->profile_image)
-                            <img src="{{ asset('storage/' . $customer->profile_image) }}" alt="Profile photo" class="rounded-circle shadow-sm" style="width: 150px; height: 150px; object-fit: cover;">
+                            <img src="{{ asset('storage/' . $customer->profile_image) }}" alt="Profile photo" class="img-fluid" style="width: 250px; height: 250px; object-fit: fill; border-radius: 8px; border: 3px solid #dc3545; background-color: #f8f9fa;">
                         @else
                             <div class="avatar-initials-large">{{ strtoupper(mb_substr($customer->fname,0,1) . mb_substr($customer->lname,0,1)) }}</div>
                         @endif

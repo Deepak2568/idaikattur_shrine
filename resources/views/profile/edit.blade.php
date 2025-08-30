@@ -46,7 +46,7 @@
                         <div class="text-center mb-4">
                             <div class="position-relative d-inline-block">
                                 @if($customer->profile_image)
-                                    <img src="{{ asset('storage/' . $customer->profile_image) }}" alt="Current profile photo" class="rounded-circle shadow-sm mb-3" style="width: 120px; height: 120px; object-fit: cover;">
+                                    <img src="{{ asset('storage/' . $customer->profile_image) }}" alt="Current profile photo" class="img-fluid" style="width: 250px; height: 250px; object-fit: fill; border-radius: 8px; border: 3px solid #dc3545; background-color: #f8f9fa;">
                                 @else
                                     <div class="avatar-initials-large mb-3">{{ strtoupper(mb_substr($customer->fname,0,1) . mb_substr($customer->lname,0,1)) }}</div>
                                 @endif
