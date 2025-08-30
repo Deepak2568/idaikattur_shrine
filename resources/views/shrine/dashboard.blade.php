@@ -3,21 +3,39 @@
 <div class="container py-4">
     <!-- Hero/Heading -->
     <div class="p-4 p-md-5 mb-4 rounded-3" style="background: linear-gradient(135deg, #f8f9ff 0%, #eef3ff 60%, #e8f5ff 100%); border: 1px solid #e9ecef;">
-        <div class="d-flex flex-wrap justify-content-between align-items-center">
-            <div class="mb-3 mb-md-0">
-                <h4 class="mb-1 fw-semibold" style="letter-spacing:.2px;">Welcome, {{ $customer->fname }} {{ $customer->lname }}</h4>
-                <div class="text-muted small">Discover thoughtful {{ $oppositeGender === 'female' ? 'bride' : 'groom' }} matches curated for you</div>
+        <div class="row align-items-center">
+            <!-- Profile Image - Left Side -->
+            <div class="col-md-3 text-center mb-3 mb-md-0">
+                <div class="avatar-ring" style="width:120px; height:120px; margin:0 auto;">
+                    @if($customer->profile_image)
+                        <img src="{{ asset('storage/' . $customer->profile_image) }}" alt="Your profile photo" class="shadow-sm" style="width:100%; height:100%; border-radius:8px;">
+                    @else
+                        <div class="avatar-initials" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#f3f4f6; color:#dc3545; font-weight:bold; font-size:2.5rem; border-radius:8px;">
+                            {{ strtoupper(mb_substr($customer->fname,0,1) . mb_substr($customer->lname,0,1)) }}
+                        </div>
+                    @endif
+                </div>
             </div>
-            <div class="d-flex gap-2">
-                <a href="{{ route('profile.show') }}" class="btn btn-light border ripple">
-                    <i class="fas fa-user-edit me-1"></i> Update Profile
-                </a>
-                <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                    @csrf
-                    <button type="submit" class="btn btn-outline-danger ripple">
-                        <i class="fas fa-sign-out-alt me-1"></i> Logout
-                    </button>
-                </form>
+            
+            <!-- Welcome Content - Right Side -->
+            <div class="col-md-9">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+                    <div class="mb-3 mb-md-0">
+                        <h4 class="mb-1 fw-semibold" style="letter-spacing:.2px;">Welcome, {{ $customer->fname }} {{ $customer->lname }}</h4>
+                        <div class="text-muted small">Discover thoughtful {{ $oppositeGender === 'female' ? 'bride' : 'groom' }} matches curated for you</div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="{{ route('profile.show') }}" class="btn btn-light border ripple">
+                            <i class="fas fa-user-edit me-1"></i> Update Profile
+                        </a>
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-danger ripple">
+                                <i class="fas fa-sign-out-alt me-1"></i> Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
