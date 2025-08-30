@@ -20,8 +20,11 @@ class LoginController extends Controller
         $customer = Customer::where('email', $request->username)->first();
 
         if ($customer && Hash::check($request->password, $customer->password)) {
-            // login customer
-            Auth::guard('customer')->login($customer);
+            // Check if remember me is checked
+            $remember = $request->has('rememberMe') && $request->rememberMe == 'on';
+            
+            // login customer with remember me functionality
+            Auth::guard('customer')->login($customer, $remember);
 
             return response()->json([
                 'status'   => true,
@@ -29,10 +32,13 @@ class LoginController extends Controller
             ]);
         }
 
+        // Return field-specific error for invalid credentials
         return response()->json([
             'status'  => false,
-            'message' => 'Invalid email or password'
-        ]);
+            'errors' => [
+                'invalid_cred' => ['Invalid credentials']
+            ]
+        ], 422);
     }
 
     public function dashboard(Request $request)

@@ -11,6 +11,18 @@ $(document).ready(function () {
         $("." + fieldName + "_error").text("");
     });
 
+    // For login form fields
+    $("#loginForm input").on("input", function () {
+        let fieldName = $(this).attr("name");
+        $("." + fieldName + "_error").text("");
+    });
+
+    // For login form checkbox
+    $("#loginForm input[type='checkbox']").on("change", function () {
+        let fieldName = $(this).attr("name");
+        $("." + fieldName + "_error").text("");
+    });
+
     $("#registerForm").on("submit", function (e) {
         e.preventDefault(); // stop form from reloading page
         $(".error-text").text(""); // clear old errors
@@ -83,6 +95,11 @@ $(document).ready(function () {
 
     $("#loginForm").submit(function(e){
         e.preventDefault();
+        
+        // Clear previous errors
+        $(".error-text").text("");
+        $("#loginError").hide();
+        
         $("#loginBtn").prop("disabled", true).html('<span class="spinner-border spinner-border-sm"></span> Processing...');
     
         $.ajax({
@@ -93,9 +110,27 @@ $(document).ready(function () {
                 if(res.status){
                     window.location.href = res.redirect;
                 } else {
-                    $("#loginError").text(res.message).show();
-                    $("#loginBtn").prop("disabled", false).text("Login");
+                    // Handle field-specific errors
+                    if(res.errors){
+                        $.each(res.errors, function(key, value){
+                            $("."+key+"_error").text(value[0]);
+                        });
+                    } else {
+                        $("#loginError").text(res.message || 'Login failed').show();
+                    }
+                    $("#loginBtn").prop("disabled", false).html('<i class="fas fa-sign-in-alt me-2"></i>Login');
                 }
+            },
+            error: function(xhr){
+                if(xhr.status === 422){
+                    let errors = xhr.responseJSON.errors;
+                    $.each(errors, function(key, value){
+                        $("."+key+"_error").text(value[0]);
+                    });
+                } else {
+                    $("#loginError").text('An error occurred during login').show();
+                }
+                $("#loginBtn").prop("disabled", false).html('<i class="fas fa-sign-in-alt me-2"></i>Login');
             }
         });
     });

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('city', 100);
             $table->string('password'); // will store hashed password
             $table->boolean('termsAccepted')->default(false);
+            $table->string('profile_image')->nullable();
             $table->bigInteger('active_status')->default(0);
             $table->enum('is_admin', ['yes', 'no'])->default('no');
             $table->rememberToken();

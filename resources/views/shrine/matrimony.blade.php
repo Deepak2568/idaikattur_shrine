@@ -237,16 +237,19 @@
         <div class="modal-body">
           <form id="loginForm">
             @csrf
+            <span class="text-danger error-text invalid_cred_error"></span>
             <div class="mb-3">
               <label for="loginEmail" class="form-label fw-bold">Email Address</label>
-              <input type="email" class="form-control" name="username" id="loginEmail" placeholder="Enter your email" required>
+              <input type="email" class="form-control" name="username" id="loginEmail" placeholder="Enter your email">
+              <span class="text-danger error-text username_error"></span>
             </div>
             <div class="mb-3">
               <label for="loginPassword" class="form-label fw-bold">Password</label>
-              <input type="password" class="form-control" name="password" id="loginPassword" placeholder="Enter your password" required>
+              <input type="password" class="form-control" name="password" id="loginPassword" placeholder="Enter your password">
+              <span class="text-danger error-text password_error"></span>
             </div>
             <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="rememberMe">
+              <input type="checkbox" name="rememberMe" class="form-check-input" id="rememberMe">
               <label class="form-check-label" for="rememberMe">Remember me</label>
             </div>
             <div class="d-grid">
@@ -414,6 +417,10 @@
     document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
+        // Clear previous errors
+        document.querySelectorAll('.error-text').forEach(span => span.textContent = '');
+        document.getElementById('loginError').style.display = 'none';
+        
         const formData = new FormData(this);
         
         fetch(loginUrl, {
@@ -428,8 +435,18 @@
             if (data.status) {
                 window.location.href = data.redirect;
             } else {
-                document.getElementById('loginError').textContent = data.message || 'Login failed';
-                document.getElementById('loginError').style.display = 'block';
+                // Handle field-specific errors
+                if (data.errors) {
+                    Object.keys(data.errors).forEach(field => {
+                        const errorSpan = document.querySelector('.' + field + '_error');
+                        if (errorSpan) {
+                            errorSpan.textContent = data.errors[field][0];
+                        }
+                    });
+                } else {
+                    document.getElementById('loginError').textContent = data.message || 'Login failed';
+                    document.getElementById('loginError').style.display = 'block';
+                }
             }
         })
         .catch(error => {
