@@ -46,18 +46,19 @@
                         <div class="text-center mb-4">
                             <div class="position-relative d-inline-block">
                                 @if($customer->profile_image)
-                                    <img src="{{ asset('storage/' . $customer->profile_image) }}" alt="Current profile photo" class="img-fluid" style="width: 250px; height: 250px; object-fit: fill; border-radius: 8px; border: 3px solid #dc3545; background-color: #f8f9fa;">
+                                    <img src="{{ asset('storage/' . $customer->profile_image) }}" alt="Current profile photo" class="img-fluid profile-preview" style="width: 250px; height: 250px;border-radius: 8px; border: 3px solid #dc3545; background-color: #f8f9fa;">
                                 @else
-                                    <div class="avatar-initials-large mb-3">{{ strtoupper(mb_substr($customer->fname,0,1) . mb_substr($customer->lname,0,1)) }}</div>
+                                    <div class="avatar-initials-large mb-3" id="initials-div">{{ strtoupper(mb_substr($customer->fname,0,1) . mb_substr($customer->lname,0,1)) }}</div>
                                 @endif
                                 <div class="position-absolute bottom-0 end-0">
-                                    <label for="profile_image" class="btn btn-primary btn-sm rounded-circle" style="width: 40px; height: 40px; padding: 0;">
+                                    <label for="profile_image" class="btn btn-primary btn-sm rounded-circle" style="width: 40px; height: 40px; padding: 0; cursor: pointer;">
                                         <i class="fas fa-camera"></i>
                                     </label>
-                                    <input type="file" id="profile_image" name="profile_image" class="d-none" accept="image/*">
+                                    <input type="file" id="profile_image" name="profile_image" class="d-none" accept="image/*" onchange="previewImage(this)">
                                 </div>
                             </div>
                             <div class="text-muted small">Click the camera icon to change your profile photo</div>
+                            <div id="upload-status" class="mt-2"></div>
                         </div>
 
                         <div class="row g-3">
@@ -667,23 +668,63 @@
 
 <script>
 // Preview image before upload
-document.getElementById('profile_image').addEventListener('change', function(e) {
-    const file = e.target.files[0];
+function previewImage(input) {
+    const file = input.files[0];
+    const reader = new FileReader();
+    const uploadStatus = document.getElementById('upload-status');
+
     if (file) {
-        const reader = new FileReader();
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+            uploadStatus.innerHTML = '<div class="alert alert-danger">Please select a valid image file.</div>';
+            return;
+        }
+
+        // Validate file size (2MB limit)
+        if (file.size > 2 * 1024 * 1024) {
+            uploadStatus.innerHTML = '<div class="alert alert-danger">Image size should be less than 2MB.</div>';
+            return;
+        }
+
         reader.onload = function(e) {
-            const img = document.querySelector('.rounded-circle');
+            const img = document.querySelector('.profile-preview');
             if (img) {
                 img.src = e.target.result;
             } else {
-                const initialsDiv = document.querySelector('.avatar-initials-large');
+                const initialsDiv = document.getElementById('initials-div');
                 if (initialsDiv) {
-                    initialsDiv.innerHTML = `<img src="${e.target.result}" alt="Profile preview" class="rounded-circle" style="width: 100%; height: 100%; object-fit: cover;">`;
+                    initialsDiv.innerHTML = `<img src="${e.target.result}" alt="Profile preview" class="profile-preview" style="width: 100%; height: 100%; object-fit: cover;">`;
                 }
             }
+            uploadStatus.innerHTML = '<div class="alert alert-success">Image selected successfully!</div>';
         };
         reader.readAsDataURL(file);
+    } else {
+        // If file input is cleared, revert to default initials or current image
+        const img = document.querySelector('.profile-preview');
+        if (img) {
+            img.src = "{{ asset('storage/' . $customer->profile_image) }}";
+        } else {
+            const initialsDiv = document.getElementById('initials-div');
+            if (initialsDiv) {
+                initialsDiv.innerHTML = "{{ strtoupper(mb_substr($customer->fname,0,1) . mb_substr($customer->lname,0,1)) }}";
+            }
+        }
+        uploadStatus.innerHTML = '';
     }
+}
+
+// Add form submission debugging
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        const fileInput = document.getElementById('profile_image');
+        if (fileInput.files.length > 0) {
+            console.log('File selected:', fileInput.files[0].name);
+            console.log('File size:', fileInput.files[0].size);
+            console.log('File type:', fileInput.files[0].type);
+        }
+    });
 });
 </script>
 @endsection
