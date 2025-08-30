@@ -442,11 +442,11 @@ function displayProfileModal(profile) {
                 <div class="row g-3">
                     <div class="col-sm-6">
                         <label class="form-label fw-bold text-muted">Height</label>
-                        <p class="mb-0">${profile.height || 'Not specified'}</p>
+                        <p class="mb-0">${profile.height == null || profile.height == '' ? 'Not specified' : profile.height + 'cm'}</p>
                     </div>
                     <div class="col-sm-6">
                         <label class="form-label fw-bold text-muted">Weight</label>
-                        <p class="mb-0">${profile.weight || 'Not specified'}</p>
+                        <p class="mb-0">${profile.weight == null || profile.weight == '' ? 'Not specified' : profile.weight + 'kg'}</p>
                     </div>
                     <div class="col-sm-6">
                         <label class="form-label fw-bold text-muted">Body Type</label>

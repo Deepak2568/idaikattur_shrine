@@ -201,7 +201,7 @@
                                     <label for="height" class="form-label fw-semibold">
                                         <i class="fas fa-ruler-vertical text-muted me-1"></i>Height
                                     </label>
-                                    <input type="text" class="form-control @error('height') is-invalid @enderror" id="height" name="height" value="{{ old('height', $customer->height ?? '') }}" placeholder="e.g., 5'6"">
+                                    <input type="text" class="form-control @error('height') is-invalid @enderror" id="height" name="height" value="{{ old('height', $customer->height ?? '') }}" placeholder="e.g., 160cm"">
                                     @error('height')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror

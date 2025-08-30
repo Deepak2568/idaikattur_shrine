@@ -50,11 +50,39 @@ class Customer extends Authenticatable
         'sister_occupation',
         'sister_status',
         'partner_preference',
+        'last_dashboard_visit',
     ];
 
     // Automatically hash when setting password
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    /**
+     * Check if dashboard visit should be updated for today
+     * Returns true if it's a new day or if last_dashboard_visit is null
+     */
+    public function shouldUpdateDashboardVisit(): bool
+    {
+        if (!$this->last_dashboard_visit) {
+            return true;
+        }
+
+        $today = now()->startOfDay();
+        $lastVisit = \Carbon\Carbon::parse($this->last_dashboard_visit)->startOfDay();
+        
+        return $lastVisit->lt($today);
+    }
+
+    /**
+     * Update the dashboard visit timestamp
+     */
+    public function updateDashboardVisit(): void
+    {
+        $this->update([
+            'last_dashboard_visit' => now(),
+            'updated_at' => now()
+        ]);
     }
 }

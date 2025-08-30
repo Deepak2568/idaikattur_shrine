@@ -41,9 +41,19 @@ class LoginController extends Controller
         ], 422);
     }
 
+    /**
+     * Display the dashboard page for authenticated customers.
+     * Updates the last_dashboard_visit timestamp once per day when the user visits the dashboard.
+     * This helps track user activity and ensures the updated_at field is refreshed daily.
+     */
     public function dashboard(Request $request)
     {
         $customer = Auth::guard('customer')->user();
+
+        // Update last_dashboard_visit if it's a new day
+        if ($customer->shouldUpdateDashboardVisit()) {
+            $customer->updateDashboardVisit();
+        }
 
         // Determine opposite gender
         $oppositeGender = $customer->gender === 'male' ? 'female' : 'male';
