@@ -65,4 +65,55 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
         return redirect('/matrimony');
     }
+
+    public function viewProfile($id)
+    {
+        $currentCustomer = Auth::guard('customer')->user();
+        
+        // Check if current user is a paid member (active_status = 1)
+        if ($currentCustomer->active_status != 1) {
+            return response()->json([
+                'status' => false,
+                'message' => 'You need to be a paid member to view profiles. Please upgrade your membership.',
+                'type' => 'membership_required'
+            ]);
+        }
+
+        // Get the profile to view
+        $profile = Customer::find($id);
+        
+        if (!$profile) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Profile not found.',
+                'type' => 'not_found'
+            ]);
+        }
+
+        // Return profile data
+        return response()->json([
+            'status' => true,
+            'profile' => [
+                'id' => $profile->id,
+                'fname' => $profile->fname,
+                'lname' => $profile->lname,
+                'email' => $profile->email,
+                'phone' => $profile->phone,
+                'dob' => $profile->dob,
+                'age' => \Carbon\Carbon::parse($profile->dob)->age,
+                'gender' => $profile->gender,
+                'religion' => $profile->religion,
+                'subcaste' => $profile->subcaste,
+                'state' => $profile->state,
+                'city' => $profile->city,
+                'profile_image' => $profile->profile_image,
+                'active_status' => $profile->active_status,
+                'created_at' => $profile->created_at->format('M d, Y'),
+                'updated_at' => $profile->updated_at->format('M d, Y'),
+                'profile_id' => 'SHM' . str_pad($profile->id, 5, '0', STR_PAD_LEFT)
+            ]
+        ]);
+    }
+
+
 }

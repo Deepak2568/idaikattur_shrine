@@ -114,10 +114,10 @@
                                 <!-- <p class="text-muted small mb-0 clamp-2">{{ $summary }}</p> -->
 
                                 <div class="mt-auto d-flex flex-wrap gap-2">
-                                    <button type="button" class="btn btn-primary btn-sm ripple">
+                                    <button type="button" class="btn btn-primary btn-sm ripple view-profile-btn" data-profile-id="{{ $p->id }}">
                                         <i class="fas fa-eye me-1"></i> View Profile
                                     </button>
-                                    <button type="button" class="btn btn-outline-success btn-sm ripple">
+                                    <button type="button" class="btn btn-outline-success btn-sm ripple send-interest-btn" data-profile-id="{{ $p->id }}">
                                         <i class="fas fa-heart me-1"></i> Send Interest
                                     </button>
                                     <button type="button" class="btn btn-outline-secondary btn-sm ripple">
@@ -155,23 +155,24 @@
 .lift-glow { transition: box-shadow .2s ease, transform .2s ease; }
 .lift-glow:hover { box-shadow: 0 14px 28px rgba(16,24,40,.12), 0 2px 6px rgba(16,24,40,.06); transform: translateY(-2px); }
 
-/* Square avatar with red border - Large size */
+/* Square avatar with gradient background - Large size */
 .avatar-ring {
     width: 200px; height: 200px;
     border-radius: 8px;
-    border: 3px solid #dc3545;
-    background: #f8f9fa;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #22c55e 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 .avatar-initials { 
     font-size: 3rem; 
     font-weight: 700; 
-    color: #6c757d; 
+    color: #ffffff; 
     letter-spacing: .5px; 
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 /* Pills */
@@ -187,11 +188,256 @@
 
 /* Profile ID badge */
 .id-badge { display:inline-block; padding:.25rem .6rem; border-radius:999px; background:#eef2ff; color:#1d4ed8; font-weight:600; border:1px solid #dbe2ff; }
+
+/* Modal styling */
+.modal-header.bg-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #ffca2c 100%) !important;
+}
+
+.modal-body .form-label {
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+
+.modal-body p {
+    font-size: 1rem;
+    margin-bottom: 0;
+}
 </style>
 
+<!-- Profile View Modal -->
+<div class="modal fade" id="profileViewModal" tabindex="-1" aria-labelledby="profileViewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profileViewModalLabel">
+                    <i class="fas fa-user-circle text-primary me-2"></i>Profile Details
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="profileModalBody">
+                <!-- Profile content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Membership Alert Modal -->
+<div class="modal fade" id="membershipAlertModal" tabindex="-1" aria-labelledby="membershipAlertModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                <h5 class="modal-title" id="membershipAlertModalLabel">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Membership Required
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <div class="mb-3" style="width: 80px; height: 80px; margin: 0 auto; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-lock fa-2x text-white"></i>
+                    </div>
+                    <h6 class="mb-3 fw-bold" style="color: #667eea;">Premium Membership Required</h6>
+                    <p class="text-muted mb-4" id="membershipAlertMessage">
+                        You need to upgrade to a premium membership to access this feature.
+                    </p>
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
+                            <i class="fas fa-crown me-2"></i>Upgrade Membership
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-// Initialize Bootstrap tooltips
-const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
+// Initialize Bootstrap tooltips (with error handling)
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Bootstrap tooltips if Bootstrap is available
+    if (typeof bootstrap !== 'undefined') {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
+    } else {
+        console.warn('Bootstrap is not loaded');
+    }
+
+    console.log('DOM loaded, setting up event listeners...');
+    
+    // View Profile functionality
+    const viewButtons = document.querySelectorAll('.view-profile-btn');
+    console.log('Found view buttons:', viewButtons.length);
+    
+    viewButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('View profile button clicked');
+            const profileId = this.getAttribute('data-profile-id');
+            console.log('Profile ID:', profileId);
+            
+            // Test alert to see if click is working
+            // alert('Button clicked! Profile ID: ' + profileId);
+            
+            viewProfile(profileId);
+        });
+    });
+
+
+});
+
+function viewProfile(profileId) {
+    console.log('viewProfile function called with ID:', profileId);
+    
+    // Find the button that was clicked and show loading state
+    const button = document.querySelector(`[data-profile-id="${profileId}"].view-profile-btn`);
+    if (!button) {
+        console.error('Button not found for profile ID:', profileId);
+        return;
+    }
+    
+    const originalText = button.innerHTML;
+    button.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Loading...';
+    button.disabled = true;
+
+    console.log('Making fetch request to:', `/profile/${profileId}`);
+    
+    fetch(`/profile/${profileId}`, {
+        method: 'GET',
+        // headers: {
+        //     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        //     'Accept': 'application/json'
+        // }
+    })
+    .then(response => {
+        console.log('Response status:', response.status);
+        return response.json();
+    })
+            .then(data => {
+            console.log('Response data:', data);
+            if (data.status) {
+                // Show profile in modal
+                displayProfileModal(data.profile);
+            } else {
+                if (data.type === 'membership_required') {
+                    // Show membership alert
+                    document.getElementById('membershipAlertMessage').textContent = data.message;
+                    if (typeof bootstrap !== 'undefined') {
+                        new bootstrap.Modal(document.getElementById('membershipAlertModal')).show();
+                    } else {
+                        alert(data.message);
+                    }
+                } else {
+                    alert(data.message || 'Error loading profile');
+                }
+            }
+        })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while loading the profile');
+    })
+    .finally(() => {
+        // Reset button state
+        button.innerHTML = originalText;
+        button.disabled = false;
+    });
+}
+
+
+
+function displayProfileModal(profile) {
+    console.log('displayProfileModal called with profile:', profile);
+    
+    const modalBody = document.getElementById('profileModalBody');
+    if (!modalBody) {
+        console.error('Modal body element not found');
+        return;
+    }
+    
+    modalBody.innerHTML = `
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <div class="mb-3">
+                    ${profile.profile_image ? 
+                        `<img src="/storage/${profile.profile_image}" alt="Profile" class="img-fluid" style="width: 250px; height: 250px; object-fit: fill; border-radius: 8px; border: 3px solid #dc3545; background-color: #f8f9fa;">` :
+                        `<div class="bg-primary text-white d-inline-flex align-items-center justify-content-center" style="width: 250px; height: 250px; font-size: 4rem; font-weight: bold; border-radius: 8px; border: 3px solid #dc3545;">
+                            ${profile.fname.charAt(0)}${profile.lname.charAt(0)}
+                        </div>`
+                    }
+                </div>
+                <h5 class="fw-bold">${profile.fname} ${profile.lname}</h5>
+                <p class="text-muted">${profile.profile_id}</p>
+            </div>
+            <div class="col-md-8">
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Age</label>
+                        <p class="mb-0">${profile.age} years</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Gender</label>
+                        <p class="mb-0">${profile.gender.charAt(0).toUpperCase() + profile.gender.slice(1)}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Religion</label>
+                        <p class="mb-0">${profile.religion}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Subcaste</label>
+                        <p class="mb-0">${profile.subcaste || 'Not specified'}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">State</label>
+                        <p class="mb-0">${profile.state}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">City</label>
+                        <p class="mb-0">${profile.city}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Email</label>
+                        <p class="mb-0">${profile.email}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Phone</label>
+                        <p class="mb-0">${profile.phone}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Member Since</label>
+                        <p class="mb-0">${profile.created_at}</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="form-label fw-bold text-muted">Last Updated</label>
+                        <p class="mb-0">${profile.updated_at}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    console.log('Modal content set, trying to show modal...');
+    
+    if (typeof bootstrap !== 'undefined') {
+        const modal = new bootstrap.Modal(document.getElementById('profileViewModal'));
+        modal.show();
+        console.log('Modal show() called');
+    } else {
+        console.error('Bootstrap is not available for modal');
+        // Fallback: show profile info in a simple alert
+        const profileInfo = `
+Profile: ${profile.fname} ${profile.lname}
+Age: ${profile.age} years
+Gender: ${profile.gender}
+Religion: ${profile.religion}
+Location: ${profile.city}, ${profile.state}
+Email: ${profile.email}
+Phone: ${profile.phone}
+        `;
+        alert(profileInfo);
+    }
+}
 </script>
 @endsection
