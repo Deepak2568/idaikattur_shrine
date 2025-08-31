@@ -19,6 +19,7 @@
             <th>Phone number</th>
             <th>Gender</th>
             <th>Active status</th>
+            <th>Member Since</th>
             <th colspan='2'>Action</th>
         </thead>
         <tbody>
@@ -31,6 +32,7 @@
                     <td>{{$user->phone}}</td>
                     <td>{{$user->gender == 'female' ? 'Female' : 'Male'}}</td>
                     <td>{{$user->active_status == '1' ? 'Paid' : 'Not paid'}}</td>
+                    <td>{{$user->created_at->format('F j, Y')}}</td>
                     <td>
                         <form action="{{url('update',$user->id)}}" method='POST'>
                             @csrf
