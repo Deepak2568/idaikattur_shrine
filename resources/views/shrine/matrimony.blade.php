@@ -21,6 +21,58 @@
   </div>
 </div>
 
+@php
+    use App\Models\Customer;
+    $featuredProfiles = Customer::where('is_admin', '!=', 'yes')
+        ->orderByDesc('created_at')
+        ->take(5)
+        ->get();
+@endphp
+
+@if($featuredProfiles->count())
+<section class="py-5 bg-light border-bottom">
+    <div class="container">
+        <div class="row text-center mb-4">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="fw-bold text-primary mb-2">Recent Profiles</h2>
+            </div>
+        </div>
+        <div class="row g-4 justify-content-center">
+            @foreach($featuredProfiles as $profile)
+                @php
+                    $initials = strtoupper(mb_substr($profile->fname,0,1) . mb_substr($profile->lname,0,1));
+                    $profile_image = $profile->profile_image ?? '';
+                    $age = $profile->dob ? \Carbon\Carbon::parse($profile->dob)->age : null;
+                    $location = trim(implode(', ', array_filter([ucfirst($profile->city), $profile->state ? 'Tamilnadu' : ''])));
+                    $bio = $profile->subcaste ? (ucfirst($profile->subcaste).' • '.ucfirst($profile->religion)) : ucfirst($profile->religion);
+                @endphp
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100 text-center">
+                        <div class="card-body p-4">
+                            <div class="mx-auto mb-3" style="width:90px; height:90px;">
+                                @if($profile_image)
+                                    <img src="{{ asset('storage/' . $profile_image) }}" alt="Profile photo" class="rounded-circle shadow" style="width:100%; height:100%;">
+                                @else
+                                    <div class="avatar-initials rounded-circle d-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary fw-bold" style="width:100%; height:100%; font-size:2.2rem;">
+                                        {{ $initials }}
+                                    </div>
+                                @endif
+                            </div>
+                            <h5 class="fw-semibold mb-1">{{ $profile->fname }} {{ $profile->lname }}</h5>
+                            <div class="text-muted small mb-1">
+                                @if($age) {{ $age }} yrs • @endif {{ $location }}
+                            </div>
+                            <div class="text-secondary small mb-2">{{ $bio }}</div>
+                            <span class="badge bg-success bg-opacity-75">{{ ucfirst($profile->gender) }}</span>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
+
 <!-- Features Section -->
 <section class="py-5">
   <div class="container">
