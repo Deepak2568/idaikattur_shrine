@@ -57,7 +57,7 @@
                 @foreach($profiles as $p)
                 @php
                     $initials = strtoupper(mb_substr($p->fname,0,1) . mb_substr($p->lname,0,1));
-                    $recentActive = \Carbon\Carbon::parse($p->updated_at)->gt(now()->subDays(7));
+                    $recentActive = \Carbon\Carbon::parse($p->last_dashboard_visit)->gt(now()->subDays(7));
                     $verified = (int)($p->active_status ?? 0) === 1;
                     $summary = trim(implode(' • ', array_filter([
                         (\Carbon\Carbon::parse($p->dob)->age).' yrs',
@@ -433,8 +433,8 @@ function displayProfileModal(profile) {
                         <p class="mb-0">${profile.created_at}</p>
                     </div>
                     <div class="col-sm-6">
-                        <label class="form-label fw-bold text-muted">Last Updated</label>
-                        <p class="mb-0">${profile.updated_at}</p>
+                        <label class="form-label fw-bold text-muted">Last Visited</label>
+                        <p class="mb-0">${profile.last_dashboard_visit}</p>
                     </div>
                 </div>
             </div>

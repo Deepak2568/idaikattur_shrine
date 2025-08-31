@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Hash;
 
 class Customer extends Authenticatable
 {
+    protected $casts = [
+        'last_dashboard_visit' => 'datetime',
+        'dob' => 'date',
+    ];
+
     protected $fillable = [
         'fname',
         'lname',

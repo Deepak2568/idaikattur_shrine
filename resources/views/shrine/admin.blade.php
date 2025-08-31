@@ -1,6 +1,17 @@
 @extends('layouts.app',["title"=>"Admin Dashboard"])
 @section('content')
 <div class="container py-4">
+    <div class="d-flex gap-2 mb-4 justify-content-end">
+        <a href="{{ route('dashboard') }}" class="btn btn-outline-primary ripple float-end">
+            <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+        </a>
+        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+            @csrf
+            <button type="submit" class="btn btn-outline-danger ripple">
+                <i class="fas fa-sign-out-alt me-1"></i> Logout
+            </button>
+        </form>
+    </div>
     @if(session('success'))
         <div class="alert alert-success fade show" role="alert">
             {{ session('success') }}
