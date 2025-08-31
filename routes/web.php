@@ -5,6 +5,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -53,3 +54,7 @@ Route::delete('/profile/delete', [ProfileController::class, 'destroy'])->name('p
 // AJAX routes
 Route::get('/profile/{id}', [LoginController::class, 'viewProfile'])->name('profile.view')->middleware('auth:customer');
 Route::post('/send-interest/{id}', [LoginController::class, 'sendInterest'])->name('send.interest')->middleware('auth:customer');
+
+Route::get('/lr-admin-settings',[AdminController::class,'index'])->name('admin');
+Route::put('/update/{id}',[AdminController::class,'update']);
+Route::delete('/delete/{id}',[AdminController::class,'destroy']);

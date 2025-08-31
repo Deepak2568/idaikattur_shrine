@@ -25,6 +25,11 @@
                         <div class="text-muted small">Discover thoughtful {{ $oppositeGender === 'female' ? 'bride' : 'groom' }} matches curated for you</div>
                     </div>
                     <div class="d-flex gap-2">
+                        @if($customer->is_admin == 'yes')
+                        <a href="{{route('admin')}}" class="btn btn-success border ripple">
+                            <i class="fas fa-user-edit me-1"></i> Admin Settings
+                        </a>
+                        @endif
                         <a href="{{ route('profile.show') }}" class="btn btn-light border ripple">
                             <i class="fas fa-user-edit me-1"></i> Update Profile
                         </a>
