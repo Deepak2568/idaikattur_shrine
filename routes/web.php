@@ -55,6 +55,6 @@ Route::delete('/profile/delete', [ProfileController::class, 'destroy'])->name('p
 Route::get('/profile/{id}', [LoginController::class, 'viewProfile'])->name('profile.view')->middleware('auth:customer');
 Route::post('/send-interest/{id}', [LoginController::class, 'sendInterest'])->name('send.interest')->middleware('auth:customer');
 
-Route::get('/lr-admin-settings',[AdminController::class,'index'])->name('admin');
+Route::get('/admin-settings',[AdminController::class,'index'])->name('admin');
 Route::put('/update/{id}',[AdminController::class,'update']);
 Route::delete('/delete/{id}',[AdminController::class,'destroy']);

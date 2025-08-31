@@ -9,7 +9,13 @@ use App\Models\Customer;
 class AdminController extends Controller
 {
     //
-    public function index(){
+    public function index(Request $request){
+        // Check if the logged in user is an admin
+        $admin = auth('customer')->user();
+        if (!$admin || $admin->is_admin !== 'yes') {
+            return redirect()->route('matrimony');
+        }
+
         $customer = Customer::all();
         return view('shrine.admin',['data'=>$customer]);
     }
