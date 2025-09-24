@@ -16,7 +16,7 @@
                     @endif
                 </div>
             </div>
-            
+
             <!-- Welcome Content - Right Side -->
             <div class="col-md-9">
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
@@ -190,11 +190,11 @@
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
-.avatar-initials { 
-    font-size: 3rem; 
-    font-weight: 700; 
-    color: #ffffff; 
-    letter-spacing: .5px; 
+.avatar-initials {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: .5px;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
@@ -290,21 +290,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     console.log('DOM loaded, setting up event listeners...');
-    
+
     // View Profile functionality
     const viewButtons = document.querySelectorAll('.view-profile-btn');
     console.log('Found view buttons:', viewButtons.length);
-    
+
     viewButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
             console.log('View profile button clicked');
             const profileId = this.getAttribute('data-profile-id');
             console.log('Profile ID:', profileId);
-            
+
             // Test alert to see if click is working
             // alert('Button clicked! Profile ID: ' + profileId);
-            
+
             viewProfile(profileId);
         });
     });
@@ -314,20 +314,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function viewProfile(profileId) {
     console.log('viewProfile function called with ID:', profileId);
-    
+
     // Find the button that was clicked and show loading state
     const button = document.querySelector(`[data-profile-id="${profileId}"].view-profile-btn`);
     if (!button) {
         console.error('Button not found for profile ID:', profileId);
         return;
     }
-    
+
     const originalText = button.innerHTML;
     button.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Loading...';
     button.disabled = true;
 
     console.log('Making fetch request to:', `/profile/${profileId}`);
-    
+
     fetch(`/profile/${profileId}`, {
         method: 'GET',
         // headers: {
@@ -373,18 +373,18 @@ function viewProfile(profileId) {
 
 function displayProfileModal(profile) {
     console.log('displayProfileModal called with profile:', profile);
-    
+
     const modalBody = document.getElementById('profileModalBody');
     if (!modalBody) {
         console.error('Modal body element not found');
         return;
     }
-    
+
     modalBody.innerHTML = `
         <div class="row">
             <div class="col-md-4 text-center">
                 <div class="mb-3">
-                    ${profile.profile_image ? 
+                    ${profile.profile_image ?
                         `<img src="/storage/${profile.profile_image}" alt="Profile" class="img-fluid" style="width: 250px; height: 250px; object-fit: fill; border-radius: 8px; border: 3px solid #dc3545; background-color: #f8f9fa;">` :
                         `<div class="bg-primary text-white d-inline-flex align-items-center justify-content-center" style="width: 250px; height: 250px; font-size: 4rem; font-weight: bold; border-radius: 8px; border: 3px solid #dc3545;">
                             ${profile.fname.charAt(0)}${profile.lname.charAt(0)}
@@ -410,7 +410,7 @@ function displayProfileModal(profile) {
                     </div>
                     <div class="col-sm-6">
                         <label class="form-label fw-bold text-muted">Subcaste</label>
-                        <p class="mb-0">${profile.subcaste || 'Not specified'}</p>
+                        <p class="mb-0">${profile.subcaste.charAt(0).toUpperCase() + profile.subcaste.slice(1)}</p>
                     </div>
                     <div class="col-sm-6">
                         <label class="form-label fw-bold text-muted">State</label>
@@ -418,7 +418,7 @@ function displayProfileModal(profile) {
                     </div>
                     <div class="col-sm-6">
                         <label class="form-label fw-bold text-muted">City</label>
-                        <p class="mb-0">${profile.city}</p>
+                        <p class="mb-0">${profile.city.charAt(0).toUpperCase() + profile.city.slice(1)}</p>
                     </div>
                     <div class="col-sm-6">
                         <label class="form-label fw-bold text-muted">Email</label>
@@ -577,9 +577,9 @@ function displayProfileModal(profile) {
         </div>
         ` : ''}
     `;
-    
+
     console.log('Modal content set, trying to show modal...');
-    
+
     if (typeof bootstrap !== 'undefined') {
         const modal = new bootstrap.Modal(document.getElementById('profileViewModal'));
         modal.show();

@@ -27,22 +27,22 @@
                             <tbody>
                                 <tr>
                                     <td><span class="badge badge-danger">1<sup>st</sup> Friday</span></td>
-                                    <td><i class="far fa-clock text-primary mr-2"></i>7 A.M, 11 A.M, 6 P.M</td>
+                                    <td><i class="far fa-clock text-primary mr-2"></i> 7 A.M, 11 A.M, 6 P.M</td>
                                     <td>Prayers for General Peoples</td>
                                 </tr>
                                 <tr>
                                     <td><span class="badge badge-danger">2<sup>nd</sup> Friday</span></td>
-                                    <td><i class="far fa-clock text-primary mr-2"></i>11 A.M, 6 P.M</td>
+                                    <td><i class="far fa-clock text-primary mr-2"></i> 11 A.M, 6 P.M</td>
                                     <td>Prayers for Maternity and Marriage Alliances</td>
                                 </tr>
                                 <tr>
                                     <td><span class="badge badge-danger">3<sup>rd</sup> Friday</span></td>
-                                    <td><i class="far fa-clock text-primary mr-2"></i>11 A.M, 6 P.M</td>
+                                    <td><i class="far fa-clock text-primary mr-2"></i> 11 A.M, 6 P.M</td>
                                     <td>Prayers for Patients</td>
                                 </tr>
                                 <tr>
                                     <td><span class="badge badge-danger">4<sup>th</sup> Friday</span></td>
-                                    <td><i class="far fa-clock text-primary mr-2"></i>11 A.M, 6 P.M</td>
+                                    <td><i class="far fa-clock text-primary mr-2"></i> 11 A.M, 6 P.M</td>
                                     <td>Prayers for Educational and Industrial growths</td>
                                 </tr>
                             </tbody>
@@ -69,7 +69,7 @@
                             <tbody>
                                 <tr>
                                     <td><span class="badge badge-success">All Sundays</span></td>
-                                    <td><i class="far fa-clock text-primary mr-2"></i>8.30 A.M, 11 A.M</td>
+                                    <td><i class="far fa-clock text-primary mr-2"></i> 8.30 A.M, 11 A.M</td>
                                     <td>Prayers for General Peoples</td>
                                 </tr>
                             </tbody>
@@ -96,7 +96,7 @@
                             <tbody>
                                 <tr>
                                     <td><span class="badge badge-info">All Weekdays</span></td>
-                                    <td><i class="far fa-clock text-primary mr-2"></i>11 A.M</td>
+                                    <td><i class="far fa-clock text-primary mr-2"></i> 11 A.M</td>
                                     <td>Prayers for General Peoples</td>
                                 </tr>
                             </tbody>

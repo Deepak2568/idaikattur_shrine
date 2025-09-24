@@ -163,7 +163,7 @@
                     </div>
                     <div class="col-md-8">
                         <h4 class="mb-3">{{ $customer->fname }} {{ $customer->lname }}</h4>
-                        
+
                         <div class="row g-3">
                             <div class="col-sm-6">
                                 <label class="form-label text-muted small">Full Name</label>

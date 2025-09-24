@@ -1,11 +1,11 @@
 <marquee behavior="scroll" direction="left" style="background: linear-gradient(90deg, #dc3545 0%, #ffc107 100%); color: #fff; padding: 12px 0; font-size: 1.15rem; font-weight: 600; letter-spacing: 1px; border-radius: 0 0 16px 16px; box-shadow: 0 4px 16px rgba(220,53,69,0.15); text-shadow: 1px 1px 4px rgba(0,0,0,0.25);">
   <span style="margin-right: 32px;">
     <i class="fas fa-church" style="color: #fff; margin-right: 8px;"></i>
-    அன்பிற்குரியவர்களே நமது திருத்தலத்தில் ஒவ்வொரு நாளும் காலை 11மணிக்கு திருப்பலி நடைபெறுகின்றது.
+    அன்பிற்குரியவர்களே நமது திருத்தலத்தில் ஒவ்வொரு நாளும் காலை 11 மணிக்கு திருப்பலி நடைபெறுகின்றது.
   </span>
   <span style="margin-right: 32px;">
     <i class="fas fa-calendar-day" style="color: #fff; margin-right: 8px;"></i>
-    செப்டம்பர் மாதம் 3 ஆம் தேதி மாதத்தின் முதல் வெள்ளிகிழமை.
+    அக்டோபர் மாதம் 3 ஆம் தேதி மாதத்தின் முதல் வெள்ளிகிழமை.
   </span>
   <span style="margin-right: 32px;">
     <i class="fas fa-clock" style="color: #fff; margin-right: 8px;"></i>
@@ -30,11 +30,11 @@
       <img src="{{ asset('images/idai1.png') }}" alt="Sacred Heart Shrine" height="65" class="d-inline-block align-top me-3" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)); transform: scale(1.2); border-radius: 8px;">
       <span class="fw-bold text-primary fs-4" style="text-shadow: 0 1px 2px rgba(0,0,0,0.1); letter-spacing: 0.5px;">SACRED HEART SHRINE</span>
     </a>
-    
+
     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
       <span class="navbar-toggler-icon"></span>
     </button>
-    
+
     <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav ms-auto">
           <li class="nav-item">
@@ -163,13 +163,13 @@
     margin: 4px 0;
     padding: 12px 16px !important;
   }
-  
+
   .dropdown-menu {
     border: none;
     box-shadow: none;
     background: transparent;
   }
-  
+
   .dropdown-item {
     background: rgba(220, 53, 69, 0.1);
     margin: 2px 0;
