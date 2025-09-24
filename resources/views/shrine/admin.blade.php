@@ -34,10 +34,11 @@
             <th colspan='2'>Action</th>
         </thead>
         <tbody>
-            <!-- {{$i = 0}} -->
+            <!-- {{$i = 1}} -->
             @foreach($data as $user)
                 @if($user->is_admin != 'yes')
-                    <td>{{$i+1}}</td>
+                <tr>
+                    <td>{{$i++}}</td>
                     <td>{{$user->fname.' '.$user->lname}}</td>
                     <td>{{$user->email}}</td>
                     <td>{{$user->phone}}</td>
@@ -62,6 +63,7 @@
                             <button class='btn btn-danger' type='submit' id={{$user->id}}><i class='fas fa-trash'></i> Delete</button>
                         </form>
                     </td>
+                </tr>
                 @endif
             @endforeach
         </tbody>
