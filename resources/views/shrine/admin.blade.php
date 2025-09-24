@@ -2,6 +2,9 @@
 @section('content')
 <div class="container py-4">
     <div class="d-flex gap-2 mb-4 justify-content-end">
+        <a href="{{ route('settings.home') }}" class="btn btn-outline-secondary ripple">
+            <i class="fas fa-cog me-1"></i> Home Page Settings
+        </a>
         <a href="{{ route('dashboard') }}" class="btn btn-outline-primary ripple float-end">
             <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
         </a>

@@ -1,6 +1,11 @@
 @extends('layouts.app',['title' => 'Home'])
 
 @section('content')
+@php
+    use App\Models\Setting;
+    $homeSettings = Setting::orderByDesc('updated_at')->first();
+    $eventDate = $homeSettings->event_date;
+@endphp
 <!-- Hero Section -->
 <div class="bg-primary text-center py-5" style="background: url('{{ asset('images/shs.png') }}') no-repeat center center; background-size: cover; color: white; position: relative;">
   <div class="overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(29, 233, 182, 0.8) 0%, rgba(183, 33, 255, 0.8) 100%);"></div>
@@ -10,8 +15,10 @@
         <!-- <img src="{{ asset('images/shs.png') }}" alt="Left Image" class="img-fluid"> -->
       </div>
       <div class="col-md-6">
-        <h3 class="display-6 text-uppercase fw-bold mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Sacred Heart Shrine Festival</h3>
-        <p class="lead mb-4 fw-bold" style="font-size:2.5rem; letter-spacing: 2px;">03-07-2026</p>
+        <h3 class="display-6 text-uppercase fw-bold mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">{{$homeSettings->display_text}}</h3>
+        <p class="lead mb-4 fw-bold" style="font-size:2.5rem; letter-spacing: 2px;">
+            {{ \Carbon\Carbon::parse($eventDate)->format('d-m-Y') }}
+        </p>
         <div class="d-flex justify-content-center mb-4">
             <div class="mx-3 text-center">
                 <div class="h2 bg-white text-primary rounded-circle p-3 shadow-sm" style="width: 80px; height: 80px; line-height: 50px;" id="days">0</div>
@@ -75,7 +82,8 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Set the date we're counting down to (YYYY-MM-DD format)
-    var countDownDate = new Date("2026-07-03T00:00:00").getTime();
+
+    var countDownDate = new Date("{{ $eventDate }}T00:00:00").getTime();
 
     function updateCountdown() {
         var now = new Date().getTime();

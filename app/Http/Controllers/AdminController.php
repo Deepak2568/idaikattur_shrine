@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\Setting;
 
 class AdminController extends Controller
 {
@@ -33,4 +34,81 @@ class AdminController extends Controller
         $customer->delete();
         return redirect()->route('admin')->with('removed', 'Customer deleted successfully!');
     }
+
+    public function homeSettings(Request $request)
+    {
+        // Check if the logged in user is an admin
+        $admin = auth('customer')->user();
+        if (!$admin || $admin->is_admin !== 'yes') {
+            return redirect()->route('matrimony');
+        }
+
+        return view('settings.home', [
+            'adminsettings' => Setting::orderBy('id', 'DESC')->get(),
+            'setting'       => null // for new form (blank)
+        ]);
+    }
+
+    public function homeSettingsSave(Request $request){
+        $request->validate([
+            'display_text' => 'required|string|max:255',
+            'event_date'   => 'required|date',
+        ]);
+        
+        Setting::create([
+            'display_text' => $request->display_text,
+            'event_date'   => $request->event_date,
+        ]);
+
+        return redirect()->route('settings.home')->with('success', 'Settings saved successfully!');
+    }
+    
+    public function homeSettingsUpdate(Request $request, $id)
+    {
+        // Check if the logged in user is an admin
+        $admin = auth('customer')->user();
+        if (!$admin || $admin->is_admin !== 'yes') {
+            return redirect()->route('matrimony');
+        }
+
+        $request->validate([
+            'display_text' => 'required|string|max:255',
+            'event_date'   => 'required|date',
+        ]);
+
+        $setting = Setting::findOrFail($id);
+
+        $setting->update([
+            'display_text' => $request->display_text,
+            'event_date'   => $request->event_date,
+        ]);
+
+        return redirect()->route('settings.home')->with('success', 'Settings updated successfully!');
+    }
+
+
+    public function homeSettingsEdit(Request $request, $id)
+    {
+        $setting = Setting::findOrFail($id);
+
+        return view('settings.home', [
+            'adminsettings' => Setting::orderBy('id', 'DESC')->get(),
+            'setting'       => $setting // for edit form
+        ]);
+    }
+    
+    public function homeSettingsDelete(Request $request, $id)
+    {
+        // Check if the logged in user is an admin
+        $admin = auth('customer')->user();
+        if (!$admin || $admin->is_admin !== 'yes') {
+            return redirect()->route('matrimony');
+        }
+
+        $setting = Setting::findOrFail($id);
+        $setting->delete();
+
+        return redirect()->route('settings.home')->with('success', 'Setting deleted successfully!');
+    }
+
 }

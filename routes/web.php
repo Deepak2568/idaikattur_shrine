@@ -58,3 +58,10 @@ Route::post('/send-interest/{id}', [LoginController::class, 'sendInterest'])->na
 Route::get('/admin-settings',[AdminController::class,'index'])->name('admin');
 Route::put('/update/{id}',[AdminController::class,'update']);
 Route::delete('/delete/{id}',[AdminController::class,'destroy']);
+
+
+Route::get('/home-settings', [AdminController::class, 'homeSettings'])->name('settings.home');
+Route::post('/home-save', [AdminController::class, 'homeSettingsSave'])->name('settings.home.save');
+Route::put('/home-update/{id}', [AdminController::class, 'homeSettingsUpdate'])->name('settings.home.update');
+Route::get('/home-edit/{id}', [AdminController::class, 'homeSettingsEdit'])->name('settings.home.edit');
+Route::delete('/home-delete/{id}', [AdminController::class, 'homeSettingsDelete'])->name('settings.home.delete');
