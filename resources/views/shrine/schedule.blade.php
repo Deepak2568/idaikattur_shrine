@@ -12,7 +12,7 @@
             <!-- Friday Mass Schedule -->
             <div class="card shadow-sm mb-5">
                 <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0"><i class="fas fa-calendar-alt mr-2"></i>Friday Mass</h4>
+                    <h4 class="mb-0"><i class="fas fa-calendar-alt mr-2"></i> Friday Mass</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -54,7 +54,7 @@
             <!-- Sunday Mass Schedule -->
             <div class="card shadow-sm mb-5">
                 <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0"><i class="fas fa-sun mr-2"></i>Sunday Mass</h4>
+                    <h4 class="mb-0"><i class="fas fa-sun mr-2"></i> Sunday Mass</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -81,7 +81,7 @@
             <!-- Weekday Mass Schedule -->
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0"><i class="fas fa-calendar-week mr-2"></i>Week Days</h4>
+                    <h4 class="mb-0"><i class="fas fa-calendar-week mr-2"></i> Week Days</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
