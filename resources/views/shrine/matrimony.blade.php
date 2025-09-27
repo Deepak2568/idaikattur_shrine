@@ -258,7 +258,7 @@
           <div class="text-center">
             <i class="fas fa-phone fa-2x text-danger mb-2"></i>
             <p class="mb-1 fw-bold">Call Us</p>
-            <small class="text-muted">+91 91596 98893</small>
+            <small class="text-muted">+91 91596 96893</small>
           </div>
           <div class="text-center">
             <i class="fas fa-envelope fa-2x text-danger mb-2"></i>

@@ -208,8 +208,8 @@
                     <div class="card-body text-center">
                       <i class="fas fa-phone fa-2x text-danger mb-3"></i>
                       <h6 class="fw-bold">Phone Support</h6>
-                      <a href="tel:+919159698893" class="text-decoration-none">
-                        +91 91596 98893
+                      <a href="tel:+919159696893" class="text-decoration-none">
+                        +91 91596 96893
                       </a>
                     </div>
                   </div>
