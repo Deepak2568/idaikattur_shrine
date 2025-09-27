@@ -111,7 +111,7 @@
                                 <label for="dob" class="form-label fw-semibold">
                                     <i class="fas fa-calendar text-muted me-1"></i>Date of Birth
                                 </label>
-                                <input type="date" class="form-control @error('dob') is-invalid @enderror" id="dob" name="dob" value="{{ old('dob', $customer->dob) }}" required>
+                                <input type="date" class="form-control @error('dob') is-invalid @enderror" id="dob" name="dob" value="{{ old('dob', \Carbon\Carbon::parse($customer->dob)->format('Y-m-d')) }}"  required>
                                 @error('dob')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
