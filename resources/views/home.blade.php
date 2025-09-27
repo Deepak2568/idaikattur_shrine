@@ -59,8 +59,8 @@
         <div class="card-body text-center">
           <i class="fas fa-cross fa-2x mb-2"></i>
           <h5 class="card-title">Bishop Message</h5>
-          <p class="card-text">I am sending this message for the Website viewers. I’m extremly happy that Sacred Heart of Jesus Shrine website is now online. And I am sure this will help people to know about Our Sacred Heart of Jesus and the marvelous happenings taking place over there.May all pilgrims who visit this holy place continue to get all blessings of GOD through the loving intercession of the BLESSED MOTHER OF GOD</p>
-          <p class="text-danger small">With prayers and blessings<br>Bishop Rev.Fr.Lourdu Anantham,<br>Sivagangai Diocese</p>
+          <p class="card-text">I am extremely happy to share that the Sacred Heart of Jesus Shrine website is now online. I am confident that it will help people learn more about the Sacred Heart of Jesus and the marvelous happenings taking place here. May all pilgrims who visit this holy place continue to receive God’s blessings through the loving intercession of the Blessed Mother of God.</p>
+          <p class="text-danger fw-bold small">With prayers and blessings<br>Bishop Rev.Fr.Lourdu Anantham,<br>Sivagangai Diocese</p>
         </div>
       </div>
     </div>
@@ -70,8 +70,8 @@
         <div class="card-body text-center">
           <i class="fas fa-church fa-2x mb-2"></i>
           <h5 class="card-title">Parish Priest Message</h5>
-          <p class="card-text">I am sending this message for the Website viewers. I’m extremly happy that Sacred Heart of Jesus Shrine website is now online. And I am sure this will help people to know about Our Sacred Heart of Jesus and the marvelous happenings taking place over there.</p>
-          <p class="text-danger small">With prayers and blessings<br>Rev.Fr.S.John Vasantha Kumar,<br>Pariesh Priest</p>
+          <p class="card-text">I am extremely happy to share that the Sacred Heart of Jesus Shrine website is now online. I am sure it will help people learn more about the Sacred Heart of Jesus and the marvelous happenings taking place here.</p>
+          <p class="text-primary fw-bold small">With prayers and blessings<br>Rev.Fr.S.John Vasantha Kumar,<br>Pariesh Priest</p>
         </div>
       </div>
     </div>
