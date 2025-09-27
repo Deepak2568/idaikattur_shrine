@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\PriestController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,11 @@ Route::get('/schedule', function () {
     return view('shrine.schedule');
 });
 
-Route::view('/priest', 'shrine.priest');
+Route::get('/priest', [PriestController::class, 'index'])->name('priest.index');
+Route::post('/priest', [PriestController::class, 'store'])->name('priest.store');
+Route::get('/priest/{id}/edit', [PriestController::class, 'edit'])->name('priest.edit');
+Route::put('/priest/{id}', [PriestController::class, 'update'])->name('priest.update');
+Route::delete('/priest/{id}', [PriestController::class, 'destroy'])->name('priest.destroy');
 Route::view('/contact', 'shrine.contact');
 Route::view('/videos', 'shrine.mass_videos');
 Route::view('/about', 'shrine.about');
