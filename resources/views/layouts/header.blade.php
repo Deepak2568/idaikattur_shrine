@@ -1,3 +1,26 @@
+@php
+    use Carbon\Carbon;
+
+    // First day of next month
+    $firstDayOfNextMonth = Carbon::now()->startOfMonth()->addMonth();
+
+    // First Friday of that month
+    $firstFriday = $firstDayOfNextMonth->copy()->next(Carbon::FRIDAY);
+
+    // Format e.g. "September 5th"
+    $formattedDate = $firstFriday->format('F jS');
+
+    $firstFriday = Carbon::now()
+        ->startOfMonth()
+        ->addMonth()
+        ->next(Carbon::FRIDAY);
+
+    // மாதம் தமிழில்
+    $monthName = $firstFriday->locale('ta')->translatedFormat('F');
+    // தேதி மட்டும்
+    $day = $firstFriday->day;
+@endphp
+
 <marquee behavior="scroll" direction="left" style="background: linear-gradient(90deg, #dc3545 0%, #ffc107 100%); color: #fff; padding: 12px 0; font-size: 1.15rem; font-weight: 600; letter-spacing: 1px; border-radius: 0 0 16px 16px; box-shadow: 0 4px 16px rgba(220,53,69,0.15); text-shadow: 1px 1px 4px rgba(0,0,0,0.25);">
   <span style="margin-right: 32px;">
     <i class="fas fa-church" style="color: #fff; margin-right: 8px;"></i>
@@ -5,11 +28,11 @@
   </span>
   <span style="margin-right: 32px;">
     <i class="fas fa-calendar-day" style="color: #fff; margin-right: 8px;"></i>
-    அக்டோபர் மாதம் 3 ஆம் தேதி மாதத்தின் முதல் வெள்ளிகிழமை.
+    {{$monthName}} மாதம் {{$day}} ஆம் தேதி மாதத்தின் முதல் வெள்ளிகிழமை.
   </span>
   <span style="margin-right: 32px;">
     <i class="fas fa-clock" style="color: #fff; margin-right: 8px;"></i>
-    அன்று காலை 7 மணிக்கும், 11 மணிக்கும், மாலை 6 மணிக்கும் திருப்பலி நடைபெறும்.
+    அன்று காலை 7 மணிக்கும், 11 மணிக்கும், மாலை 6 மணிக்கும் திருப்பலி மற்றும் குணமளிக்கும் ஆராதனையும் நடைபெறும்.
   </span>
   <span style="margin-right: 32px;">
     <i class="fas fa-church" style="color: #fff; margin-right: 8px;"></i>
@@ -17,11 +40,11 @@
   </span>
   <span style="margin-right: 32px;">
     <i class="fas fa-calendar-day" style="color: #fff; margin-right: 8px;"></i>
-    September 3rd, being the first Friday of the month,
+    {{$formattedDate}}, being the first Friday of the month.
   </span>
   <span>
     <i class="fas fa-clock" style="color: #fff; margin-right: 8px;"></i>
-    Holy Mass will be celebrated at 7:00 AM, 11:00 AM, and 6:00 PM.
+    On that day, rituals and blessings will be conducted at 7 AM, 11 AM, and 6 PM.
   </span>
 </marquee>
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-lg" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border-bottom: 2px solid #e9ecef;">
