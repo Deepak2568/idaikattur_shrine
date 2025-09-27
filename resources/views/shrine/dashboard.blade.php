@@ -93,7 +93,7 @@
                                 <!-- Profile ID on top -->
                                 <div class="mb-2">
                                     <span class="id-badge small">
-                                        <i class="far fa-id-badge me-1"></i> SHM{{ str_pad($p->id, 5, '0', STR_PAD_LEFT) }}
+                                        <i class="far fa-id-badge me-1"></i> SHM{{ str_pad($p->id, 2, '0', STR_PAD_LEFT) }}
                                     </span>
                                 </div>
 

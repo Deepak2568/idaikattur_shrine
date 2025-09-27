@@ -158,7 +158,7 @@
                             <div class="avatar-initials-large">{{ strtoupper(mb_substr($customer->fname,0,1) . mb_substr($customer->lname,0,1)) }}</div>
                         @endif
                         <div class="mt-2">
-                            <span class="badge bg-primary">Profile ID: SHM{{ str_pad($customer->id, 5, '0', STR_PAD_LEFT) }}</span>
+                            <span class="badge bg-primary">Profile ID: SHM{{ str_pad($customer->id, 2, '0', STR_PAD_LEFT) }}</span>
                         </div>
                     </div>
                     <div class="col-md-8">

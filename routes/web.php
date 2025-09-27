@@ -66,6 +66,7 @@ Route::post('/send-interest/{id}', [LoginController::class, 'sendInterest'])->na
 
 Route::get('/admin-settings',[AdminController::class,'index'])->name('admin');
 Route::put('/update/{id}',[AdminController::class,'update']);
+Route::put('/deactivate/{id}',[AdminController::class,'deactivate']);
 Route::delete('/delete/{id}',[AdminController::class,'destroy']);
 
 

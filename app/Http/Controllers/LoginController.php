@@ -121,7 +121,7 @@ class LoginController extends Controller
                 'created_at' => $profile->created_at->format('M d, Y'),
                 'updated_at' => $profile->updated_at->format('M d, Y'),
                 'last_dashboard_visit' => $profile->last_dashboard_visit ? $profile->last_dashboard_visit->format('M d, Y') : null,
-                'profile_id' => 'SHM' . str_pad($profile->id, 5, '0', STR_PAD_LEFT),
+                'profile_id' => 'SHM' . str_pad($profile->id, 2, '0', STR_PAD_LEFT),
                 'address' => $profile->address,
                 'height' => $profile->height,
                 'weight' => $profile->weight,

@@ -29,6 +29,14 @@ class AdminController extends Controller
         return redirect()->route('admin')->with('success', 'Customer activated successfully!');
     }
 
+    public function deactivate(Request $request, $id){
+        $customer = Customer::findorfail($id);
+        $customer->active_status = 0; // set to Paid
+        $customer->save();
+
+        return redirect()->route('admin')->with('success', 'Customer deactivated successfully!');
+    }
+
     public function destroy(Request $request, $id){
         $customer = Customer::findorfail($id);
         $customer->delete();
