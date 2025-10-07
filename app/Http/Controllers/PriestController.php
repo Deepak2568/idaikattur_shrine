@@ -17,7 +17,7 @@ class PriestController extends Controller
     {
         $priests = Priest::getRecentPriests();
         $currentPriest = Priest::getCurrentPriest();
-        
+
         return view('shrine.priest', compact('priests', 'currentPriest'));
     }
 
@@ -37,18 +37,18 @@ class PriestController extends Controller
             'designation' => 'required|string|max:255',
             'from_year' => 'required|integer|min:1900|max:' . (date('Y') + 10),
             'to_year' => 'nullable|integer|min:1900|max:' . (date('Y') + 10) . '|gte:from_year',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:10240' // 10MB max
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:4096' // 10MB max
         ]);
 
         try {
             $image = $request->file('image');
-            
+
             // Create directory if it doesn't exist
             $directory = 'priest_images';
             if (!Storage::exists($directory)) {
                 Storage::makeDirectory($directory);
             }
-            
+
             // Generate unique filename
             $filename = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
             $imagePath = $image->storeAs($directory, $filename, 'public');
@@ -89,7 +89,7 @@ class PriestController extends Controller
             'designation' => 'required|string|max:255',
             'from_year' => 'required|integer|min:1900|max:' . (date('Y') + 10),
             'to_year' => 'nullable|integer|min:1900|max:' . (date('Y') + 10) . '|gte:from_year',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4096'
         ]);
 
         try {
@@ -108,15 +108,15 @@ class PriestController extends Controller
                 }
 
                 $image = $request->file('image');
-            
+
                 // Create directory if it doesn't exist
                 $directory = 'priest_images';
-                
-                
+
+
                 // Generate unique filename
                 $filename = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
                 $imagePath = $image->storeAs($directory, $filename, 'public');
-               
+
 
                 $updateData['image_path'] = $imagePath;
                 $updateData['original_name'] = $image->getClientOriginalName();

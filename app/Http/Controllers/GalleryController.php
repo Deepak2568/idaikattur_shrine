@@ -17,11 +17,11 @@ class GalleryController extends Controller
     {
         $folders = Gallery::getFolderNames();
         $galleryData = [];
-        
+
         foreach ($folders as $folder) {
             $galleryData[$folder] = Gallery::getImagesByFolder($folder);
         }
-        
+
         return view('shrine.gallery', compact('galleryData', 'folders'));
     }
 
@@ -37,23 +37,23 @@ class GalleryController extends Controller
 
         $request->validate([
             'folder_name' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:10240' // 10MB max
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4096'
         ]);
 
         try {
             $folderName = $request->folder_name;
             $image = $request->file('image');
-            
+
             // Create directory if it doesn't exist
             $directory = 'gallery/' . $folderName;
             if (!Storage::exists($directory)) {
                 Storage::makeDirectory($directory);
             }
-            
+
             // Generate unique filename
             $filename = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
             $imagePath = $image->storeAs($directory, $filename, 'public');
-            
+
             // Store in database (allow multiple images per folder)
             Gallery::createImage(
                 $folderName,
@@ -62,9 +62,9 @@ class GalleryController extends Controller
                 $image->getMimeType(),
                 $image->getSize()
             );
-            
+
             return redirect()->back()->with('success', 'Image uploaded successfully to folder: ' . $request->folder_name);
-            
+
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error uploading image: ' . $e->getMessage());
         }
@@ -82,17 +82,17 @@ class GalleryController extends Controller
 
         try {
             $gallery = Gallery::findOrFail($id);
-            
+
             // Delete file from storage
             if (Storage::disk('public')->exists($gallery->image_path)) {
                 Storage::disk('public')->delete($gallery->image_path);
             }
-            
+
             // Delete from database
             $gallery->delete();
-            
+
             return redirect()->back()->with('success', 'Image deleted successfully.');
-            
+
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error deleting image: ' . $e->getMessage());
         }

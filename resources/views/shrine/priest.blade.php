@@ -85,7 +85,7 @@
                             <div class="mb-3">
                                 <small class="text-muted">
                                     <i class="fas fa-info-circle"></i>
-                                    Supported formats: JPEG, PNG, JPG, GIF, WebP. Max size: 10MB<br>
+                                    Supported formats: JPEG, PNG, JPG, GIF, WebP. Max size: 4MB<br>
                                     Leave "To Year" empty for current priest
                                 </small>
           </div>

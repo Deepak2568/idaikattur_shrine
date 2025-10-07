@@ -1,24 +1,34 @@
 @php
-    use Carbon\Carbon;
+use Carbon\Carbon;
 
-    // First day of next month
-    $firstDayOfNextMonth = Carbon::now()->startOfMonth()->addMonth();
+$today = Carbon::now();
 
-    // First Friday of that month
-    $firstFriday = $firstDayOfNextMonth->copy()->next(Carbon::FRIDAY);
+// First day of this month
+$firstDayOfThisMonth = $today->copy()->startOfMonth();
 
-    // Format e.g. "September 5th"
-    $formattedDate = $firstFriday->format('F jS');
+// Helper: get first Friday for a given month's first day
+$getFirstFriday = function (Carbon $firstDay) {
+    $weekdayOfFirst = $firstDay->dayOfWeek; // 0 = Sunday ... 6 = Saturday
+    $target = Carbon::FRIDAY;                // constant for Friday (5)
+    $daysToAdd = ($target - $weekdayOfFirst + 7) % 7;
+    return $firstDay->copy()->addDays($daysToAdd);
+};
 
-    $firstFriday = Carbon::now()
-        ->startOfMonth()
-        ->addMonth()
-        ->next(Carbon::FRIDAY);
+// First Friday of this month
+$firstFridayThisMonth = $getFirstFriday($firstDayOfThisMonth);
 
-    // மாதம் தமிழில்
-    $monthName = $firstFriday->locale('ta')->translatedFormat('F');
-    // தேதி மட்டும்
-    $day = $firstFriday->day;
+// If today's after this month's first Friday, use next month's first Friday
+if ($today->gt($firstFridayThisMonth)) {
+    $firstDayOfNextMonth = $today->copy()->startOfMonth()->addMonth();
+    $firstFriday = $getFirstFriday($firstDayOfNextMonth);
+} else {
+    $firstFriday = $firstFridayThisMonth;
+}
+
+// Formats
+$formattedDate = $firstFriday->format('F jS');      // e.g. "November 7th"
+$monthName     = $firstFriday->locale('ta')->translatedFormat('F'); // month in Tamil
+$day           = $firstFriday->day;
 @endphp
 
 <marquee behavior="scroll" direction="left" style="background: linear-gradient(90deg, #dc3545 0%, #ffc107 100%); color: #fff; padding: 12px 0; font-size: 1.15rem; font-weight: 600; letter-spacing: 1px; border-radius: 0 0 16px 16px; box-shadow: 0 4px 16px rgba(220,53,69,0.15); text-shadow: 1px 1px 4px rgba(0,0,0,0.25);">

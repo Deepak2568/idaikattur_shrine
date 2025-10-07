@@ -47,7 +47,7 @@
                                 <div class="mt-3">
                                     <small class="text-muted">
                                         <i class="fas fa-info-circle"></i>
-                                        Supported: JPEG, PNG, JPG, GIF, WebP. Max size: 10MB
+                                        Supported: JPEG, PNG, JPG, GIF, WebP. Max size: 4MB
                                     </small>
                                 </div>
                                 <div class="mt-4 text-end">
