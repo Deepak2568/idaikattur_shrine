@@ -51,7 +51,7 @@
                         <div class="card-body p-4">
                             <div class="mx-auto mb-3" style="width:90px; height:90px;">
                                 @if($profile_image)
-                                    <img src="{{ asset('storage/' . $profile_image) }}" alt="Profile photo" class="rounded-circle shadow" style="width:100%; height:100%;">
+                                    <img src="{{ asset('storage/app/public/' . $profile_image) }}" alt="Profile photo" class="rounded-circle shadow" style="width:100%; height:100%;">
                                 @else
                                     <div class="avatar-initials rounded-circle d-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary fw-bold" style="width:100%; height:100%; font-size:2.2rem;">
                                         {{ $initials }}
@@ -82,7 +82,7 @@
         <p class="lead text-muted">We help Christian families find their perfect match through our trusted matrimony platform.</p>
       </div>
     </div>
-    
+
     <div class="row g-4">
       <div class="col-lg-3 col-md-6">
         <div class="card border-0 shadow-sm h-100 text-center">
@@ -95,7 +95,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col-lg-3 col-md-6">
         <div class="card border-0 shadow-sm h-100 text-center">
           <div class="card-body p-4">
@@ -107,7 +107,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col-lg-3 col-md-6">
         <div class="card border-0 shadow-sm h-100 text-center">
           <div class="card-body p-4">
@@ -119,7 +119,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col-lg-3 col-md-6">
         <div class="card border-0 shadow-sm h-100 text-center">
           <div class="card-body p-4">
@@ -144,7 +144,7 @@
         <p class="lead text-muted">Simple steps to find your perfect match</p>
       </div>
     </div>
-    
+
     <div class="row g-4">
       <div class="col-lg-4">
         <div class="text-center">
@@ -155,7 +155,7 @@
           <p class="text-muted">Sign up and create your detailed profile with photos and preferences.</p>
         </div>
       </div>
-      
+
       <div class="col-lg-4">
         <div class="text-center">
           <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
@@ -165,7 +165,7 @@
           <p class="text-muted">Browse profiles and connect with potential matches who share your values.</p>
         </div>
       </div>
-      
+
       <div class="col-lg-4">
         <div class="text-center">
           <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
@@ -188,7 +188,7 @@
         <p class="lead text-muted">Real stories from couples who found love through Sacred Heart Matrimony</p>
       </div>
     </div>
-    
+
     <div class="row g-4">
       <div class="col-lg-6">
         <div class="card border-0 shadow-sm h-100">
@@ -206,7 +206,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col-lg-6">
         <div class="card border-0 shadow-sm h-100">
           <div class="card-body p-4">
@@ -464,17 +464,17 @@
   <script>
     var registerUrl = "{{ route('register') }}";
     var loginUrl = "{{ route('login.check') }}";
-    
+
     // Update login form to use the correct route
     document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        
+
         // Clear previous errors
         document.querySelectorAll('.error-text').forEach(span => span.textContent = '');
         document.getElementById('loginError').style.display = 'none';
-        
+
         const formData = new FormData(this);
-        
+
         fetch(loginUrl, {
             method: 'POST',
             body: formData,
@@ -509,5 +509,5 @@
     });
   </script>
   @endsection
-  
+
   @endsection

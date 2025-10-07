@@ -32,8 +32,8 @@
                                 <div class="flex-grow-1">
                                     <h5 class="mb-1">Email Us</h5>
                                     <p class="mb-0">
-                                        <a href="mailto:sacredheartblessings@gmail.com" class="text-decoration-none">
-                                            sacredheartblessings@gmail.com
+                                        <a href="mailto:idaikatturchurch@gmail.com" class="text-decoration-none">
+                                            idaikatturchurch@gmail.com
                                         </a>
                                     </p>
                                 </div>
@@ -88,10 +88,10 @@
                                     <div class="col-12">
                                         <div class="mb-3">
                                             <label for="subject" class="form-label">Subject</label>
-                                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" value='{{old("subject")}}'>   
+                                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" value='{{old("subject")}}'>
                                             @error('subject')
                                                 <span class='text-danger'>{{$message}}</span>
-                                            @enderror                                         
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -119,10 +119,10 @@
             <div class="card shadow-sm mt-4">
                 <div class="card-body p-0">
                     <div class="ratio ratio-21x9">
-                        <iframe 
+                        <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3932.0575941795505!2d78.38584871428053!3d9.761189179779953!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00e15d96c28b7f%3A0x2b32496c2e787fcb!2sSacred%20Heart%20Shrine!5e0!3m2!1sen!2sin!4v1648369561274!5m2!1sen!2sin"
-                            style="border:0;" 
-                            allowfullscreen="" 
+                            style="border:0;"
+                            allowfullscreen=""
                             loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade">
                         </iframe>

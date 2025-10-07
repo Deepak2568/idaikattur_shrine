@@ -15,7 +15,7 @@
           </li>
           <li class="mb-2">
             <i class="fas fa-envelope me-2"></i>
-            <a href="mailto:sacredheartblessing@gmail.com" class="text-light text-decoration-none">sacredheartblessing@gmail.com</a>
+            <a href="mailto:idaikatturchurch@gmail.com" class="text-light text-decoration-none">idaikatturchurch@gmail.com</a>
           </li>
           <li class="mb-2">
             <a href="https://www.youtube.com/channel/UCkj4XX11IQ-3uuqeOcFPZGA" class="text-light text-decoration-none" target="_blank"><i class="fab fa-youtube me-2"></i></a> Idaikattur Church Official

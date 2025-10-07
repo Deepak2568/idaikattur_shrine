@@ -11,7 +11,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
             @endsession
-            
+
             <!-- Admin Upload Form (Only visible to admin) -->
             @auth('customer')
                 @if(Auth::guard('customer')->check())
@@ -27,9 +27,9 @@
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <label for="folder_name" class="form-label fw-semibold">Folder Name</label>
-                                        <input type="text" class="form-control @error('folder_name') is-invalid @enderror" 
-                                               id="folder_name" name="folder_name" 
-                                               value="{{ old('folder_name') }}" 
+                                        <input type="text" class="form-control @error('folder_name') is-invalid @enderror"
+                                               id="folder_name" name="folder_name"
+                                               value="{{ old('folder_name') }}"
                                                placeholder="e.g. Events, Festivals, etc." required>
                                         @error('folder_name')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -37,7 +37,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="image" class="form-label fw-semibold">Select Image</label>
-                                        <input type="file" class="form-control @error('image') is-invalid @enderror" 
+                                        <input type="file" class="form-control @error('image') is-invalid @enderror"
                                                 id="image" name="image" accept="image/*" required>
                                         @error('image')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -68,13 +68,13 @@
                 <ul class="nav nav-tabs" id="galleryTabs" role="tablist">
                     @foreach($folders as $index => $folder)
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link {{ $index === 0 ? 'active' : '' }}" 
-                                    id="{{ Str::slug($folder) }}-tab" 
-                                    data-bs-toggle="tab" 
-                                    data-bs-target="#{{ Str::slug($folder) }}" 
-                                    type="button" 
-                                    role="tab" 
-                                    aria-controls="{{ Str::slug($folder) }}" 
+                            <button class="nav-link {{ $index === 0 ? 'active' : '' }}"
+                                    id="{{ Str::slug($folder) }}-tab"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#{{ Str::slug($folder) }}"
+                                    type="button"
+                                    role="tab"
+                                    aria-controls="{{ Str::slug($folder) }}"
                                     aria-selected="{{ $index === 0 ? 'true' : 'false' }}">
                                 {{ $folder }}
                                 <span class="badge bg-secondary ms-2">{{ count($galleryData[$folder]) }}</span>
@@ -86,31 +86,31 @@
                 <!-- Tab Content -->
                 <div class="tab-content" id="galleryTabContent">
                     @foreach($folders as $index => $folder)
-                        <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}" 
-                             id="{{ Str::slug($folder) }}" 
-                             role="tabpanel" 
+                        <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}"
+                             id="{{ Str::slug($folder) }}"
+                             role="tabpanel"
                              aria-labelledby="{{ Str::slug($folder) }}-tab">
-                            
+
                             <div class="row mt-4">
                                 @forelse($galleryData[$folder] as $image)
                                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                                         <div class="card gallery-card">
                                             <div class="card-img-container position-relative">
-                                                <img src="{{ asset('storage/' . $image->image_path) }}" 
-                                                     class="card-img-top" 
+                                                <img src="{{ asset('storage/app/public' . $image->image_path) }}"
+                                                     class="card-img-top"
                                                      alt="{{ $image->original_name }}"
                                                      style="height: 200px; object-fit: cover; cursor: pointer;"
-                                                     data-bs-toggle="modal" 
+                                                     data-bs-toggle="modal"
                                                      data-bs-target="#imageModal"
-                                                     data-image-src="{{ asset('storage/' . $image->image_path) }}"
+                                                     data-image-src="{{ asset('storage/app/public' . $image->image_path) }}"
                                                      data-image-title="{{ $image->original_name }}">
-                                                
+
                                                 <!-- Admin Delete Button -->
                                                 @auth('customer')
                                                     @if(Auth::guard('customer')->check())
                                                     <div class="position-absolute top-0 end-0 p-2">
-                                                        <form action="{{ route('gallery.destroy', $image->id) }}" 
-                                                              method="POST" 
+                                                        <form action="{{ route('gallery.destroy', $image->id) }}"
+                                                              method="POST"
                                                               class="d-inline"
                                                               onsubmit="return confirm('Are you sure you want to delete this image?')">
                                                             @csrf
@@ -178,12 +178,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const imageModal = document.getElementById('imageModal');
     const modalImage = document.getElementById('modalImage');
     const modalTitle = document.getElementById('imageModalLabel');
-    
+
     imageModal.addEventListener('show.bs.modal', function (event) {
         const button = event.relatedTarget;
         const imageSrc = button.getAttribute('data-image-src');
         const imageTitle = button.getAttribute('data-image-title');
-        
+
         modalImage.src = imageSrc;
         modalTitle.textContent = imageTitle;
     });

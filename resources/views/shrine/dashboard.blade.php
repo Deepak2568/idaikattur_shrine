@@ -8,7 +8,7 @@
             <div class="col-md-3 text-center mb-3 mb-md-0">
                 <div class="avatar-ring" style="width:120px; height:120px; margin:0 auto;">
                     @if($customer->profile_image)
-                        <img src="{{ asset('storage/' . $customer->profile_image) }}" alt="Your profile photo" class="shadow-sm" style="width:100%; height:100%; border-radius:8px;">
+                        <img src="{{ asset('storage/app/public/' . $customer->profile_image) }}" alt="Your profile photo" class="shadow-sm" style="width:100%; height:100%; border-radius:8px;">
                     @else
                         <div class="avatar-initials" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#f3f4f6; color:#dc3545; font-weight:bold; font-size:2.5rem; border-radius:8px;">
                             {{ strtoupper(mb_substr($customer->fname,0,1) . mb_substr($customer->lname,0,1)) }}
@@ -73,7 +73,7 @@
                         <div class="col-12 col-md-4 d-flex align-items-center justify-content-center p-4">
                             <div class="avatar-ring" aria-label="profile avatar">
                                 @if($profile_image)
-                                    <img src="{{ asset('storage/' . $profile_image) }}" alt="Profile photo" class="shadow-sm" style="width: 100%; height: 100%; border-radius: 5px;">
+                                    <img src="{{ asset('storage/app/public/' . $profile_image) }}" alt="Profile photo" class="shadow-sm" style="width: 100%; height: 100%; border-radius: 5px;">
                                 @else
                                     <div class="avatar-initials">{{ $initials }}</div>
                                 @endif
@@ -385,7 +385,7 @@ function displayProfileModal(profile) {
             <div class="col-md-4 text-center">
                 <div class="mb-3">
                     ${profile.profile_image ?
-                        `<img src="/storage/${profile.profile_image}" alt="Profile" class="img-fluid" style="width: 250px; height: 250px; object-fit: fill; border-radius: 8px; border: 3px solid #dc3545; background-color: #f8f9fa;">` :
+                        `<img src="/storage/app/public/${profile.profile_image}" alt="Profile" class="img-fluid" style="width: 250px; height: 250px; object-fit: fill; border-radius: 8px; border: 3px solid #dc3545; background-color: #f8f9fa;">` :
                         `<div class="bg-primary text-white d-inline-flex align-items-center justify-content-center" style="width: 250px; height: 250px; font-size: 4rem; font-weight: bold; border-radius: 8px; border: 3px solid #dc3545;">
                             ${profile.fname.charAt(0)}${profile.lname.charAt(0)}
                         </div>`

@@ -23,13 +23,13 @@
                             @if(isset($priest))
                                 @method('PUT')
                             @endif
-                            
+
         <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="father_name" class="form-label">Father Name</label>
-                                    <input type="text" class="form-control @error('father_name') is-invalid @enderror" 
-                                           id="father_name" name="father_name" 
-                                           value="{{ old('father_name', isset($priest) ? $priest->father_name : '') }}" 
+                                    <input type="text" class="form-control @error('father_name') is-invalid @enderror"
+                                           id="father_name" name="father_name"
+                                           value="{{ old('father_name', isset($priest) ? $priest->father_name : '') }}"
                                            placeholder="Enter Father's full name" required>
                                     @error('father_name')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -37,9 +37,9 @@
                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="designation" class="form-label">Designation</label>
-                                    <input type="text" class="form-control @error('designation') is-invalid @enderror" 
-                                           id="designation" name="designation" 
-                                           value="{{ old('designation', isset($priest) ? $priest->designation : '') }}" 
+                                    <input type="text" class="form-control @error('designation') is-invalid @enderror"
+                                           id="designation" name="designation"
+                                           value="{{ old('designation', isset($priest) ? $priest->designation : '') }}"
                                            placeholder="Enter designation (e.g., Parish Priest, Assistant Priest)" required>
                                     @error('designation')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -50,9 +50,9 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="from_year" class="form-label">From Year</label>
-                                    <input type="number" class="form-control @error('from_year') is-invalid @enderror" 
-                                           id="from_year" name="from_year" 
-                                           value="{{ old('from_year', isset($priest) ? $priest->from_year : '') }}" 
+                                    <input type="number" class="form-control @error('from_year') is-invalid @enderror"
+                                           id="from_year" name="from_year"
+                                           value="{{ old('from_year', isset($priest) ? $priest->from_year : '') }}"
                                            min="1900" max="{{ date('Y') + 10 }}" required>
                                     @error('from_year')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -60,9 +60,9 @@
                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="to_year" class="form-label">To Year (Leave empty if current)</label>
-                                    <input type="number" class="form-control @error('to_year') is-invalid @enderror" 
-                                           id="to_year" name="to_year" 
-                                           value="{{ old('to_year', isset($priest) ? $priest->to_year : '') }}" 
+                                    <input type="number" class="form-control @error('to_year') is-invalid @enderror"
+                                           id="to_year" name="to_year"
+                                           value="{{ old('to_year', isset($priest) ? $priest->to_year : '') }}"
                                            min="1900" max="{{ date('Y') + 10 }}">
                                     @error('to_year')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -72,7 +72,7 @@
 
                             <div class="mb-3">
                                 <label for="image" class="form-label">Priest Image</label>
-                                <input type="file" class="form-control @error('image') is-invalid @enderror" 
+                                <input type="file" class="form-control @error('image') is-invalid @enderror"
                                         id="image" name="image" accept="image/*" {{ !isset($priest) ? 'required' : '' }}>
                                 @error('image')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -81,10 +81,10 @@
                                     <small class="text-muted">Current image: {{ $priest->original_name }}</small>
                                 @endif
                 </div>
-                            
+
                             <div class="mb-3">
                                 <small class="text-muted">
-                                    <i class="fas fa-info-circle"></i> 
+                                    <i class="fas fa-info-circle"></i>
                                     Supported formats: JPEG, PNG, JPG, GIF, WebP. Max size: 10MB<br>
                                     Leave "To Year" empty for current priest
                                 </small>
@@ -92,7 +92,7 @@
 
                             <div class="d-flex gap-2">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save"></i> 
+                                    <i class="fas fa-save"></i>
                                     {{ isset($priest) ? 'Update Priest' : 'Add Priest' }}
                                 </button>
                                 @if(isset($priest))
@@ -129,12 +129,12 @@
             <div class="member">
               <div class="member-img">
                             @if($priestItem->image_path)
-                                <img src="{{ Storage::url($priestItem->image_path) }}" 
-                                     class="img-fluid" alt="{{ $priestItem->father_name }}" 
+                                <img src="{{ Storage::url('app/public/'. $priestItem->image_path) }}"
+                                     class="img-fluid" alt="{{ $priestItem->father_name }}"
                                      style="height: 357px;width: 357px;">
                             @else
-                                <img src="{{ asset('images/default-priest.jpg') }}" 
-                                     class="img-fluid" alt="{{ $priestItem->father_name }}" 
+                                <img src="{{ asset('images/default-priest.jpg') }}"
+                                     class="img-fluid" alt="{{ $priestItem->father_name }}"
                                      style="height: 357px;width: 357px;object-fit: cover;">
                             @endif
                 <!-- <div class="social">
@@ -148,16 +148,16 @@
                             <h4>{{ $priestItem->father_name }}</h4>
                             <span>{{ $priestItem->designation }}</span>
                             <p class="text-danger">{{ $priestItem->year_range }}</p>
-                            
+
                             @auth('customer')
                                 @if(auth('customer')->user()->is_admin === 'yes')
                                     <div class="admin-actions mt-2">
-                                        <a href="{{ route('priest.edit', $priestItem->id) }}" 
+                                        <a href="{{ route('priest.edit', $priestItem->id) }}"
                                            class="btn btn-sm btn-outline-primary">
                                             <i class="fas fa-edit"></i> Edit
                                         </a>
-                                        <form action="{{ route('priest.destroy', $priestItem->id) }}" 
-                                              method="POST" class="d-inline" 
+                                        <form action="{{ route('priest.destroy', $priestItem->id) }}"
+                                              method="POST" class="d-inline"
                                               onsubmit="return confirm('Are you sure you want to delete this priest?')">
                                             @csrf
                                             @method('DELETE')

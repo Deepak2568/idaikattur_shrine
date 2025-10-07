@@ -113,12 +113,12 @@
               <span class="nav-hover-effect"></span>
             </a>
           </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a class="nav-link px-2 text-dark fw-semibold position-relative d-flex align-items-center" href="{{ url('/matrimony') }}" style="transition: all 0.3s ease; border-radius: 8px; margin: 0 1px; white-space: nowrap;">
               <i class="fas fa-heart me-1" style="color: #dc3545;"></i>Matrimony
               <span class="nav-hover-effect"></span>
             </a>
-          </li>
+          </li> --}}
         </ul>
     </div>
   </div>

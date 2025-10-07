@@ -155,7 +155,7 @@ echo '<!DOCTYPE html>
                 <h5><i class="fas fa-info-circle"></i>Contact Information</h5>
                 <p><i class="fas fa-map-marker-alt"></i>Sacred Heart Shrine, Idaikattur, Sivagangai</p>
                 <p><i class="fas fa-phone"></i>+91 91596 96893</p>
-                <p><i class="fas fa-envelope"></i>sacredheartblessing@gmail.com</p>
+                <p><i class="fas fa-envelope"></i>idaikatturchurch@gmail.com</p>
             </div>
         </div>
     </div>

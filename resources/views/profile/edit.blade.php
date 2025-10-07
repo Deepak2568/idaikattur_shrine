@@ -41,12 +41,12 @@
                     <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        
+
                         <!-- Profile Image Upload -->
                         <div class="text-center mb-4">
                             <div class="position-relative d-inline-block">
                                 @if($customer->profile_image)
-                                    <img src="{{ asset('storage/' . $customer->profile_image) }}" alt="Current profile photo" class="img-fluid profile-preview" style="width: 250px; height: 250px;border-radius: 8px; border: 3px solid #dc3545; background-color: #f8f9fa;">
+                                    <img src="{{ asset('storage/app/public/' . $customer->profile_image) }}" alt="Current profile photo" class="img-fluid profile-preview" style="width: 250px; height: 250px;border-radius: 8px; border: 3px solid #dc3545; background-color: #f8f9fa;">
                                 @else
                                     <div class="avatar-initials-large mb-3" id="initials-div">{{ strtoupper(mb_substr($customer->fname,0,1) . mb_substr($customer->lname,0,1)) }}</div>
                                 @endif
@@ -703,7 +703,7 @@ function previewImage(input) {
         // If file input is cleared, revert to default initials or current image
         const img = document.querySelector('.profile-preview');
         if (img) {
-            img.src = "{{ asset('storage/' . $customer->profile_image) }}";
+            img.src = "{{ asset('storage/app/public/' . $customer->profile_image) }}";
         } else {
             const initialsDiv = document.getElementById('initials-div');
             if (initialsDiv) {
