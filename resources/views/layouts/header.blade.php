@@ -1,34 +1,34 @@
 @php
-use Carbon\Carbon;
+    use Carbon\Carbon;
 
-$today = Carbon::now();
+    $today = Carbon::now();
 
-// First day of this month
-$firstDayOfThisMonth = $today->copy()->startOfMonth();
+    // First day of this month
+    $firstDayOfThisMonth = $today->copy()->startOfMonth();
 
-// Helper: get first Friday for a given month's first day
-$getFirstFriday = function (Carbon $firstDay) {
-    $weekdayOfFirst = $firstDay->dayOfWeek; // 0 = Sunday ... 6 = Saturday
-    $target = Carbon::FRIDAY;                // constant for Friday (5)
-    $daysToAdd = ($target - $weekdayOfFirst + 7) % 7;
-    return $firstDay->copy()->addDays($daysToAdd);
-};
+    // Helper: get first Friday for a given month's first day
+    $getFirstFriday = function (Carbon $firstDay) {
+        $weekdayOfFirst = $firstDay->dayOfWeek; // 0 = Sunday ... 6 = Saturday
+        $target = Carbon::FRIDAY;                // constant for Friday (5)
+        $daysToAdd = ($target - $weekdayOfFirst + 7) % 7;
+        return $firstDay->copy()->addDays($daysToAdd);
+    };
 
-// First Friday of this month
-$firstFridayThisMonth = $getFirstFriday($firstDayOfThisMonth);
+    // First Friday of this month
+    $firstFridayThisMonth = $getFirstFriday($firstDayOfThisMonth);
 
-// If today's after this month's first Friday, use next month's first Friday
-if ($today->gt($firstFridayThisMonth)) {
-    $firstDayOfNextMonth = $today->copy()->startOfMonth()->addMonth();
-    $firstFriday = $getFirstFriday($firstDayOfNextMonth);
-} else {
-    $firstFriday = $firstFridayThisMonth;
-}
+    // If today's after this month's first Friday, use next month's first Friday
+    if ($today->gt($firstFridayThisMonth)) {
+        $firstDayOfNextMonth = $today->copy()->startOfMonth()->addMonth();
+        $firstFriday = $getFirstFriday($firstDayOfNextMonth);
+    } else {
+        $firstFriday = $firstFridayThisMonth;
+    }
 
-// Formats
-$formattedDate = $firstFriday->format('F jS');      // e.g. "November 7th"
-$monthName     = $firstFriday->locale('ta')->translatedFormat('F'); // month in Tamil
-$day           = $firstFriday->day;
+    // Formats
+    $formattedDate = $firstFriday->format('F jS');      // e.g. "November 7th"
+    $monthName     = $firstFriday->locale('ta')->translatedFormat('F'); // month in Tamil
+    $day           = $firstFriday->day;
 @endphp
 
 <marquee behavior="scroll" direction="left" style="background: linear-gradient(90deg, #dc3545 0%, #ffc107 100%); color: #fff; padding: 12px 0; font-size: 1.15rem; font-weight: 600; letter-spacing: 1px; border-radius: 0 0 16px 16px; box-shadow: 0 4px 16px rgba(220,53,69,0.15); text-shadow: 1px 1px 4px rgba(0,0,0,0.25);">
@@ -83,6 +83,12 @@ $day           = $firstFriday->day;
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link px-2 text-dark fw-semibold position-relative d-flex align-items-center" href="{{ url('/schedule') }}" style="transition: all 0.3s ease; border-radius: 8px; margin: 0 1px; white-space: nowrap;">
+                <i class="fas fa-calendar-alt me-2" style="color: #dc3545;"></i>Mass Schedule
+                <span class="nav-hover-effect"></span>
+              </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link px-2 text-dark fw-semibold position-relative d-flex align-items-center" href="{{ url('/gallery') }}" style="transition: all 0.3s ease; border-radius: 8px; margin: 0 1px; white-space: nowrap;">
               <i class="fas fa-images me-1" style="color: #dc3545;"></i>Gallery
               <span class="nav-hover-effect"></span>
@@ -109,9 +115,9 @@ $day           = $firstFriday->day;
               <a class="dropdown-item py-3 px-3 fw-semibold d-flex align-items-center" href="{{ url('/videos') }}" style="border-radius: 8px; transition: all 0.3s ease; margin: 2px 0;">
                 <i class="fas fa-video me-2" style="color: #dc3545;"></i>Mass Videos
               </a>
-              <a class="dropdown-item py-3 px-3 fw-semibold d-flex align-items-center" href="{{ url('/schedule') }}" style="border-radius: 8px; transition: all 0.3s ease; margin: 2px 0;">
-                <i class="fas fa-calendar-alt me-2" style="color: #dc3545;"></i>Mass Schedule
-              </a>
+              <!--<a class="dropdown-item py-3 px-3 fw-semibold d-flex align-items-center" href="{{ url('/schedule') }}" style="border-radius: 8px; transition: all 0.3s ease; margin: 2px 0;">-->
+              <!--  <i class="fas fa-calendar-alt me-2" style="color: #dc3545;"></i>Mass Schedule-->
+              <!--</a>-->
               <!-- <a class="dropdown-item py-3 px-3 fw-semibold d-flex align-items-center" href="{{ url('/comments') }}" style="border-radius: 8px; transition: all 0.3s ease; margin: 2px 0;">
                 <i class="fas fa-comments me-2" style="color: #dc3545;"></i>Mass Comments
               </a> -->
@@ -123,12 +129,12 @@ $day           = $firstFriday->day;
               <span class="nav-hover-effect"></span>
             </a>
           </li>
-          {{-- <li class="nav-item">
-            <a class="nav-link px-2 text-dark fw-semibold position-relative d-flex align-items-center" href="{{ url('/matrimony') }}" style="transition: all 0.3s ease; border-radius: 8px; margin: 0 1px; white-space: nowrap;">
-              <i class="fas fa-heart me-1" style="color: #dc3545;"></i>Matrimony
-              <span class="nav-hover-effect"></span>
-            </a>
-          </li> --}}
+          <!--<li class="nav-item">-->
+          <!--  <a class="nav-link px-2 text-dark fw-semibold position-relative d-flex align-items-center" href="{{ url('/matrimony') }}" style="transition: all 0.3s ease; border-radius: 8px; margin: 0 1px; white-space: nowrap;">-->
+          <!--    <i class="fas fa-heart me-1" style="color: #dc3545;"></i>Matrimony-->
+          <!--    <span class="nav-hover-effect"></span>-->
+          <!--  </a>-->
+          <!--</li>-->
         </ul>
     </div>
   </div>

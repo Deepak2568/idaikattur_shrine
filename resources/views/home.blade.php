@@ -38,8 +38,8 @@
             </div>
         </div>
         <p class="text-white fw-bold" style="font-size: 16px;">எமது இதய அன்பில் நிலைத்திருந்தால் எல்லா நன்மைகளும் பெறுவீர்கள்"</p>
-        <p class="text-white fw-bold" style="font-size: 16px;">இயேசுவின் திரு இருதய ஆண்டவர் திருத்தலம் - IDAIKATTUR</p>
-        <p class="text-white fw-bold" style="font-size: 16px;">இடைக்காட்டூர், சிவகங்கை.</p>
+        <p class="text-white fw-bold" style="font-size: 16px;">இயேசுவின் திரு இருதய ஆண்டவர் திருத்தலம் - இடைக்காட்டூர்</p>
+        {{-- <p class="text-white fw-bold" style="font-size: 16px;">இடைக்காட்டூர், சிவகங்கை.</p> --}}
         <p class="text-white fw-bold" style="font-size: 16px;">SACRED HEART OF JESUS SHRINE - IDAIKATTUR</p>
       </div>
       <div class="col-md-3">

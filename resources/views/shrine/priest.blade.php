@@ -146,7 +146,7 @@
               </div>
               <div class="member-info">
                             <h4>{{ $priestItem->father_name }}</h4>
-                            <span>{{ $priestItem->designation }}</span>
+                            {{-- <span>{{ $priestItem->designation }}</span> --}}
                             <p class="text-danger">{{ $priestItem->year_range }}</p>
 
                             @auth('customer')
