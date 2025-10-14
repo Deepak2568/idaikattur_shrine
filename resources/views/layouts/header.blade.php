@@ -61,7 +61,7 @@
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}" style="transition: all 0.3s ease;">
       <img src="{{ asset('images/idai1.png') }}" alt="Sacred Heart Shrine" height="65" class="d-inline-block align-top me-3" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)); transform: scale(1.2); border-radius: 8px;">
-      <span class="fw-bold text-primary fs-4" style="text-shadow: 0 1px 2px rgba(0,0,0,0.1); letter-spacing: 0.5px;">SACRED HEART SHRINE</span>
+      <span class="fw-bold text-danger fs-4" style="text-shadow: 0 1px 2px rgba(0,0,0,0.1); letter-spacing: 0.5px;">SACRED HEART SHRINE</span>
     </a>
 
     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="box-shadow: 0 2px 4px rgba(0,0,0,0.1);">

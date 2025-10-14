@@ -77,6 +77,50 @@
     </div>
   </div>
 </div>
+<!-- Announcement Notice Section -->
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card border-0 shadow-sm" style="border-radius: 18px;">
+        <div class="card-header bg-danger text-white text-center fw-bold" style="border-radius: 18px 18px 0 0; font-size: 1.06rem;">
+          <i class="fas fa-bullhorn me-2"></i>
+          Announcements & Mass Schedule
+        </div>
+        <div class="card-body p-0 bg-white" style="border-radius: 0 0 18px 18px; overflow: hidden;">
+          <div style="height:190px; position:relative;">
+            <marquee direction="up" scrollamount="4" onmouseover="this.stop();" onmouseout="this.start();" style="height: 190px; padding: 1rem 2rem;">
+              <div class="mb-2 d-flex align-items-start">
+                <i class="fas fa-church text-danger me-2 mt-1"></i>
+                <div><b>Daily Mass:</b> 11:00 AM (Shrine)</div>
+              </div>
+              <div class="mb-2 d-flex align-items-start">
+                <i class="fas fa-calendar-day text-warning me-2 mt-1"></i>
+                <div><b>First Friday of the Month:</b> Special Mass at 7:00 AM, 11:00 AM, and 6:00 PM</div>
+              </div>
+              <div class="mb-2 d-flex align-items-start">
+                <i class="fas fa-clock text-primary me-2 mt-1"></i>
+                <div><b>Adoration & Healing Service:</b> All Fridays after each mass</div>
+              </div>
+              <div class="mb-2 d-flex align-items-start">
+                <i class="fas fa-church text-success me-2 mt-1"></i>
+                <div><b>Sunday Mass:</b> 8:30 AM & 11:00 AM</div>
+              </div>
+              <div class="mb-2 d-flex align-items-start">
+                <i class="fas fa-info-circle text-info me-2 mt-1"></i>
+                <div>Special prayers and intentions can be submitted at the Shrine Office.</div>
+              </div>
+              <div class="d-flex align-items-start">
+                <i class="fas fa-calendar-alt text-secondary me-2 mt-1"></i>
+                <div><b>Confession:</b> Available before each Mass</div>
+              </div>
+            </marquee>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 @section('scripts')
 <script>
