@@ -120,21 +120,33 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p build
+          # Keep zip small so shared hosting can download before timeout.
+          # Images/vendor already live on the server — do not re-upload every deploy.
           zip -r -q build/release.zip . \
             -x "*.git*" \
             -x "*node_modules*" \
+            -x "*vendor*" \
+            -x "*public/images*" \
+            -x "*public/build*" \
             -x "*.env" \
             -x "*.env.*" \
             -x "*tests*" \
-            -x "*docker/mysql/init*" \
+            -x "*docker*" \
             -x "*storage/app*" \
             -x "*storage/framework*" \
             -x "*storage/logs*" \
             -x "*build/release.zip" \
             -x "*.phpunit.result.cache" \
             -x "*phpunit.xml" \
-            -x "*docker-compose.yml"
+            -x "*docker-compose.yml" \
+            -x "*.md"
           ls -lh build/release.zip
+          # Fail early if pack somehow still too large for shared-host pull
+          SIZE=$(stat -c%s build/release.zip)
+          echo "Zip bytes: ${SIZE}"
+          if [ "$SIZE" -gt 40000000 ]; then
+            echo "::warning::Release zip is larger than 40MB; shared hosting may time out."
+          fi
 
       - name: Publish release zip
         env:
