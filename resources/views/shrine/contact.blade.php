@@ -59,41 +59,55 @@
                                                 {{ session('success') }}
                                             </div>
                                         @endif
+                                        @if(session('error'))
+                                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                {{ session('error') }}
+                                            </div>
+                                        @endif
                                         <div class="alert alert-danger d-none" id="error-message"></div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="name" class="form-label">Full name</label>
-                                            <input type="text" class="form-control" id="name" name="user_name" placeholder="Your Name" value='{{old("user_name")}}'>
+                                            <label for="name" class="form-label">Full name <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="name" name="user_name" placeholder="Your Name" value="{{ old('user_name') }}" required>
                                             @error('user_name')
-                                                <span class='text-danger'>{{$message}}</span>
+                                                <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="email" class="form-label">Email address</label>
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" value='{{old("email")}}'>
+                                            <label for="email" class="form-label">Email address <span class="text-danger">*</span></label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" value="{{ old('email') }}" required>
                                             @error('email')
-                                                <span class='text-danger'>{{$message}}</span>
+                                                <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="subject" class="form-label">Subject</label>
-                                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" value='{{old("subject")}}'>
+                                            <label for="phone" class="form-label">Phone number <span class="text-danger">*</span></label>
+                                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="e.g. +91 98765 43210" value="{{ old('phone') }}" required>
+                                            @error('phone')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="subject" class="form-label">Subject <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" value="{{ old('subject') }}" required>
                                             @error('subject')
-                                                <span class='text-danger'>{{$message}}</span>
+                                                <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="mb-3">
-                                            <label for="message" class="form-label">Message</label>
-                                            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Message">{{old("message")}}</textarea>
+                                            <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
+                                            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Message" required>{{ old('message') }}</textarea>
                                             @error('message')
-                                                <span class='text-danger'>{{$message}}</span>
+                                                <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                     </div>
