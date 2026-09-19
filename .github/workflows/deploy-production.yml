@@ -11,21 +11,17 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: read
+  contents: write
 
-# Hiox shared hosting blocks SFTP from GitHub Actions.
-# Deploy over HTTPS to the Laravel route /ci-deploy.
+# Hiox shared hosting: large zip uploads are blocked by WAF/limits.
+# CI creates a GitHub Release asset; the server pulls it (small POST).
 #
-# One-time manual setup (FileZilla):
-# 1. Upload these files to the live app (same paths):
-#      app/Http/Controllers/DeployController.php
-#      routes/web.php
-#      bootstrap/app.php
-# 2. Add to server .env:  DEPLOY_TOKEN=<long-random-string>
-# 3. GitHub secrets:
-#      DEPLOY_TOKEN  = same value as server .env
-#      DEPLOY_URL    = https://idaikatturshs.in/ci-deploy
-# 4. In cPanel MultiPHP INI: upload_max_filesize=128M, post_max_size=128M
+# One-time FileZilla upload (required again for this update):
+#   app/Http/Controllers/DeployController.php
+#
+# Secrets:
+#   DEPLOY_TOKEN  = same as server .env DEPLOY_TOKEN
+#   DEPLOY_URL    = https://idaikatturshs.in/ci-deploy
 
 jobs:
   test:
@@ -140,25 +136,54 @@ jobs:
             -x "*docker-compose.yml"
           ls -lh build/release.zip
 
-      - name: Upload release to server
+      - name: Publish release zip
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          TAG="deploy-${GITHUB_RUN_ID}"
+          gh release delete "$TAG" --yes --cleanup-tag 2>/dev/null || true
+          gh release create "$TAG" build/release.zip \
+            --title "Deploy ${GITHUB_SHA}" \
+            --notes "Automated production deploy" \
+            --prerelease
+          echo "TAG=${TAG}" >> "$GITHUB_ENV"
+
+      - name: Ask server to pull release
         env:
           DEPLOY_URL: ${{ secrets.DEPLOY_URL }}
           DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
+          ASSET_API_URL="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${TAG}" --jq '.assets[0].url')"
+          echo "Asset API URL obtained"
+
           response="$(mktemp)"
           http_code="$(curl -sS -o "$response" -w "%{http_code}" \
             -X POST \
             -H "X-Deploy-Token: ${DEPLOY_TOKEN}" \
-            -F "release=@build/release.zip" \
+            -H "Content-Type: application/x-www-form-urlencoded" \
+            -H "User-Agent: IdaikatturShrine-DeployBot/1.0" \
+            -H "Accept: text/plain" \
+            --data-urlencode "download_url=${ASSET_API_URL}" \
+            --data-urlencode "github_token=${GH_TOKEN}" \
             --connect-timeout 30 \
             --max-time 900 \
             "${DEPLOY_URL}")"
+
           echo "HTTP ${http_code}"
-          cat "$response"
+          head -c 2000 "$response" || true
           echo
-          if [ "$http_code" != "200" ]; then
-            echo "::error::Deploy endpoint failed. Update GitHub secret DEPLOY_URL to https://idaikatturshs.in/ci-deploy (no .php). Upload DeployController + routes/web.php + bootstrap/app.php once via FileZilla. Ensure DEPLOY_TOKEN matches server .env and PHP post_max_size/upload_max_filesize >= 128M."
+
+          if grep -qiE 'One moment, please|request is being verified|Imunify360' "$response"; then
+            echo "::error::Bot protection blocked /ci-deploy. Whitelist that path in Imunify360 / ask Hiox support."
             exit 1
           fi
+
+          if [ "$http_code" != "200" ]; then
+            echo "::error::Deploy failed (HTTP ${http_code}). Re-upload updated DeployController.php via FileZilla, confirm DEPLOY_URL=https://idaikatturshs.in/ci-deploy and DEPLOY_TOKEN."
+            exit 1
+          fi
+
           grep -q '^OK deployed' "$response"
