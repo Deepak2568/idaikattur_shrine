@@ -134,35 +134,26 @@
         @endif
 
         <!-- Priests Display Section -->
-        <div class="row">
+        <div class="row g-4">
             @forelse($priests as $priestItem)
-                <div class="col-lg-4 col-md-6 d-flex align-items-stretch mb-4">
-            <div class="member">
-              <div class="member-img">
+                <div class="col-lg-4 col-md-6 d-flex">
+                    <article class="member w-100">
+                        <div class="member-media">
                             @if($priestItem->image_path)
                                 <img src="{{ Storage::url('app/public/'. $priestItem->image_path) }}"
-                                     class="img-fluid" alt="{{ $priestItem->father_name }}"
-                                     style="height: 357px;width: 357px;">
+                                     alt="{{ $priestItem->father_name }}">
                             @else
                                 <img src="{{ asset('images/default-priest.jpg') }}"
-                                     class="img-fluid" alt="{{ $priestItem->father_name }}"
-                                     style="height: 357px;width: 357px;object-fit: cover;">
+                                     alt="{{ $priestItem->father_name }}">
                             @endif
-                <!-- <div class="social">
-                  <a href=""><i class="fab fa-twitter"></i></a>
-                  <a href=""><i class="fab fa-facebook"></i></a>
-                  <a href=""><i class="fab fa-instagram"></i></a>
-                  <a href=""><i class="fab fa-linkedin"></i></a>
-                </div> -->
-              </div>
-              <div class="member-info">
-                            <h4>{{ $priestItem->father_name }}</h4>
-                            {{-- <span>{{ $priestItem->designation }}</span> --}}
-                            <p class="text-danger">{{ $priestItem->year_range }}</p>
+                        </div>
+                        <div class="member-info">
+                            <h4 class="member-name">{{ $priestItem->father_name }}</h4>
+                            <p class="member-years mb-0">{{ $priestItem->year_range }}</p>
 
                             @auth('customer')
                                 @if(auth('customer')->user()->is_admin === 'yes')
-                                    <div class="admin-actions mt-2">
+                                    <div class="admin-actions mt-3">
                                         <a href="{{ route('priest.edit', $priestItem->id) }}"
                                            class="btn btn-sm btn-outline-primary">
                                             <i class="fas fa-edit"></i> Edit
@@ -176,20 +167,20 @@
                                                 <i class="fas fa-trash"></i> Delete
                                             </button>
                                         </form>
-              </div>
+                                    </div>
                                 @endif
                             @endauth
-            </div>
-          </div>
+                        </div>
+                    </article>
                 </div>
             @empty
                 <div class="col-12">
                     <div class="text-center py-5">
                         <i class="fas fa-user-tie fa-3x text-muted mb-3"></i>
                         <h4 class="text-muted">No priests found</h4>
-                        <p class="text-muted">Priest information will be displayed here once added.</p>
-              </div>
-            </div>
+                        <p class="text-muted mb-0">Priest information will be displayed here once added.</p>
+                    </div>
+                </div>
             @endforelse
         </div>
 
