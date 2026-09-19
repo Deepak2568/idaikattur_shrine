@@ -13,12 +13,13 @@ concurrency:
 permissions:
   contents: read
 
-# Hiox shared hosting has no SSH — deploy uses FTP from cPanel.
+# Hiox shared hosting uses SFTP (not FTP).
 # Required secrets:
-#   FTP_SERVER       e.g. ftp.yourdomain.com or server IP
-#   FTP_USERNAME     cPanel / FTP username
-#   FTP_PASSWORD     FTP password
-#   FTP_SERVER_DIR   remote Laravel root, e.g. /public_html/  or /home/USER/public_html/
+#   SFTP_HOST         e.g. 103.235.104.210 or idaikatturshs.in
+#   SFTP_PORT         e.g. 21478
+#   SFTP_USERNAME     e.g. idaikatt
+#   SFTP_PASSWORD     SFTP password from hosting panel
+#   SFTP_SERVER_DIR   remote Laravel root, e.g. /public_html/ or /home/idaikatt/public_html/
 
 jobs:
   test:
@@ -76,7 +77,7 @@ jobs:
           retention-days: 3
 
   deploy:
-    name: Deploy to production (FTP)
+    name: Deploy to production (SFTP)
     needs: build
     runs-on: ubuntu-latest
     environment: production
@@ -102,15 +103,16 @@ jobs:
       - name: Install production Composer dependencies
         run: composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress
 
-      - name: Verify FTP secrets
+      - name: Verify SFTP secrets
         env:
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+          SFTP_PORT: ${{ secrets.SFTP_PORT }}
+          SFTP_USERNAME: ${{ secrets.SFTP_USERNAME }}
+          SFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
+          SFTP_SERVER_DIR: ${{ secrets.SFTP_SERVER_DIR }}
         run: |
           missing=0
-          for name in FTP_SERVER FTP_USERNAME FTP_PASSWORD FTP_SERVER_DIR; do
+          for name in SFTP_HOST SFTP_PORT SFTP_USERNAME SFTP_PASSWORD SFTP_SERVER_DIR; do
             if [ -z "${!name}" ]; then
               echo "::error::Missing secret: $name"
               missing=1
@@ -119,45 +121,43 @@ jobs:
           if [ "$missing" -ne 0 ]; then
             exit 1
           fi
+          echo "SFTP secrets are present."
 
-          # Hostname only — no ftp://, https://, path, or trailing slash
-          if echo "$FTP_SERVER" | grep -Eq '://|/|@'; then
-            echo "::error::FTP_SERVER must be a bare hostname or IP (e.g. ftp.example.com or 1.2.3.4), not a URL."
-            exit 1
-          fi
+      - name: Deploy via SFTP
+        env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+          SFTP_PORT: ${{ secrets.SFTP_PORT }}
+          SFTP_USERNAME: ${{ secrets.SFTP_USERNAME }}
+          SFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
+          SFTP_SERVER_DIR: ${{ secrets.SFTP_SERVER_DIR }}
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y lftp
 
-          echo "Checking DNS for FTP_SERVER..."
-          if ! getent hosts "$FTP_SERVER" >/dev/null 2>&1 && ! dig +short "$FTP_SERVER" A | grep -q .; then
-            echo "::error::FTP_SERVER hostname does not resolve (ENOTFOUND). In cPanel → FTP Accounts, copy the exact FTP server / IP from Hiox and update the GitHub secret."
-            exit 1
-          fi
-          echo "FTP secrets look valid."
+          # Normalize remote dir (ensure trailing slash)
+          REMOTE_DIR="${SFTP_SERVER_DIR%/}/"
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          protocol: ${{ secrets.FTP_PROTOCOL || 'ftp' }}
-          port: ${{ secrets.FTP_PORT || 21 }}
-          timeout: 600000
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-            **/node_modules/**
-            **/.env
-            **/.env.*
-            **/tests/**
-            **/docker/mysql/init/**
-            **/storage/app/**
-            **/storage/framework/**
-            **/storage/logs/**
-            **/.phpunit.result.cache
-            **/.phpactor.json
-            **/phpunit.xml
-            **/.editorconfig
-            **/docker-compose.yml
-            **/.dockerignore
+          lftp -u "${SFTP_USERNAME},${SFTP_PASSWORD}" "sftp://${SFTP_HOST}:${SFTP_PORT}" <<EOF
+          set sftp:auto-confirm yes
+          set net:timeout 30
+          set net:max-retries 2
+          set mirror:parallel-transfer-count 2
+          mirror -R --verbose --parallel=2 \
+            --exclude-glob .git/ \
+            --exclude-glob .github/ \
+            --exclude-glob node_modules/ \
+            --exclude-glob .env \
+            --exclude-glob .env.* \
+            --exclude-glob tests/ \
+            --exclude-glob docker/mysql/init/ \
+            --exclude-glob storage/app/ \
+            --exclude-glob storage/framework/ \
+            --exclude-glob storage/logs/ \
+            --exclude-glob .phpunit.result.cache \
+            --exclude-glob phpunit.xml \
+            --exclude-glob docker-compose.yml \
+            --exclude-glob .dockerignore \
+            ./ ${REMOTE_DIR}
+          bye
+          EOF
