@@ -133,31 +133,49 @@ jobs:
         run: |
           set -euo pipefail
           sudo apt-get update
-          sudo apt-get install -y lftp
+          sudo apt-get install -y lftp sshpass openssh-client
 
-          # Normalize remote dir (ensure trailing slash)
           REMOTE_DIR="${SFTP_SERVER_DIR%/}/"
 
-          lftp -u "${SFTP_USERNAME},${SFTP_PASSWORD}" "sftp://${SFTP_HOST}:${SFTP_PORT}" <<EOF
-          set sftp:auto-confirm yes
-          set net:timeout 30
-          set net:max-retries 2
-          set mirror:parallel-transfer-count 2
-          mirror -R --verbose --parallel=2 \
-            --exclude-glob .git/ \
-            --exclude-glob .github/ \
-            --exclude-glob node_modules/ \
-            --exclude-glob .env \
-            --exclude-glob .env.* \
-            --exclude-glob tests/ \
-            --exclude-glob docker/mysql/init/ \
-            --exclude-glob storage/app/ \
-            --exclude-glob storage/framework/ \
-            --exclude-glob storage/logs/ \
-            --exclude-glob .phpunit.result.cache \
-            --exclude-glob phpunit.xml \
-            --exclude-glob docker-compose.yml \
-            --exclude-glob .dockerignore \
-            ./ ${REMOTE_DIR}
-          bye
-          EOF
+          echo "==> Testing SFTP login on ${SFTP_HOST}:${SFTP_PORT}"
+          export SSHPASS="${SFTP_PASSWORD}"
+          if ! sshpass -e sftp -oBatchMode=no -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null \
+            -P "${SFTP_PORT}" "${SFTP_USERNAME}@${SFTP_HOST}" <<< $'pwd\nbye' ; then
+            echo "::error::SFTP login failed. Recheck SFTP_HOST, SFTP_PORT (${SFTP_PORT}), SFTP_USERNAME, SFTP_PASSWORD. Hiox may also block GitHub Actions IPs — ask support to allow outbound SFTP from CI."
+            exit 1
+          fi
+          echo "==> SFTP login OK"
+
+          # URL-encode credentials so special chars like $ ) & work in lftp
+          ENCODED_USER=$(python3 -c "import urllib.parse,os; print(urllib.parse.quote(os.environ['SFTP_USERNAME'], safe=''))")
+          ENCODED_PASS=$(python3 -c "import urllib.parse,os; print(urllib.parse.quote(os.environ['SFTP_PASSWORD'], safe=''))")
+
+          echo "==> Mirroring files to ${REMOTE_DIR}"
+          lftp -c "
+            set cmd:fail-exit yes;
+            set sftp:auto-confirm yes;
+            set net:timeout 60;
+            set net:max-retries 5;
+            set net:reconnect-interval-base 5;
+            set mirror:parallel-transfer-count 1;
+            set sftp:connect-program \"ssh -a -x -p ${SFTP_PORT} -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null\";
+            open sftp://${ENCODED_USER}:${ENCODED_PASS}@${SFTP_HOST}:${SFTP_PORT};
+            mirror -R --verbose --continue \
+              --exclude-glob .git/ \
+              --exclude-glob .github/ \
+              --exclude-glob node_modules/ \
+              --exclude-glob .env \
+              --exclude-glob .env.* \
+              --exclude-glob tests/ \
+              --exclude-glob docker/mysql/init/ \
+              --exclude-glob storage/app/ \
+              --exclude-glob storage/framework/ \
+              --exclude-glob storage/logs/ \
+              --exclude-glob .phpunit.result.cache \
+              --exclude-glob phpunit.xml \
+              --exclude-glob docker-compose.yml \
+              --exclude-glob .dockerignore \
+              ./ ${REMOTE_DIR};
+            bye
+          "
+          echo "==> Deploy finished"
