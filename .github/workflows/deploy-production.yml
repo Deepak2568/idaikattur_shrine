@@ -13,13 +13,16 @@ concurrency:
 permissions:
   contents: read
 
-# Hiox shared hosting uses SFTP (not FTP).
-# Required secrets:
-#   SFTP_HOST         e.g. 103.235.104.210 or idaikatturshs.in
-#   SFTP_PORT         e.g. 21478
-#   SFTP_USERNAME     e.g. idaikatt
-#   SFTP_PASSWORD     SFTP password from hosting panel
-#   SFTP_SERVER_DIR   remote Laravel root, e.g. /public_html/ or /home/idaikatt/public_html/
+# Hiox shared hosting blocks SFTP from GitHub Actions.
+# Deploy over HTTPS instead (always allowed on shared hosting).
+#
+# One-time manual setup (FileZilla / cPanel File Manager):
+# 1. Upload public/ci-deploy.php to the live site public folder
+# 2. Add to server .env:  DEPLOY_TOKEN=<long-random-string>
+# 3. GitHub secrets:
+#      DEPLOY_TOKEN  = same value as server .env
+#      DEPLOY_URL    = https://idaikatturshs.in/ci-deploy.php
+#         (use /public/ci-deploy.php if that is your public URL path)
 
 jobs:
   test:
@@ -60,7 +63,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: npm
 
       - name: Install npm dependencies
@@ -77,7 +80,7 @@ jobs:
           retention-days: 3
 
   deploy:
-    name: Deploy to production (SFTP)
+    name: Deploy to production (HTTPS)
     needs: build
     runs-on: ubuntu-latest
     environment: production
@@ -103,79 +106,56 @@ jobs:
       - name: Install production Composer dependencies
         run: composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress
 
-      - name: Verify SFTP secrets
+      - name: Verify deploy secrets
         env:
-          SFTP_HOST: ${{ secrets.SFTP_HOST }}
-          SFTP_PORT: ${{ secrets.SFTP_PORT }}
-          SFTP_USERNAME: ${{ secrets.SFTP_USERNAME }}
-          SFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
-          SFTP_SERVER_DIR: ${{ secrets.SFTP_SERVER_DIR }}
+          DEPLOY_URL: ${{ secrets.DEPLOY_URL }}
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         run: |
-          missing=0
-          for name in SFTP_HOST SFTP_PORT SFTP_USERNAME SFTP_PASSWORD SFTP_SERVER_DIR; do
-            if [ -z "${!name}" ]; then
-              echo "::error::Missing secret: $name"
-              missing=1
-            fi
-          done
-          if [ "$missing" -ne 0 ]; then
+          if [ -z "$DEPLOY_URL" ] || [ -z "$DEPLOY_TOKEN" ]; then
+            echo "::error::Add GitHub secrets DEPLOY_URL and DEPLOY_TOKEN (see workflow comments)."
             exit 1
           fi
-          echo "SFTP secrets are present."
+          echo "Deploy secrets are present."
 
-      - name: Deploy via SFTP
-        env:
-          SFTP_HOST: ${{ secrets.SFTP_HOST }}
-          SFTP_PORT: ${{ secrets.SFTP_PORT }}
-          SFTP_USERNAME: ${{ secrets.SFTP_USERNAME }}
-          SFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
-          SFTP_SERVER_DIR: ${{ secrets.SFTP_SERVER_DIR }}
+      - name: Pack release zip
         run: |
           set -euo pipefail
-          sudo apt-get update
-          sudo apt-get install -y lftp sshpass openssh-client
+          mkdir -p build
+          zip -r -q build/release.zip . \
+            -x "*.git*" \
+            -x "*node_modules*" \
+            -x "*.env" \
+            -x "*.env.*" \
+            -x "*tests*" \
+            -x "*docker/mysql/init*" \
+            -x "*storage/app*" \
+            -x "*storage/framework*" \
+            -x "*storage/logs*" \
+            -x "*build/release.zip" \
+            -x "*.phpunit.result.cache" \
+            -x "*phpunit.xml" \
+            -x "*docker-compose.yml"
+          ls -lh build/release.zip
 
-          REMOTE_DIR="${SFTP_SERVER_DIR%/}/"
-
-          echo "==> Testing SFTP login on ${SFTP_HOST}:${SFTP_PORT}"
-          export SSHPASS="${SFTP_PASSWORD}"
-          if ! sshpass -e sftp -oBatchMode=no -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null \
-            -P "${SFTP_PORT}" "${SFTP_USERNAME}@${SFTP_HOST}" <<< $'pwd\nbye' ; then
-            echo "::error::SFTP login failed. Recheck SFTP_HOST, SFTP_PORT (${SFTP_PORT}), SFTP_USERNAME, SFTP_PASSWORD. Hiox may also block GitHub Actions IPs — ask support to allow outbound SFTP from CI."
+      - name: Upload release to server
+        env:
+          DEPLOY_URL: ${{ secrets.DEPLOY_URL }}
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: |
+          set -euo pipefail
+          response="$(mktemp)"
+          http_code="$(curl -sS -o "$response" -w "%{http_code}" \
+            -X POST \
+            -H "X-Deploy-Token: ${DEPLOY_TOKEN}" \
+            -F "release=@build/release.zip" \
+            --connect-timeout 30 \
+            --max-time 900 \
+            "${DEPLOY_URL}")"
+          echo "HTTP ${http_code}"
+          cat "$response"
+          echo
+          if [ "$http_code" != "200" ]; then
+            echo "::error::Deploy endpoint failed. Confirm ci-deploy.php is uploaded, DEPLOY_TOKEN matches server .env, and PHP upload_max_filesize/post_max_size are large enough (e.g. 128M)."
             exit 1
           fi
-          echo "==> SFTP login OK"
-
-          # URL-encode credentials so special chars like $ ) & work in lftp
-          ENCODED_USER=$(python3 -c "import urllib.parse,os; print(urllib.parse.quote(os.environ['SFTP_USERNAME'], safe=''))")
-          ENCODED_PASS=$(python3 -c "import urllib.parse,os; print(urllib.parse.quote(os.environ['SFTP_PASSWORD'], safe=''))")
-
-          echo "==> Mirroring files to ${REMOTE_DIR}"
-          lftp -c "
-            set cmd:fail-exit yes;
-            set sftp:auto-confirm yes;
-            set net:timeout 60;
-            set net:max-retries 5;
-            set net:reconnect-interval-base 5;
-            set mirror:parallel-transfer-count 1;
-            set sftp:connect-program \"ssh -a -x -p ${SFTP_PORT} -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null\";
-            open sftp://${ENCODED_USER}:${ENCODED_PASS}@${SFTP_HOST}:${SFTP_PORT};
-            mirror -R --verbose --continue \
-              --exclude-glob .git/ \
-              --exclude-glob .github/ \
-              --exclude-glob node_modules/ \
-              --exclude-glob .env \
-              --exclude-glob .env.* \
-              --exclude-glob tests/ \
-              --exclude-glob docker/mysql/init/ \
-              --exclude-glob storage/app/ \
-              --exclude-glob storage/framework/ \
-              --exclude-glob storage/logs/ \
-              --exclude-glob .phpunit.result.cache \
-              --exclude-glob phpunit.xml \
-              --exclude-glob docker-compose.yml \
-              --exclude-glob .dockerignore \
-              ./ ${REMOTE_DIR};
-            bye
-          "
-          echo "==> Deploy finished"
+          grep -q '^OK deployed' "$response"
