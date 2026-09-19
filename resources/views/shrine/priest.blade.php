@@ -1,7 +1,18 @@
 @extends('layouts.app',['title' => 'Parish Priest'])
 
 @section('content')
-<section class="team mt-3" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+<section class="sh-page-hero" style="background-image: url('{{ asset('images/shs.png') }}');">
+  <div class="container sh-animate-in">
+    <div class="row">
+      <div class="col-lg-8">
+        <h1 class="display-5 fw-bold">Parish Priests</h1>
+        <p class="lead">Shepherds who have served our shrine</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="team sh-section" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
       <div class="container">
 
         @auth('customer')

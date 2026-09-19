@@ -1,49 +1,44 @@
 @extends('layouts.app',['title' => 'Contact Us'])
 @section('content')
-<div class="container py-5">
+<section class="sh-page-hero" style="background-image: url('{{ asset('images/shs.png') }}');">
+    <div class="container sh-animate-in">
+        <div class="row">
+            <div class="col-lg-8">
+                <h1 class="display-5 fw-bold">Contact Us</h1>
+                <p class="lead">Get in touch with Sacred Heart Shrine, Idaikattur</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container sh-section">
     <div class="row justify-content-center">
         <div class="col-lg-10">
-            <div class="text-center mb-5">
-                <h2 class="display-4 text-danger fw-bold">Contact Us</h2>
-                <p class="lead text-muted">Get in touch with us</p>
-            </div>
-
             <div class="row g-4">
-                <!-- Contact Information -->
                 <div class="col-lg-6">
                     <div class="card shadow-sm h-100">
-                        <div class="card-body">
+                        <div class="card-body p-4">
                             <div class="d-flex align-items-start mb-4">
-                                <div class="d-flex align-items-center">
-                                    <span class="flex-shrink-0" style="margin-right: 16px;">
-                                        <i class="fas fa-map-marker-alt fa-2x text-danger"></i>
-                                    </span>
-                                    <div class="flex-grow-1">
-                                        <h5 class="mb-1">Sacred Heart Shrine</h5>
-                                        <p class="mb-0 text-muted">Idaikattur, Sivagangai-630602, Tamilnadu, India</p>
-                                    </div>
+                                <span class="flex-shrink-0 me-3"><i class="fas fa-map-marker-alt fa-2x text-danger"></i></span>
+                                <div>
+                                    <h5 class="mb-1">Sacred Heart Shrine</h5>
+                                    <p class="mb-0 text-muted">Idaikattur, Sivagangai-630602, Tamilnadu, India</p>
                                 </div>
                             </div>
 
                             <div class="d-flex align-items-start mb-4">
-                                <div class="flex-shrink-0" style="margin-right: 16px;">
-                                    <i class="fas fa-envelope fa-2x text-danger"></i>
-                                </div>
-                                <div class="flex-grow-1">
+                                <span class="flex-shrink-0 me-3"><i class="fas fa-envelope fa-2x text-danger"></i></span>
+                                <div>
                                     <h5 class="mb-1">Email Us</h5>
                                     <p class="mb-0">
-                                        <a href="mailto:idaikatturchurch@gmail.com" class="text-decoration-none">
-                                            idaikatturchurch@gmail.com
-                                        </a>
+                                        <a href="mailto:idaikatturchurch@gmail.com" class="text-decoration-none">idaikatturchurch@gmail.com</a>
                                     </p>
                                 </div>
                             </div>
 
                             <div class="d-flex align-items-start">
-                                <div class="flex-shrink-0" style="margin-right: 16px;">
-                                    <i class="fas fa-phone-alt fa-2x text-danger"></i>
-                                </div>
-                                <div class="flex-grow-1">
+                                <span class="flex-shrink-0 me-3"><i class="fas fa-phone-alt fa-2x text-danger"></i></span>
+                                <div>
                                     <h5 class="mb-1">Call Us</h5>
                                     <p class="mb-0">+91 91596 96893<br>04574 267212</p>
                                 </div>
@@ -52,14 +47,13 @@
                     </div>
                 </div>
 
-                <!-- Contact Form -->
                 <div class="col-lg-6">
                     <div class="card shadow-sm h-100">
-                        <div class="card-body">
+                        <div class="card-body p-4">
                             <form action="{{ route('contact') }}" method="post" role="form">
                                 @csrf
                                 <div class="row g-3">
-                                <div class="col-12">
+                                    <div class="col-12">
                                         @if(session('success'))
                                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                                 {{ session('success') }}
@@ -97,7 +91,7 @@
                                     <div class="col-12">
                                         <div class="mb-3">
                                             <label for="message" class="form-label">Message</label>
-                                            <textarea class="form-control" id="message" name="message" style="height: 150px" placeholder="Message">{{old("message")}}</textarea>
+                                            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Message">{{old("message")}}</textarea>
                                             @error('message')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
@@ -115,7 +109,6 @@
                 </div>
             </div>
 
-            <!-- Map Section -->
             <div class="card shadow-sm mt-4">
                 <div class="card-body p-0">
                     <div class="ratio ratio-21x9">
@@ -124,7 +117,8 @@
                             style="border:0;"
                             allowfullscreen=""
                             loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Sacred Heart Shrine map">
                         </iframe>
                     </div>
                 </div>

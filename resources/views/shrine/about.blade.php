@@ -1,14 +1,24 @@
 @extends('layouts.app',['title'=>'About'])
 @section('content')
-<!-- ======= About Section ======= -->
-<section class="about" data-aos="fade-up">
+<section class="sh-page-hero" style="background-image: url('{{ asset('images/shs.png') }}');">
+  <div class="container sh-animate-in">
+    <div class="row">
+      <div class="col-lg-8">
+        <h1 class="display-5 fw-bold">About the Shrine</h1>
+        <p class="lead">Sacred Heart of Jesus Shrine — Idaikattur</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about sh-section" data-aos="fade-up">
       <div class="container">
 
-        <div class="row">
-          <div class="col-lg-6 mt-5">
-            <img src="{{asset('images/about/ab1.jpg')}}" class="img-fluid" alt="church" style="width:100%;">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-6">
+            <img src="{{asset('images/about/ab1.jpg')}}" class="img-fluid rounded-3 shadow-sm" alt="church" style="width:100%;">
           </div>
-          <div class="col-lg-6 pt-4 pt-lg-0 mt-5">
+          <div class="col-lg-6">
             <p class="fst-italic">
               The Sacred Heart Church is an ancient church built in Gothic architectural style situated at Idaikattur, in Sivagangai District of Tamilnadu. It is about 36 km from Madurai and in close proximity to the National Highway leading to Rameshwaram from Madurai. This unique church of the sacred heart of Jesus was built in 1894 AD by a French missionary Fr. Ferdinand Celle SJ. This is a replica of the Rheims Cathedral in France. Since the church was said to be built by angels, Fr. Ferdinand Celle SJ has placed 153 depictions of angels in and around the church. He has depicted the relics of forty saints in four elliptical shaped wooden bowls, which rest over the wooden heart in the main altar portion
             </p>
@@ -59,42 +69,31 @@
         
     </section><!-- End About Section -->
 
-    <section class="py-5 bg-light">
+    <section class="sh-section pt-0 sh-about-stats">
       <div class="container">
         <div class="row g-4">
           <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow-sm h-100">
-              <div class="card-body text-center">
-                <h2 class="display-4 fw-bold text-danger mb-0" id="yearsCounter">0</h2>
-                <p class="text-muted mb-0">Years</p>
-              </div>
+            <div class="sh-stat">
+              <h2 class="display-4 fw-bold mb-0" id="yearsCounter">0</h2>
+              <p class="text-muted mb-0">Years</p>
             </div>
           </div>
-
           <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow-sm h-100">
-              <div class="card-body text-center">
-                <h2 class="display-4 fw-bold text-danger mb-0" id="visitorsCounter">0</h2>
-                <p class="text-muted mb-0">Visitors</p>
-              </div>
+            <div class="sh-stat">
+              <h2 class="display-4 fw-bold mb-0" id="visitorsCounter">0</h2>
+              <p class="text-muted mb-0">Visitors</p>
             </div>
           </div>
-
           <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow-sm h-100">
-              <div class="card-body text-center">
-                <h2 class="display-4 fw-bold text-danger mb-0" id="massCounter">0</h2>
-                <p class="text-muted mb-0">Mass In Month</p>
-              </div>
+            <div class="sh-stat">
+              <h2 class="display-4 fw-bold mb-0" id="massCounter">0</h2>
+              <p class="text-muted mb-0">Mass In Month</p>
             </div>
           </div>
-
           <div class="col-lg-3 col-md-6">
-            <div class="card border-0 shadow-sm h-100">
-              <div class="card-body text-center">
-                <h2 class="display-4 fw-bold text-danger mb-0" id="workersCounter">0</h2>
-                <p class="text-muted mb-0">Workers</p>
-              </div>
+            <div class="sh-stat">
+              <h2 class="display-4 fw-bold mb-0" id="workersCounter">0</h2>
+              <p class="text-muted mb-0">Workers</p>
             </div>
           </div>
         </div>
@@ -136,7 +135,7 @@
           });
         });
 
-        const targetSection = document.querySelector('.py-5');
+        const targetSection = document.querySelector('.sh-about-stats');
         if (targetSection) {
           observer.observe(targetSection);
         }

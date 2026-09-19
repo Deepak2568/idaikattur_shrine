@@ -7,127 +7,120 @@
     $eventDate = $homeSettings?->event_date ?? now()->addMonth()->toDateString();
     $displayText = $homeSettings?->display_text ?? 'Idaikattur Shrine';
 @endphp
-<!-- Hero Section -->
-<div class="bg-primary text-center py-5" style="background: url('{{ asset('images/shs.png') }}') no-repeat center center; background-size: cover; color: white; position: relative;">
-  <div class="overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(29, 233, 182, 0.8) 0%, rgba(183, 33, 255, 0.8) 100%);"></div>
-  <div class="container" style="position: relative; z-index: 1;">
-    <div class="row align-items-center">
-      <div class="col-md-3">
-        <!-- <img src="{{ asset('images/shs.png') }}" alt="Left Image" class="img-fluid"> -->
+
+<section class="sh-home-hero" style="background-image: url('{{ asset('images/shs.png') }}');">
+  <div class="sh-home-hero__overlay"></div>
+  <div class="container sh-animate-in">
+    <div class="row">
+      <div class="col-lg-8 col-xl-7">
+        <p class="lead-date">{{ \Carbon\Carbon::parse($eventDate)->format('d M Y') }}</p>
+        <h1>{{ $displayText }}</h1>
+
+        <div class="sh-countdown" aria-live="polite">
+          <div class="sh-countdown__item">
+            <span class="sh-countdown__value" id="days">0</span>
+            <span class="sh-countdown__label">Days</span>
+          </div>
+          <div class="sh-countdown__item">
+            <span class="sh-countdown__value" id="hours">0</span>
+            <span class="sh-countdown__label">Hours</span>
+          </div>
+          <div class="sh-countdown__item">
+            <span class="sh-countdown__value" id="minutes">0</span>
+            <span class="sh-countdown__label">Minutes</span>
+          </div>
+          <div class="sh-countdown__item">
+            <span class="sh-countdown__value" id="seconds">0</span>
+            <span class="sh-countdown__label">Seconds</span>
+          </div>
+        </div>
+
+        <p class="sh-home-quote">எமது இதய அன்பில் நிலைத்திருந்தால் எல்லா நன்மைகளும் பெறுவீர்கள்"</p>
+        <p class="sh-home-quote">இயேசுவின் திரு இருதய ஆண்டவர் திருத்தலம் - இடைக்காட்டூர்</p>
+        <p class="sh-home-quote mb-0">Sacred Heart of Jesus Shrine — Idaikattur</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sh-section">
+  <div class="container">
+    <h2 class="sh-section-title sh-animate-in">Blessings</h2>
+    <p class="sh-section-lead">Messages from our bishop and parish priest.</p>
+    <div class="row g-4 sh-feature-grid sh-animate-in-delay">
+      <div class="col-md-6">
+        <div class="card h-100">
+          <img src="{{ asset('images/bishop.jpg') }}" class="card-img-top" alt="Bishop" style="height: 220px; object-fit: contain; background: var(--sh-teal-soft);">
+          <div class="card-body">
+            <h5 class="card-title">Bishop Message</h5>
+            <p class="card-text">I am extremely happy to share that the Sacred Heart of Jesus Shrine website is now online. I am confident that it will help people learn more about the Sacred Heart of Jesus and the marvelous happenings taking place here. May all pilgrims who visit this holy place continue to receive God’s blessings through the loving intercession of the Blessed Mother of God.</p>
+            <p class="fw-semibold small mb-0" style="color: var(--sh-teal);">With prayers and blessings<br>Bishop Rev.Fr.Lourdu Anantham,<br>Sivagangai Diocese</p>
+          </div>
+        </div>
       </div>
       <div class="col-md-6">
-        <h3 class="display-6 text-uppercase fw-bold mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">{{ $displayText }}</h3>
-        <p class="lead mb-4 fw-bold" style="font-size:2.5rem; letter-spacing: 2px;">
-            {{ \Carbon\Carbon::parse($eventDate)->format('d-m-Y') }}
-        </p>
-        <div class="d-flex justify-content-center mb-4">
-            <div class="mx-3 text-center">
-                <div class="h2 bg-white text-primary rounded-circle p-3 shadow-sm" style="width: 80px; height: 80px; line-height: 50px;" id="days">0</div>
-                <small class="text-white fw-bold mt-2 d-block" style="font-size: 0.9rem; letter-spacing: 1px;">Days</small>
-            </div>
-            <div class="mx-3 text-center">
-                <div class="h2 bg-white text-primary rounded-circle p-3 shadow-sm" style="width: 80px; height: 80px; line-height: 50px;" id="hours">0</div>
-                <small class="text-white fw-bold mt-2 d-block" style="font-size: 0.9rem; letter-spacing: 1px;">Hours</small>
-            </div>
-            <div class="mx-3 text-center">
-                <div class="h2 bg-white text-primary rounded-circle p-3 shadow-sm" style="width: 80px; height: 80px; line-height: 50px;" id="minutes">0</div>
-                <small class="text-white fw-bold mt-2 d-block" style="font-size: 0.9rem; letter-spacing: 1px;">Minutes</small>
-            </div>
-            <div class="mx-3 text-center">
-                <div class="h2 bg-white text-primary rounded-circle p-3 shadow-sm" style="width: 80px; height: 80px; line-height: 50px;" id="seconds">0</div>
-                <small class="text-white fw-bold mt-2 d-block" style="font-size: 0.9rem; letter-spacing: 1px;">Seconds</small>
-            </div>
-        </div>
-        <p class="text-white fw-bold" style="font-size: 16px;">எமது இதய அன்பில் நிலைத்திருந்தால் எல்லா நன்மைகளும் பெறுவீர்கள்"</p>
-        <p class="text-white fw-bold" style="font-size: 16px;">இயேசுவின் திரு இருதய ஆண்டவர் திருத்தலம் - இடைக்காட்டூர்</p>
-        {{-- <p class="text-white fw-bold" style="font-size: 16px;">இடைக்காட்டூர், சிவகங்கை.</p> --}}
-        <p class="text-white fw-bold" style="font-size: 16px;">SACRED HEART OF JESUS SHRINE - IDAIKATTUR</p>
-      </div>
-      <div class="col-md-3">
-        <!-- <img src="{{ asset('images/jvk.jpg') }}" alt="Right Image" class="img-fluid"> -->
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Blessings Section -->
-<div class="container my-5">
-  <h3>Blessings</h3>
-  <div class="row">
-    <div class="col-md-6 mb-4">
-      <div class="card">
-        <img src="{{ asset('images/bishop.jpg') }}" class="card-img-top" alt="Bishop" style="height: 200px; object-fit: scale-down;">
-        <div class="card-body text-center">
-          <i class="fas fa-cross fa-2x mb-2"></i>
-          <h5 class="card-title">Bishop Message</h5>
-          <p class="card-text">I am extremely happy to share that the Sacred Heart of Jesus Shrine website is now online. I am confident that it will help people learn more about the Sacred Heart of Jesus and the marvelous happenings taking place here. May all pilgrims who visit this holy place continue to receive God’s blessings through the loving intercession of the Blessed Mother of God.</p>
-          <p class="text-danger fw-bold small">With prayers and blessings<br>Bishop Rev.Fr.Lourdu Anantham,<br>Sivagangai Diocese</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6 mb-4">
-      <div class="card">
-        <img src="{{ asset('images/jvk.jpg') }}" class="card-img-top" alt="Parish Priest" style="height: 200px; object-fit: scale-down;">
-        <div class="card-body text-center">
-          <i class="fas fa-church fa-2x mb-2"></i>
-          <h5 class="card-title">Parish Priest Message</h5>
-          <p class="card-text">I am extremely happy to share that the Sacred Heart of Jesus Shrine website is now online. I am sure it will help people learn more about the Sacred Heart of Jesus and the marvelous happenings taking place here.</p>
-          <p class="text-primary fw-bold small">With prayers and blessings<br>Rev.Fr.S.John Vasantha Kumar,<br>Pariesh Priest</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Announcement Notice Section -->
-<div class="container my-4">
-  <div class="row justify-content-center">
-    <div class="col-md-10">
-      <div class="card border-0 shadow-sm" style="border-radius: 18px;">
-        <div class="card-header bg-danger text-white text-center fw-bold" style="border-radius: 18px 18px 0 0; font-size: 1.06rem;">
-          <i class="fas fa-bullhorn me-2"></i>
-          Announcements & Mass Schedule
-        </div>
-        <div class="card-body p-0 bg-white" style="border-radius: 0 0 18px 18px; overflow: hidden;">
-          <div style="height:190px; position:relative;">
-            <marquee direction="up" scrollamount="4" onmouseover="this.stop();" onmouseout="this.start();" style="height: 190px; padding: 1rem 2rem;">
-              <div class="mb-2 d-flex align-items-start">
-                <i class="fas fa-church text-danger me-2 mt-1"></i>
-                <div><b>Daily Mass:</b> 11:00 AM (Shrine)</div>
-              </div>
-              <div class="mb-2 d-flex align-items-start">
-                <i class="fas fa-calendar-day text-warning me-2 mt-1"></i>
-                <div><b>First Friday of the Month:</b> Special Mass at 7:00 AM, 11:00 AM, and 6:00 PM</div>
-              </div>
-              <div class="mb-2 d-flex align-items-start">
-                <i class="fas fa-clock text-primary me-2 mt-1"></i>
-                <div><b>Adoration & Healing Service:</b> All Fridays after each mass</div>
-              </div>
-              <div class="mb-2 d-flex align-items-start">
-                <i class="fas fa-church text-success me-2 mt-1"></i>
-                <div><b>Sunday Mass:</b> 8:30 AM & 11:00 AM</div>
-              </div>
-              <div class="mb-2 d-flex align-items-start">
-                <i class="fas fa-info-circle text-info me-2 mt-1"></i>
-                <div>Special prayers and intentions can be submitted at the Shrine Office.</div>
-              </div>
-              <div class="d-flex align-items-start">
-                <i class="fas fa-calendar-alt text-secondary me-2 mt-1"></i>
-                <div><b>Confession:</b> Available before each Mass</div>
-              </div>
-            </marquee>
+        <div class="card h-100">
+          <img src="{{ asset('images/jvk.jpg') }}" class="card-img-top" alt="Parish Priest" style="height: 220px; object-fit: contain; background: var(--sh-teal-soft);">
+          <div class="card-body">
+            <h5 class="card-title">Parish Priest Message</h5>
+            <p class="card-text">I am extremely happy to share that the Sacred Heart of Jesus Shrine website is now online. I am sure it will help people learn more about the Sacred Heart of Jesus and the marvelous happenings taking place here.</p>
+            <p class="fw-semibold small mb-0" style="color: var(--sh-teal);">With prayers and blessings<br>Rev.Fr.S.John Vasantha Kumar,<br>Parish Priest</p>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
+<section class="sh-section pt-0">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="card">
+          <div class="card-header bg-danger text-white text-center fw-semibold">
+            <i class="fas fa-bullhorn me-2"></i>
+            Announcements & Mass Schedule
+          </div>
+          <div class="card-body p-0">
+            <div style="height:190px; position:relative;">
+              <marquee direction="up" scrollamount="4" onmouseover="this.stop();" onmouseout="this.start();" style="height: 190px; padding: 1rem 1.5rem;">
+                <div class="mb-2 d-flex align-items-start">
+                  <i class="fas fa-church text-danger me-2 mt-1"></i>
+                  <div><b>Daily Mass:</b> 11:00 AM (Shrine)</div>
+                </div>
+                <div class="mb-2 d-flex align-items-start">
+                  <i class="fas fa-calendar-day text-warning me-2 mt-1"></i>
+                  <div><b>First Friday of the Month:</b> Special Mass at 7:00 AM, 11:00 AM, and 6:00 PM</div>
+                </div>
+                <div class="mb-2 d-flex align-items-start">
+                  <i class="fas fa-clock text-danger me-2 mt-1"></i>
+                  <div><b>Adoration & Healing Service:</b> All Fridays after each mass</div>
+                </div>
+                <div class="mb-2 d-flex align-items-start">
+                  <i class="fas fa-church text-success me-2 mt-1"></i>
+                  <div><b>Sunday Mass:</b> 8:30 AM & 11:00 AM</div>
+                </div>
+                <div class="mb-2 d-flex align-items-start">
+                  <i class="fas fa-info-circle text-info me-2 mt-1"></i>
+                  <div>Special prayers and intentions can be submitted at the Shrine Office.</div>
+                </div>
+                <div class="d-flex align-items-start">
+                  <i class="fas fa-calendar-alt text-secondary me-2 mt-1"></i>
+                  <div><b>Confession:</b> Available before each Mass</div>
+                </div>
+              </marquee>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 @endsection
+
 @section('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Set the date we're counting down to (YYYY-MM-DD format)
-
     var countDownDate = new Date("{{ $eventDate }}T00:00:00").getTime();
 
     function updateCountdown() {
@@ -153,8 +146,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('seconds').textContent = seconds;
     }
 
-    updateCountdown(); // Initial call
-    setInterval(updateCountdown, 1000); // Update every second
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
 });
 </script>
 @endsection

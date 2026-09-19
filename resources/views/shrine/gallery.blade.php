@@ -1,7 +1,18 @@
 @extends('layouts.app',['title'=>'Gallery'])
 @section('content')
 
-<div class="container my-5">
+<section class="sh-page-hero" style="background-image: url('{{ asset('images/shs.png') }}');">
+    <div class="container sh-animate-in">
+        <div class="row">
+            <div class="col-lg-8">
+                <h1 class="display-5 fw-bold">Gallery</h1>
+                <p class="lead">Moments of faith from Sacred Heart Shrine</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container sh-section">
     <div class="row">
         <div class="col-12">
             @if(session('success'))
@@ -15,7 +26,6 @@
             <!-- Admin Upload Form (Only visible to admin) -->
             @auth('customer')
                 @if(Auth::guard('customer')->check())
-                    <h2 class="text-center mb-5">Gallery</h2>
                     <div class="card shadow-sm border-0 mb-5">
                         <div class="card-header bg-gradient-primary text-white d-flex align-items-center">
                             <i class="fas fa-images me-2 text-primary"></i>
@@ -193,50 +203,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 @section('styles')
 <style>
-.gallery-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: none;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.gallery-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-}
-
-.card-img-container {
-    overflow: hidden;
-    border-radius: 0.375rem 0.375rem 0 0;
-}
-
-.card-img-container img {
-    transition: transform 0.3s ease;
-}
-
-.gallery-card:hover .card-img-container img {
-    transform: scale(1.05);
-}
-
-.nav-tabs .nav-link {
-    border: none;
-    border-bottom: 3px solid transparent;
-    color: #6c757d;
-    font-weight: 500;
-}
-
-.nav-tabs .nav-link.active {
-    color: #0d6efd;
-    border-bottom-color: #0d6efd;
-    background-color: transparent;
-}
-
-.nav-tabs .nav-link:hover {
-    border-bottom-color: #0d6efd;
-    color: #0d6efd;
-}
-
-.badge {
-    font-size: 0.7rem;
-}
+.card-img-container { overflow: hidden; }
+.card-img-container img { transition: transform 0.35s ease; }
+.gallery-card:hover .card-img-container img { transform: scale(1.04); }
 </style>
 @endsection
