@@ -97,7 +97,7 @@ try {
             Write-Error "Bot protection still active. Whitelist /ci-deploy in cPanel Imunify360."
         }
         if ($httpCode -eq "403") {
-            Write-Error "Forbidden — check DEPLOY_TOKEN matches server .env"
+            Write-Error "Forbidden - check DEPLOY_TOKEN matches server .env"
         }
         Write-Error "Deploy failed."
     }
