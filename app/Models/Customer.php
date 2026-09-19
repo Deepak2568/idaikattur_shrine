@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 
 class Customer extends Authenticatable
 {
+    use HasFactory;
+
     protected $casts = [
         'last_dashboard_visit' => 'datetime',
         'dob' => 'date',
