@@ -13,6 +13,13 @@ concurrency:
 permissions:
   contents: read
 
+# Hiox shared hosting has no SSH — deploy uses FTP from cPanel.
+# Required secrets:
+#   FTP_SERVER       e.g. ftp.yourdomain.com or server IP
+#   FTP_USERNAME     cPanel / FTP username
+#   FTP_PASSWORD     FTP password
+#   FTP_SERVER_DIR   remote Laravel root, e.g. /public_html/  or /home/USER/public_html/
+
 jobs:
   test:
     name: Test
@@ -69,7 +76,7 @@ jobs:
           retention-days: 3
 
   deploy:
-    name: Deploy to production
+    name: Deploy to production (FTP)
     needs: build
     runs-on: ubuntu-latest
     environment: production
@@ -84,49 +91,59 @@ jobs:
           name: frontend-build
           path: public/build
 
-      - name: Setup SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.PRODUCTION_SSH_KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          PORT="${{ secrets.PRODUCTION_PORT }}"
-          PORT="${PORT:-22}"
-          ssh-keyscan -p "$PORT" -H "${{ secrets.PRODUCTION_HOST }}" >> ~/.ssh/known_hosts
-
-      - name: Sync application files
-        env:
-          HOST: ${{ secrets.PRODUCTION_HOST }}
-          USER: ${{ secrets.PRODUCTION_USER }}
-          PORT: ${{ secrets.PRODUCTION_PORT }}
-          REMOTE_PATH: ${{ secrets.PRODUCTION_PATH }}
-        run: |
-          PORT="${PORT:-22}"
-          rsync -az --delete \
-            -e "ssh -i ~/.ssh/deploy_key -p ${PORT} -o StrictHostKeyChecking=yes" \
-            --exclude='.git/' \
-            --exclude='.github/' \
-            --exclude='.env' \
-            --exclude='.env.*' \
-            --exclude='node_modules/' \
-            --exclude='vendor/' \
-            --exclude='tests/' \
-            --exclude='docker/mysql/init/*.sql' \
-            --exclude='storage/app/' \
-            --exclude='storage/framework/' \
-            --exclude='storage/logs/' \
-            --exclude='.phpunit.result.cache' \
-            --exclude='.phpactor.json' \
-            ./ "${USER}@${HOST}:${REMOTE_PATH}/"
-
-      - name: Run remote deploy script
-        uses: appleboy/ssh-action@v1.2.0
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          host: ${{ secrets.PRODUCTION_HOST }}
-          username: ${{ secrets.PRODUCTION_USER }}
-          key: ${{ secrets.PRODUCTION_SSH_KEY }}
-          port: ${{ secrets.PRODUCTION_PORT || 22 }}
-          script: |
-            cd "${{ secrets.PRODUCTION_PATH }}"
-            mkdir -p storage/framework/{cache,sessions,views} storage/logs storage/app/public bootstrap/cache
-            chmod +x scripts/deploy-production.sh
-            ./scripts/deploy-production.sh
+          php-version: "8.3"
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, gd, intl, bcmath, exif
+          coverage: none
+          tools: composer
+
+      - name: Install production Composer dependencies
+        run: composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress
+
+      - name: Verify FTP secrets
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
+        run: |
+          missing=0
+          for name in FTP_SERVER FTP_USERNAME FTP_PASSWORD FTP_SERVER_DIR; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Missing secret: $name — add it in Settings → Secrets and variables → Actions"
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+          echo "FTP secrets are present."
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          timeout: 600000
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/node_modules/**
+            **/.env
+            **/.env.*
+            **/tests/**
+            **/docker/mysql/init/**
+            **/storage/app/**
+            **/storage/framework/**
+            **/storage/logs/**
+            **/.phpunit.result.cache
+            **/.phpactor.json
+            **/phpunit.xml
+            **/.editorconfig
+            **/docker-compose.yml
+            **/.dockerignore
