@@ -150,6 +150,8 @@ jobs:
           echo "TAG=${TAG}" >> "$GITHUB_ENV"
 
       - name: Ask server to pull release
+        id: notify
+        continue-on-error: true
         env:
           DEPLOY_URL: ${{ secrets.DEPLOY_URL }}
           DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
@@ -177,13 +179,25 @@ jobs:
           echo
 
           if grep -qiE 'One moment, please|request is being verified|Imunify360' "$response"; then
-            echo "::error::Bot protection blocked /ci-deploy. Whitelist that path in Imunify360 / ask Hiox support."
+            echo "::warning::Bot protection blocked GitHub IPs. Release ${TAG} was published — finish deploy from your PC: pwsh ./scripts/trigger-deploy.ps1 -Tag ${TAG}"
             exit 1
           fi
 
-          if [ "$http_code" != "200" ]; then
-            echo "::error::Deploy failed (HTTP ${http_code}). Re-upload updated DeployController.php via FileZilla, confirm DEPLOY_URL=https://idaikatturshs.in/ci-deploy and DEPLOY_TOKEN."
+          if [ "$http_code" != "200" ] || ! grep -q '^OK deployed' "$response"; then
+            echo "::warning::Auto-notify failed. Release ${TAG} is ready — run from your PC: pwsh ./scripts/trigger-deploy.ps1 -Tag ${TAG}"
             exit 1
           fi
 
-          grep -q '^OK deployed' "$response"
+          echo "Server pull succeeded."
+
+      - name: Deploy status
+        if: always()
+        run: |
+          if [ "${{ steps.notify.outcome }}" = "success" ]; then
+            echo "Production deploy completed via GitHub Actions."
+          else
+            echo "::notice::Hiox blocked the GitHub IP. Finish deploy on your PC after installing GitHub CLI:"
+            echo "  gh auth login"
+            echo "  pwsh ./scripts/trigger-deploy.ps1 -Tag deploy-${GITHUB_RUN_ID}"
+            echo "Or whitelist /ci-deploy in cPanel → Imunify360 → exclude URL from bot protection."
+          fi
