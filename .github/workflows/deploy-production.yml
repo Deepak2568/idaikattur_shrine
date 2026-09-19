@@ -112,22 +112,36 @@ jobs:
           missing=0
           for name in FTP_SERVER FTP_USERNAME FTP_PASSWORD FTP_SERVER_DIR; do
             if [ -z "${!name}" ]; then
-              echo "::error::Missing secret: $name — add it in Settings → Secrets and variables → Actions"
+              echo "::error::Missing secret: $name"
               missing=1
             fi
           done
           if [ "$missing" -ne 0 ]; then
             exit 1
           fi
-          echo "FTP secrets are present."
+
+          # Hostname only — no ftp://, https://, path, or trailing slash
+          if echo "$FTP_SERVER" | grep -Eq '://|/|@'; then
+            echo "::error::FTP_SERVER must be a bare hostname or IP (e.g. ftp.example.com or 1.2.3.4), not a URL."
+            exit 1
+          fi
+
+          echo "Checking DNS for FTP_SERVER..."
+          if ! getent hosts "$FTP_SERVER" >/dev/null 2>&1 && ! dig +short "$FTP_SERVER" A | grep -q .; then
+            echo "::error::FTP_SERVER hostname does not resolve (ENOTFOUND). In cPanel → FTP Accounts, copy the exact FTP server / IP from Hiox and update the GitHub secret."
+            exit 1
+          fi
+          echo "FTP secrets look valid."
 
       - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          protocol: ${{ secrets.FTP_PROTOCOL || 'ftp' }}
+          port: ${{ secrets.FTP_PORT || 21 }}
           timeout: 600000
           exclude: |
             **/.git*
