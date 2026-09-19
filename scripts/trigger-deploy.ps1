@@ -1,12 +1,10 @@
-# Trigger production deploy from your PC (bypasses Hiox bot check on GitHub IPs).
-# Prerequisites:
-#   - curl.exe (built into Windows 10+)
-#   - Optional: $env:GITHUB_TOKEN if the repo/releases are private
+# Deploy production by downloading the release on YOUR PC, then uploading
+# to the server. The server never talks to GitHub (avoids Hiox timeout/blocks).
 #
 # Usage:
 #   .\scripts\trigger-deploy.ps1
 #   .\scripts\trigger-deploy.ps1 -Tag deploy-123456789
-#   .\scripts\trigger-deploy.ps1 -DeployUrl "https://idaikatturshs.in/ci-deploy" -DeployToken "your-token"
+#   .\scripts\trigger-deploy.ps1 -DeployToken "your-token"
 
 param(
     [string]$Tag = "",
@@ -54,7 +52,7 @@ if (-not $Tag) {
     $releases = Invoke-GitHubApi "https://api.github.com/repos/$Repo/releases?per_page=20"
     $match = $releases | Where-Object { $_.tag_name -like "deploy-*" } | Select-Object -First 1
     if (-not $match) {
-        Write-Error "No deploy-* release found. Run the GitHub Action first (it creates the release even if notify fails)."
+        Write-Error "No deploy-* release found. Wait for the GitHub Action to finish, then retry."
     }
     $Tag = $match.tag_name
 }
@@ -64,40 +62,31 @@ $release = Invoke-GitHubApi "https://api.github.com/repos/$Repo/releases/tags/$T
 if (-not $release.assets -or $release.assets.Count -lt 1) {
     Write-Error "No asset on release $Tag"
 }
-$assetApiUrl = $release.assets[0].url
-Write-Host "Asset: $($release.assets[0].name)"
 
-Write-Host "Asking server to pull release (from your IP)..."
+$asset = $release.assets[0]
+$downloadUrl = $asset.browser_download_url
+Write-Host "Asset: $($asset.name) ($([math]::Round($asset.size / 1KB, 1)) KB)"
 
+$zipPath = Join-Path $env:TEMP "shrine-$Tag-release.zip"
+Write-Host "Downloading release to your PC..."
+$dlHeaders = @{ "User-Agent" = "IdaikatturShrine-Deploy/1.0" }
+Invoke-WebRequest -Uri $downloadUrl -OutFile $zipPath -Headers $dlHeaders
+if (-not (Test-Path $zipPath) -or (Get-Item $zipPath).Length -lt 100) {
+    Write-Error "Download failed or empty zip."
+}
+Write-Host "Downloaded $([math]::Round((Get-Item $zipPath).Length / 1KB, 1)) KB"
+
+Write-Host "Uploading zip to server (server does not call GitHub)..."
 $responseFile = [System.IO.Path]::GetTempFileName()
 try {
-    $curlArgs = @(
-        "-sS", "-o", $responseFile, "-w", "%{http_code}",
-        "-X", "POST",
-        "-H", "X-Deploy-Token: $DeployToken",
-        "-H", "Content-Type: application/x-www-form-urlencoded",
-        "-H", "Accept: text/plain",
-        "--data-urlencode", "download_url=$assetApiUrl",
-        "--connect-timeout", "30",
-        "--max-time", "900",
+    $httpCode = curl.exe -sS -o $responseFile -w "%{http_code}" `
+        -X POST `
+        -H "X-Deploy-Token: $DeployToken" `
+        -H "Accept: text/plain" `
+        -F "release=@$zipPath" `
+        --connect-timeout 30 `
+        --max-time 300 `
         $DeployUrl
-    )
-    if ($GitHubToken) {
-        $curlArgs = @(
-            "-sS", "-o", $responseFile, "-w", "%{http_code}",
-            "-X", "POST",
-            "-H", "X-Deploy-Token: $DeployToken",
-            "-H", "Content-Type: application/x-www-form-urlencoded",
-            "-H", "Accept: text/plain",
-            "--data-urlencode", "download_url=$assetApiUrl",
-            "--data-urlencode", "github_token=$GitHubToken",
-            "--connect-timeout", "30",
-            "--max-time", "900",
-            $DeployUrl
-        )
-    }
-
-    $httpCode = & curl.exe @curlArgs
 
     $body = Get-Content -Raw $responseFile
     Write-Host "HTTP $httpCode"
@@ -105,10 +94,10 @@ try {
 
     if ($httpCode -ne "200" -or $body -notmatch "^OK deployed") {
         if ($body -match "One moment|being verified|Imunify") {
-            Write-Error "Bot protection still active. Whitelist /ci-deploy in cPanel Imunify360 (see instructions)."
+            Write-Error "Bot protection still active. Whitelist /ci-deploy in cPanel Imunify360."
         }
-        if ($body -match "Download HTTP 404|Download HTTP 401|Download HTTP 403") {
-            Write-Error "Server could not download the release. Set a GitHub PAT: `$env:GITHUB_TOKEN = 'ghp_...' then re-run."
+        if ($httpCode -eq "403") {
+            Write-Error "Forbidden — check DEPLOY_TOKEN matches server .env"
         }
         Write-Error "Deploy failed."
     }
@@ -117,4 +106,5 @@ try {
 }
 finally {
     Remove-Item -Force $responseFile -ErrorAction SilentlyContinue
+    Remove-Item -Force $zipPath -ErrorAction SilentlyContinue
 }
