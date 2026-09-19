@@ -757,6 +757,128 @@ main { min-height: 58vh; }
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1) !important;
 }
 
+/* Blessings messages */
+.sh-blessing {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--sh-surface);
+  border: 1px solid var(--sh-line);
+  border-radius: var(--sh-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--sh-shadow);
+  border-left: 4px solid var(--sh-teal);
+}
+
+.sh-blessing__photo {
+  background:
+    linear-gradient(180deg, var(--sh-teal-soft) 0%, #eef6f6 100%);
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sh-blessing__photo img {
+  width: 180px;
+  height: 220px;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.sh-blessing__body {
+  padding: 1.35rem 1.4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.sh-blessing__eyebrow {
+  margin: 0 0 0.35rem;
+  font-family: var(--sh-font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sh-rose);
+}
+
+.sh-blessing__title {
+  font-family: var(--sh-font-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--sh-teal);
+  margin: 0 0 0.85rem;
+  line-height: 1.2;
+}
+
+.sh-blessing__message {
+  margin: 0 0 1.25rem;
+  color: #334155;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  flex: 1;
+}
+
+.sh-blessing__sign {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--sh-line);
+}
+
+.sh-blessing__closing {
+  margin: 0 0 0.35rem;
+  font-family: var(--sh-font-display);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: #b45309;
+}
+
+.sh-blessing__name {
+  margin: 0 0 0.15rem;
+  font-family: var(--sh-font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--sh-teal);
+}
+
+.sh-blessing__role {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--sh-muted);
+}
+
+@media (min-width: 576px) {
+  .sh-blessing {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .sh-blessing__photo {
+    width: 200px;
+    flex-shrink: 0;
+    padding: 1.15rem;
+  }
+
+  .sh-blessing__photo img {
+    width: 168px;
+    height: 210px;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .sh-blessing__body {
+    width: auto;
+    flex: 1;
+  }
+}
+
 .sh-stat {
   text-align: center;
   padding: 1.6rem 1rem;

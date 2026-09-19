@@ -47,26 +47,40 @@
   <div class="container">
     <h2 class="sh-section-title sh-animate-in">Blessings</h2>
     <p class="sh-section-lead">Messages from our bishop and parish priest.</p>
-    <div class="row g-4 sh-feature-grid sh-animate-in-delay">
-      <div class="col-md-6">
-        <div class="card h-100">
-          <img src="{{ asset('images/bishop.jpg') }}" class="card-img-top" alt="Bishop" style="height: 220px; object-fit: contain; background: var(--sh-teal-soft);">
-          <div class="card-body">
-            <h5 class="card-title">Bishop Message</h5>
-            <p class="card-text">I am extremely happy to share that the Sacred Heart of Jesus Shrine website is now online. I am confident that it will help people learn more about the Sacred Heart of Jesus and the marvelous happenings taking place here. May all pilgrims who visit this holy place continue to receive God’s blessings through the loving intercession of the Blessed Mother of God.</p>
-            <p class="fw-semibold small mb-0" style="color: var(--sh-teal);">With prayers and blessings<br>Bishop Rev.Fr.Lourdu Anantham,<br>Sivagangai Diocese</p>
+    <div class="row g-4 sh-blessing-grid sh-animate-in-delay">
+      <div class="col-lg-6">
+        <article class="sh-blessing">
+          <div class="sh-blessing__photo">
+            <img src="{{ asset('images/bishop.jpg') }}" alt="Bishop Rev.Fr.Lourdu Anantham">
           </div>
-        </div>
+          <div class="sh-blessing__body">
+            <p class="sh-blessing__eyebrow">From the Diocese</p>
+            <h3 class="sh-blessing__title">Bishop Message</h3>
+            <p class="sh-blessing__message">I am extremely happy to share that the Sacred Heart of Jesus Shrine website is now online. I am confident that it will help people learn more about the Sacred Heart of Jesus and the marvelous happenings taking place here. May all pilgrims who visit this holy place continue to receive God’s blessings through the loving intercession of the Blessed Mother of God.</p>
+            <footer class="sh-blessing__sign">
+              <p class="sh-blessing__closing">With prayers and blessings</p>
+              <p class="sh-blessing__name">Bishop Rev. Fr. Lourdu Anantham</p>
+              <p class="sh-blessing__role">Sivagangai Diocese</p>
+            </footer>
+          </div>
+        </article>
       </div>
-      <div class="col-md-6">
-        <div class="card h-100">
-          <img src="{{ asset('images/jvk.jpg') }}" class="card-img-top" alt="Parish Priest" style="height: 220px; object-fit: contain; background: var(--sh-teal-soft);">
-          <div class="card-body">
-            <h5 class="card-title">Parish Priest Message</h5>
-            <p class="card-text">I am extremely happy to share that the Sacred Heart of Jesus Shrine website is now online. I am sure it will help people learn more about the Sacred Heart of Jesus and the marvelous happenings taking place here.</p>
-            <p class="fw-semibold small mb-0" style="color: var(--sh-teal);">With prayers and blessings<br>Rev.Fr.S.John Vasantha Kumar,<br>Parish Priest</p>
+      <div class="col-lg-6">
+        <article class="sh-blessing">
+          <div class="sh-blessing__photo">
+            <img src="{{ asset('images/jvk.jpg') }}" alt="Rev.Fr.S.John Vasantha Kumar">
           </div>
-        </div>
+          <div class="sh-blessing__body">
+            <p class="sh-blessing__eyebrow">From the Parish</p>
+            <h3 class="sh-blessing__title">Parish Priest Message</h3>
+            <p class="sh-blessing__message">I am extremely happy to share that the Sacred Heart of Jesus Shrine website is now online. I am sure it will help people learn more about the Sacred Heart of Jesus and the marvelous happenings taking place here.</p>
+            <footer class="sh-blessing__sign">
+              <p class="sh-blessing__closing">With prayers and blessings</p>
+              <p class="sh-blessing__name">Rev. Fr. S. John Vasantha Kumar</p>
+              <p class="sh-blessing__role">Parish Priest</p>
+            </footer>
+          </div>
+        </article>
       </div>
     </div>
   </div>
