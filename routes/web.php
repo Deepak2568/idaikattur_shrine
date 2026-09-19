@@ -8,9 +8,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PriestController;
+use App\Http\Controllers\DeployController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+Route::post('/ci-deploy', DeployController::class)->name('ci.deploy');
 
 Route::get('/', function () {
     return view('home');

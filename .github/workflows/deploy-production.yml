@@ -14,15 +14,18 @@ permissions:
   contents: read
 
 # Hiox shared hosting blocks SFTP from GitHub Actions.
-# Deploy over HTTPS instead (always allowed on shared hosting).
+# Deploy over HTTPS to the Laravel route /ci-deploy.
 #
-# One-time manual setup (FileZilla / cPanel File Manager):
-# 1. Upload public/ci-deploy.php to the live site public folder
+# One-time manual setup (FileZilla):
+# 1. Upload these files to the live app (same paths):
+#      app/Http/Controllers/DeployController.php
+#      routes/web.php
+#      bootstrap/app.php
 # 2. Add to server .env:  DEPLOY_TOKEN=<long-random-string>
 # 3. GitHub secrets:
 #      DEPLOY_TOKEN  = same value as server .env
-#      DEPLOY_URL    = https://idaikatturshs.in/ci-deploy.php
-#         (use /public/ci-deploy.php if that is your public URL path)
+#      DEPLOY_URL    = https://idaikatturshs.in/ci-deploy
+# 4. In cPanel MultiPHP INI: upload_max_filesize=128M, post_max_size=128M
 
 jobs:
   test:
@@ -155,7 +158,7 @@ jobs:
           cat "$response"
           echo
           if [ "$http_code" != "200" ]; then
-            echo "::error::Deploy endpoint failed. Confirm ci-deploy.php is uploaded, DEPLOY_TOKEN matches server .env, and PHP upload_max_filesize/post_max_size are large enough (e.g. 128M)."
+            echo "::error::Deploy endpoint failed. Update GitHub secret DEPLOY_URL to https://idaikatturshs.in/ci-deploy (no .php). Upload DeployController + routes/web.php + bootstrap/app.php once via FileZilla. Ensure DEPLOY_TOKEN matches server .env and PHP post_max_size/upload_max_filesize >= 128M."
             exit 1
           fi
           grep -q '^OK deployed' "$response"
