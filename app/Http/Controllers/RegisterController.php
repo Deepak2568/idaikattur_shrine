@@ -28,6 +28,7 @@ class RegisterController extends Controller
             'termsAccepted' => 'accepted',
             'profile_image' => 'required|image|mimes:jpg,jpeg,png|max:4096',
         ]);
+        
 
         if ($request->hasFile('profile_image')) {
             $file = $request->file('profile_image');
