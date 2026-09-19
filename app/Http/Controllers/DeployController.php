@@ -65,6 +65,7 @@ class DeployController extends Controller
 
             try {
                 $copied = $this->copyReleaseFiles($source, base_path());
+                $copied += $this->mirrorSharedHostingAssets(base_path());
             } catch (\Throwable $e) {
                 return response('Copy failed: '.$e->getMessage()."\n", 500)->header('Content-Type', 'text/plain');
             }
@@ -74,6 +75,46 @@ class DeployController extends Controller
             @unlink($tmpZip);
             $this->deleteDirectory($extractTo);
         }
+    }
+
+    /**
+     * Shared hosts often use the Laravel app root as the web root.
+     * Mirror public/css → css so /css/shrine-theme.css resolves like /images does.
+     */
+    private function mirrorSharedHostingAssets(string $root): int
+    {
+        $copied = 0;
+        $pairs = [
+            'public/css' => 'css',
+        ];
+
+        foreach ($pairs as $from => $to) {
+            $srcDir = $root.'/'.$from;
+            $dstDir = $root.'/'.$to;
+            if (! is_dir($srcDir)) {
+                continue;
+            }
+            if (! is_dir($dstDir) && ! mkdir($dstDir, 0755, true)) {
+                throw new \RuntimeException("Could not create {$to}");
+            }
+
+            foreach (scandir($srcDir) ?: [] as $entry) {
+                if ($entry === '.' || $entry === '..') {
+                    continue;
+                }
+                $src = $srcDir.'/'.$entry;
+                if (! is_file($src)) {
+                    continue;
+                }
+                $dst = $dstDir.'/'.$entry;
+                if (! copy($src, $dst)) {
+                    throw new \RuntimeException("Failed mirroring {$to}/{$entry}");
+                }
+                $copied++;
+            }
+        }
+
+        return $copied;
     }
 
     /**

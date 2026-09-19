@@ -15,6 +15,18 @@ use Illuminate\Support\Facades\Auth;
 
 Route::post('/ci-deploy', DeployController::class)->name('ci.deploy');
 
+// Shared hosting: docroot is app root, so /css/* 404s while /public/css/* works.
+// This route keeps asset('css/...') working when the request hits Laravel.
+Route::get('/css/shrine-theme.css', function () {
+    $path = public_path('css/shrine-theme.css');
+    abort_unless(is_file($path), 404);
+
+    return response()->file($path, [
+        'Content-Type' => 'text/css; charset=UTF-8',
+        'Cache-Control' => 'public, max-age=604800',
+    ]);
+});
+
 Route::get('/', function () {
     return view('home');
 });
