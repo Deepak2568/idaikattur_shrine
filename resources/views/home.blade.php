@@ -4,7 +4,8 @@
 @php
     use App\Models\Setting;
     $homeSettings = Setting::orderByDesc('updated_at')->first();
-    $eventDate = $homeSettings->event_date;
+    $eventDate = $homeSettings?->event_date ?? now()->addMonth()->toDateString();
+    $displayText = $homeSettings?->display_text ?? 'Idaikattur Shrine';
 @endphp
 <!-- Hero Section -->
 <div class="bg-primary text-center py-5" style="background: url('{{ asset('images/shs.png') }}') no-repeat center center; background-size: cover; color: white; position: relative;">
@@ -15,7 +16,7 @@
         <!-- <img src="{{ asset('images/shs.png') }}" alt="Left Image" class="img-fluid"> -->
       </div>
       <div class="col-md-6">
-        <h3 class="display-6 text-uppercase fw-bold mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">{{$homeSettings->display_text}}</h3>
+        <h3 class="display-6 text-uppercase fw-bold mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">{{ $displayText }}</h3>
         <p class="lead mb-4 fw-bold" style="font-size:2.5rem; letter-spacing: 2px;">
             {{ \Carbon\Carbon::parse($eventDate)->format('d-m-Y') }}
         </p>
