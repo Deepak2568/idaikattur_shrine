@@ -21,11 +21,13 @@ class AdminController extends Controller
         $customer = Customer::all();
         $visitorsToday = SiteVisitor::countToday();
         $visitorsLast7Days = SiteVisitor::recentDays(7);
+        $visitorLocations = SiteVisitor::topLocations(7, 10);
 
         return view('shrine.admin', [
             'data' => $customer,
             'visitorsToday' => $visitorsToday,
             'visitorsLast7Days' => $visitorsLast7Days,
+            'visitorLocations' => $visitorLocations,
         ]);
     }
 

@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-4">
             <div class="card shadow-sm h-100 border-0">
                 <div class="card-body">
                     <p class="text-muted small mb-2 text-uppercase fw-semibold" style="letter-spacing: 0.06em;">Last 7 days</p>
@@ -56,6 +56,35 @@
                                 @empty
                                     <tr>
                                         <td colspan="2" class="text-muted">No visitor data yet.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body">
+                    <p class="text-muted small mb-2 text-uppercase fw-semibold" style="letter-spacing: 0.06em;">Locations (last 7 days)</p>
+                    <div class="table-responsive mb-0">
+                        <table class="table table-sm mb-0 align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Place</th>
+                                    <th class="text-end">Visitors</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse(($visitorLocations ?? []) as $loc)
+                                    <tr>
+                                        <td>{{ $loc['label'] }}</td>
+                                        <td class="text-end fw-semibold">{{ $loc['total'] }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="2" class="text-muted">No location data yet.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

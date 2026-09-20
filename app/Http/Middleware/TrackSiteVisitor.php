@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\SiteVisitor;
+use App\Services\IpGeolocation;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,13 +20,16 @@ class TrackSiteVisitor
 
         try {
             $date = now()->toDateString();
-            $hash = hash('sha256', $request->ip().'|'.$date);
+            $ip = $request->ip();
+            $hash = hash('sha256', $ip.'|'.$date);
 
+            // Location is resolved only when creating a new unique visitor for the day.
             SiteVisitor::query()->firstOrCreate(
                 [
                     'visit_date' => $date,
                     'visitor_hash' => $hash,
-                ]
+                ],
+                app(IpGeolocation::class)->lookup($ip)
             );
         } catch (\Throwable $e) {
             // Never break the site if tracking fails.
