@@ -83,9 +83,6 @@
           <a class="nav-link {{ request()->is('about') ? 'active' : '' }}" href="{{ url('/about') }}"><i class="fas fa-info-circle me-1"></i>About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ request()->is('schedule') ? 'active' : '' }}" href="{{ url('/schedule') }}"><i class="fas fa-calendar-alt me-1"></i>Mass Schedule</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link {{ request()->is('gallery') ? 'active' : '' }}" href="{{ url('/gallery') }}"><i class="fas fa-images me-1"></i>Gallery</a>
         </li>
         <li class="nav-item">
@@ -95,12 +92,18 @@
           <a class="nav-link" href="https://www.youtube.com/channel/UCkj4XX11IQ-3uuqeOcFPZGA" target="_blank" rel="noopener"><i class="fab fa-youtube me-1"></i>YouTube</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle {{ request()->is('videos') ? 'active' : '' }}" href="#" id="massDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle {{ request()->is('videos') || request()->is('schedule') || request()->is('mass-offerings') ? 'active' : '' }}" href="#" id="massDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-church me-1"></i>Mass
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="massDropdown">
             <li>
-              <a class="dropdown-item" href="{{ url('/videos') }}"><i class="fas fa-video me-2"></i>Mass Videos</a>
+              <a class="dropdown-item {{ request()->is('schedule') ? 'active' : '' }}" href="{{ url('/schedule') }}"><i class="fas fa-calendar-alt me-2"></i>Mass Timings</a>
+            </li>
+            <li>
+              <a class="dropdown-item {{ request()->is('videos') ? 'active' : '' }}" href="{{ url('/videos') }}"><i class="fas fa-video me-2"></i>Mass Videos</a>
+            </li>
+            <li>
+              <a class="dropdown-item {{ request()->is('mass-offerings') ? 'active' : '' }}" href="{{ url('/mass-offerings') }}"><i class="fas fa-hand-holding-heart me-2"></i>Mass Offerings</a>
             </li>
           </ul>
         </li>

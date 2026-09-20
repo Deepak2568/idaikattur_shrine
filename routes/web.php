@@ -35,6 +35,8 @@ Route::get('/schedule', function () {
     return view('shrine.schedule');
 });
 
+Route::view('/mass-offerings', 'shrine.mass_offerings');
+
 Route::get('/priest', [PriestController::class, 'index'])->name('priest.index');
 Route::post('/priest', [PriestController::class, 'store'])->name('priest.store');
 Route::get('/priest/{id}/edit', [PriestController::class, 'edit'])->name('priest.edit');

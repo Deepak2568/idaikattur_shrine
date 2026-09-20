@@ -889,6 +889,41 @@ main { min-height: 58vh; }
   height: 100%;
 }
 
+.sh-coming-soon {
+  padding: clamp(2.5rem, 6vw, 4rem) 1.5rem;
+  background: var(--sh-surface);
+  border: 1px solid var(--sh-line);
+  border-radius: var(--sh-radius-lg);
+  box-shadow: var(--sh-shadow);
+  border-top: 3px solid var(--sh-teal);
+}
+
+.sh-coming-soon__eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sh-rose);
+}
+
+.sh-coming-soon__title {
+  font-family: var(--sh-font-display);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  color: var(--sh-teal);
+  margin: 0 0 0.85rem;
+}
+
+.sh-coming-soon__text {
+  color: var(--sh-muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 32rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .sh-stat .display-4,
 .sh-stat .h2 {
   color: var(--sh-teal);

@@ -1,11 +1,11 @@
-@extends('layouts.app', ['title' => 'Mass Schedule'])
+@extends('layouts.app', ['title' => 'Mass Timings'])
 
 @section('content')
 <section class="sh-page-hero" style="background-image: url('{{ asset('images/shs.png') }}');">
     <div class="container sh-animate-in">
         <div class="row">
             <div class="col-lg-8">
-                <h1 class="display-5 fw-bold">Mass Schedule</h1>
+                <h1 class="display-5 fw-bold">Mass Timings</h1>
                 <p class="lead">Join us in prayer and worship at Sacred Heart Shrine</p>
             </div>
         </div>

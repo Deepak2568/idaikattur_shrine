@@ -35,7 +35,7 @@
         <ul class="list-unstyled mb-0">
           <li class="mb-2"><a href="{{ url('/') }}">Home</a></li>
           <li class="mb-2"><a href="{{ url('/about') }}">About Us</a></li>
-          <li class="mb-2"><a href="{{ url('/schedule') }}">Mass Schedule</a></li>
+          <li class="mb-2"><a href="{{ url('/schedule') }}">Mass Timings</a></li>
           <li class="mb-2"><a href="{{ url('/gallery') }}">Gallery</a></li>
           <li class="mb-2"><a href="{{ url('/contact') }}">Contact</a></li>
         </ul>
