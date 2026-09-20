@@ -106,13 +106,13 @@
                                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                                         <div class="card gallery-card">
                                             <div class="card-img-container position-relative">
-                                                <img src="{{ asset('storage/app/public/' . $image->image_path) }}"
+                                                <img src="{{ asset('storage/' . $image->image_path) }}"
                                                      class="card-img-top"
                                                      alt="{{ $image->original_name }}"
                                                      style="height: 200px; object-fit: cover; cursor: pointer;"
                                                      data-bs-toggle="modal"
                                                      data-bs-target="#imageModal"
-                                                     data-image-src="{{ asset('storage/app/public/' . $image->image_path) }}"
+                                                     data-image-src="{{ asset('storage/' . $image->image_path) }}"
                                                      data-image-title="{{ $image->original_name }}">
 
                                                 <!-- Admin Delete Button -->
