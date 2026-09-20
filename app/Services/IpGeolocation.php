@@ -30,21 +30,31 @@ class IpGeolocation
             ];
         }
 
+        $result = $this->lookupIpWhoIs($ip)
+            ?? $this->lookupIpApi($ip);
+
+        return $result ?? $empty;
+    }
+
+    /**
+     * @return array{country: ?string, region: ?string, city: ?string}|null
+     */
+    private function lookupIpWhoIs(string $ip): ?array
+    {
         try {
-            $response = Http::timeout(3)
+            $response = Http::timeout(4)
                 ->acceptJson()
-                ->get("https://ipwho.is/{$ip}", [
-                    'fields' => 'success,country,region,city',
-                ]);
+                ->withHeaders(['User-Agent' => 'IdaikatturShrine/1.0'])
+                ->get("https://ipwho.is/{$ip}");
 
             if (! $response->successful()) {
-                return $empty;
+                return null;
             }
 
             $data = $response->json();
 
-            if (! ($data['success'] ?? false)) {
-                return $empty;
+            if (! is_array($data) || ! ($data['success'] ?? false)) {
+                return null;
             }
 
             return [
@@ -53,11 +63,50 @@ class IpGeolocation
                 'city' => $this->clean($data['city'] ?? null),
             ];
         } catch (\Throwable $e) {
-            Log::warning('IP geolocation failed', [
+            Log::warning('IP geolocation (ipwho.is) failed', [
                 'message' => $e->getMessage(),
             ]);
 
-            return $empty;
+            return null;
+        }
+    }
+
+    /**
+     * Free fallback (HTTP). Used when HTTPS provider fails on host.
+     *
+     * @return array{country: ?string, region: ?string, city: ?string}|null
+     */
+    private function lookupIpApi(string $ip): ?array
+    {
+        try {
+            $response = Http::timeout(4)
+                ->acceptJson()
+                ->withHeaders(['User-Agent' => 'IdaikatturShrine/1.0'])
+                ->get("http://ip-api.com/json/{$ip}", [
+                    'fields' => 'status,country,regionName,city',
+                ]);
+
+            if (! $response->successful()) {
+                return null;
+            }
+
+            $data = $response->json();
+
+            if (! is_array($data) || ($data['status'] ?? null) !== 'success') {
+                return null;
+            }
+
+            return [
+                'country' => $this->clean($data['country'] ?? null),
+                'region' => $this->clean($data['regionName'] ?? null),
+                'city' => $this->clean($data['city'] ?? null),
+            ];
+        } catch (\Throwable $e) {
+            Log::warning('IP geolocation (ip-api) failed', [
+                'message' => $e->getMessage(),
+            ]);
+
+            return null;
         }
     }
 

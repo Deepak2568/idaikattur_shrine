@@ -23,20 +23,34 @@ class TrackSiteVisitor
             $ip = $request->ip();
             $hash = hash('sha256', $ip.'|'.$date);
 
-            // Location is resolved only when creating a new unique visitor for the day.
-            SiteVisitor::query()->firstOrCreate(
+            $visitor = SiteVisitor::query()->firstOrCreate(
                 [
                     'visit_date' => $date,
                     'visitor_hash' => $hash,
-                ],
-                app(IpGeolocation::class)->lookup($ip)
+                ]
             );
+
+            // Fill location for new rows, or older rows that still have null place data.
+            if ($this->needsLocation($visitor)) {
+                $location = app(IpGeolocation::class)->lookup($ip);
+
+                if ($location['country'] || $location['region'] || $location['city']) {
+                    $visitor->fill($location)->save();
+                }
+            }
         } catch (\Throwable $e) {
             // Never break the site if tracking fails.
             report($e);
         }
 
         return $response;
+    }
+
+    private function needsLocation(SiteVisitor $visitor): bool
+    {
+        return blank($visitor->country)
+            && blank($visitor->region)
+            && blank($visitor->city);
     }
 
     private function shouldSkip(Request $request): bool
