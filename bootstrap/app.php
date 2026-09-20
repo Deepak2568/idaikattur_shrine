@@ -14,6 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'ci-deploy',
         ]);
+
+        $middleware->web(append: [
+            \App\Http\Middleware\TrackSiteVisitor::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Setting;
+use App\Models\SiteVisitor;
 
 class AdminController extends Controller
 {
@@ -18,7 +19,14 @@ class AdminController extends Controller
         }
 
         $customer = Customer::all();
-        return view('shrine.admin',['data'=>$customer]);
+        $visitorsToday = SiteVisitor::countToday();
+        $visitorsLast7Days = SiteVisitor::recentDays(7);
+
+        return view('shrine.admin', [
+            'data' => $customer,
+            'visitorsToday' => $visitorsToday,
+            'visitorsLast7Days' => $visitorsLast7Days,
+        ]);
     }
 
     public function update(Request $request, $id){

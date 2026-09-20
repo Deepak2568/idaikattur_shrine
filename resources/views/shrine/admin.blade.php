@@ -25,6 +25,47 @@
             {{ session('removed') }}
         </div>
     @endif
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 border-0" style="border-left: 4px solid var(--sh-teal, #0f3d3e) !important;">
+                <div class="card-body">
+                    <p class="text-muted small mb-1 text-uppercase fw-semibold" style="letter-spacing: 0.06em;">Visitors today</p>
+                    <p class="display-6 fw-bold mb-0" style="color: var(--sh-teal, #0f3d3e);">{{ $visitorsToday ?? 0 }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body">
+                    <p class="text-muted small mb-2 text-uppercase fw-semibold" style="letter-spacing: 0.06em;">Last 7 days</p>
+                    <div class="table-responsive mb-0">
+                        <table class="table table-sm mb-0 align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th class="text-end">Unique visitors</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse(($visitorsLast7Days ?? []) as $day)
+                                    <tr>
+                                        <td>{{ \Carbon\Carbon::parse($day['date'])->format('d M Y') }}</td>
+                                        <td class="text-end fw-semibold">{{ $day['total'] }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="2" class="text-muted">No visitor data yet.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <table class="table table-striped table-hover table-bordered align-middle text-center">
         <thead class="table-dark">
             <tr>
