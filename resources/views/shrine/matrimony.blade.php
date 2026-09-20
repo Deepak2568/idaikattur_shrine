@@ -51,7 +51,7 @@
                         <div class="card-body p-4">
                             <div class="mx-auto mb-3" style="width:90px; height:90px;">
                                 @if($profile_image)
-                                    <img src="{{ asset('storage/' . $profile_image) }}" alt="Profile photo" class="rounded-circle shadow" style="width:100%; height:100%;">
+                                    <img src="{{ public_storage_url($profile_image) }}" alt="Profile photo" class="rounded-circle shadow" style="width:100%; height:100%;">
                                 @else
                                     <div class="avatar-initials rounded-circle d-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary fw-bold" style="width:100%; height:100%; font-size:2.2rem;">
                                         {{ $initials }}

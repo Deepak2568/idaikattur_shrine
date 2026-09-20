@@ -15,6 +15,24 @@ use Illuminate\Support\Facades\Auth;
 
 Route::post('/ci-deploy', DeployController::class)->name('ci.deploy');
 
+// Serve public-disk files without relying on public/storage symlink (shared hosting).
+Route::get('/media/{path}', function (string $path) {
+    $path = str_replace('\\', '/', $path);
+    $path = ltrim($path, '/');
+    if ($path === '' || str_contains($path, '..')) {
+        abort(404);
+    }
+
+    $base = realpath(storage_path('app/public'));
+    $full = realpath(storage_path('app/public/'.$path));
+
+    abort_unless($base && $full && str_starts_with($full, $base) && is_file($full), 404);
+
+    return response()->file($full, [
+        'Cache-Control' => 'public, max-age=604800',
+    ]);
+})->where('path', '.*')->name('media');
+
 // Shared hosting: docroot is app root, so /css/* 404s while /public/css/* works.
 // This route keeps asset('css/...') working when the request hits Laravel.
 Route::get('/css/shrine-theme.css', function () {

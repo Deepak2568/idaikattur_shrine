@@ -140,7 +140,7 @@
                     <article class="member w-100">
                         <div class="member-media">
                             @if($priestItem->image_path)
-                                <img src="{{ Storage::url('app/public/'. $priestItem->image_path) }}"
+                                <img src="{{ public_storage_url($priestItem->image_path) }}"
                                      alt="{{ $priestItem->father_name }}">
                             @else
                                 <img src="{{ asset('images/default-priest.jpg') }}"
