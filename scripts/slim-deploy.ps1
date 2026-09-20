@@ -25,17 +25,31 @@ if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
 New-Item -ItemType Directory -Path $stage | Out-Null
 
 $paths = @(
+    "app\Support\helpers.php",
+    "app\Providers\AppServiceProvider.php",
     "app\Http\Controllers\ContactController.php",
     "app\Http\Controllers\RegisterController.php",
     "app\Http\Controllers\DeployController.php",
+    "app\Http\Controllers\AdminController.php",
+    "app\Http\Middleware\TrackSiteVisitor.php",
     "app\Mail\ContactFormSubmitted.php",
     "app\Mail\MatrimonyRegistrationSubmitted.php",
     "app\Models\Contact.php",
+    "app\Models\SiteVisitor.php",
+    "bootstrap\app.php",
     "config\services.php",
     "database\migrations\2026_03_28_120000_add_phone_to_contacts_table.php",
+    "database\migrations\2026_03_28_131500_change_contacts_phone_to_string.php",
+    "database\migrations\2026_03_28_180000_create_site_visitors_table.php",
     "resources\views\emails\contact-submitted.blade.php",
     "resources\views\emails\matrimony-registered.blade.php",
     "resources\views\shrine\contact.blade.php",
+    "resources\views\shrine\admin.blade.php",
+    "resources\views\shrine\dashboard.blade.php",
+    "resources\views\shrine\matrimony.blade.php",
+    "resources\views\shrine\mass_offerings.blade.php",
+    "resources\views\profile\show.blade.php",
+    "resources\views\profile\edit.blade.php",
     "resources\views\layouts\app.blade.php",
     "resources\views\layouts\header.blade.php",
     "resources\views\layouts\footer.blade.php",
@@ -46,7 +60,8 @@ $paths = @(
     "resources\views\shrine\priest.blade.php",
     "resources\views\shrine\mass_videos.blade.php",
     "routes\web.php",
-    "public\css\shrine-theme.css"
+    "public\css\shrine-theme.css",
+    "public\shrine.js"
 )
 
 foreach ($p in $paths) {
