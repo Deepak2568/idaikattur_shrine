@@ -61,12 +61,12 @@ $(document).ready(function () {
                     `);
                     setTimeout(function(){
                         $("#successPopup").fadeOut(800, function() { $(this).remove(); });
-                    }, 2200);
+                    }, 5000);
     
                     $("#registerForm")[0].reset();
                     setTimeout(function(){
                         $('#registerModal').modal('hide'); 
-                    }, 3000); 
+                    }, 5500); 
                 }
     
                 $btn.html(originalBtnHtml).prop("disabled", false);

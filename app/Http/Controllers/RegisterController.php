@@ -37,6 +37,9 @@ class RegisterController extends Controller
             $validated['profile_image'] = $path;
         }
 
+        // Checkbox posts "on"; DB column is boolean/tinyint.
+        $validated['termsAccepted'] = true;
+
         $customer = Customer::create($validated);
 
         $adminEmail = config('services.admin_email', 'jesurajadeepak@gmail.com');
@@ -52,7 +55,7 @@ class RegisterController extends Controller
 
         return response()->json([
             'status' => 200,
-            'message' => 'Registration Successfully. Now you can access the website....',
+            'message' => 'Registration Successfully. Now you can access the website..... Please contact the churh member for further details to view the profiles.',
         ]);
     }
 }
