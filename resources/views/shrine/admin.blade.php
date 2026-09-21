@@ -95,6 +95,53 @@
         </div>
     </div>
 
+    <div class="row g-3 mb-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100 border-0" style="border-left: 4px solid #b91c1c !important;">
+                <div class="card-body">
+                    <p class="text-muted small mb-1 text-uppercase fw-semibold" style="letter-spacing: 0.06em;">Donation interests</p>
+                    <p class="display-6 fw-bold mb-1" style="color: #b91c1c;">{{ $donationRequestsCount ?? 0 }}</p>
+                    <p class="small text-muted mb-0">{{ $donationRequestsPending ?? 0 }} pending</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body">
+                    <p class="text-muted small mb-2 text-uppercase fw-semibold" style="letter-spacing: 0.06em;">Recent donation requests</p>
+                    <div class="table-responsive mb-0" style="max-height: 220px; overflow-y: auto;">
+                        <table class="table table-sm mb-0 align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th class="text-end">Amount</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse(($donationRequests ?? []) as $req)
+                                    <tr>
+                                        <td>{{ $req->name }}</td>
+                                        <td>{{ $req->phone }}</td>
+                                        <td class="text-start small" style="max-width: 180px;">{{ $req->address ?: '—' }}</td>
+                                        <td class="text-end">{{ $req->amount !== null ? '₹'.number_format((float) $req->amount, 2) : '—' }}</td>
+                                        <td>{{ $req->created_at?->format('d M Y') }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="text-muted">No donation requests yet.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <table class="table table-striped table-hover table-bordered align-middle text-center">
         <thead class="table-dark">
             <tr>

@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PriestController;
 use App\Http\Controllers\DeployController;
+use App\Http\Controllers\DonationController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,6 +62,8 @@ Route::get('/priest/{id}/edit', [PriestController::class, 'edit'])->name('priest
 Route::put('/priest/{id}', [PriestController::class, 'update'])->name('priest.update');
 Route::delete('/priest/{id}', [PriestController::class, 'destroy'])->name('priest.destroy');
 Route::view('/contact', 'shrine.contact');
+Route::get('/donate', [DonationController::class, 'index'])->name('donate');
+Route::post('/donate', [DonationController::class, 'store'])->name('donate.store');
 Route::view('/videos', 'shrine.mass_videos');
 Route::view('/about', 'shrine.about');
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');

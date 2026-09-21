@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Setting;
 use App\Models\SiteVisitor;
+use App\Models\DonationRequest;
 
 class AdminController extends Controller
 {
@@ -22,12 +23,18 @@ class AdminController extends Controller
         $visitorsToday = SiteVisitor::countToday();
         $visitorsLast7Days = SiteVisitor::recentDays(7);
         $visitorLocations = SiteVisitor::topLocations(7, 10);
+        $donationRequestsCount = DonationRequest::count();
+        $donationRequestsPending = DonationRequest::countPending();
+        $donationRequests = DonationRequest::query()->latest()->limit(50)->get();
 
         return view('shrine.admin', [
             'data' => $customer,
             'visitorsToday' => $visitorsToday,
             'visitorsLast7Days' => $visitorsLast7Days,
             'visitorLocations' => $visitorLocations,
+            'donationRequestsCount' => $donationRequestsCount,
+            'donationRequestsPending' => $donationRequestsPending,
+            'donationRequests' => $donationRequests,
         ]);
     }
 
