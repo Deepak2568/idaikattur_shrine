@@ -111,7 +111,7 @@
           <a class="nav-link {{ request()->is('matrimony') ? 'active' : '' }}" href="{{ url('/matrimony') }}"><i class="fas fa-heart me-1"></i>Matrimony</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ request()->is('donate') ? 'active' : '' }}" href="{{ url('/donate') }}"><i class="fas fa-donate me-1"></i>Donate</a>
+          <a class="nav-link sh-nav-donate {{ request()->is('donate') ? 'active' : '' }}" href="{{ url('/donate') }}"><i class="fas fa-donate me-1"></i>Donate</a>
         </li>
         <li class="nav-item">
           <a class="nav-link {{ request()->is('contact') ? 'active' : '' }}" href="{{ url('/contact') }}"><i class="fas fa-envelope me-1"></i>Contact</a>

@@ -45,6 +45,23 @@
 
 <section class="sh-section">
   <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="sh-donate-cta sh-animate-in">
+          <p class="sh-donate-cta__eyebrow">New</p>
+          <h2 class="sh-donate-cta__title">Support Sacred Heart Shrine</h2>
+          <p class="sh-donate-cta__text">If you wish to donate to the shrine, share your interest. Online payment will be available soon.</p>
+          <a href="{{ url('/donate') }}" class="btn btn-danger btn-lg px-4">
+            <i class="fas fa-donate me-2"></i> Donation interest
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sh-section pt-0">
+  <div class="container">
     <h2 class="sh-section-title sh-animate-in">Blessings</h2>
     <p class="sh-section-lead">Messages from our bishop and parish priest.</p>
     <div class="row g-4 sh-blessing-grid sh-animate-in-delay">
@@ -81,22 +98,6 @@
             </footer>
           </div>
         </article>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="sh-section pt-0">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <div class="text-center p-4 p-md-5 rounded-3" style="background: linear-gradient(135deg, rgba(15,61,62,0.08), rgba(185,28,28,0.08)); border: 1px solid rgba(15,61,62,0.12);">
-          <h2 class="h3 mb-2" style="font-family: var(--sh-font-display, Georgia, serif); color: var(--sh-teal, #0f3d3e);">Support Sacred Heart Shrine</h2>
-          <p class="mb-4 text-muted mx-auto" style="max-width: 36rem;">If you wish to donate to the shrine, share your interest. Online payment will be available soon.</p>
-          <a href="{{ url('/donate') }}" class="btn btn-danger btn-lg px-4">
-            <i class="fas fa-donate me-2"></i> Donation interest
-          </a>
-        </div>
       </div>
     </div>
   </div>
